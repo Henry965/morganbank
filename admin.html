@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Morgan Bank Admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.jsdelivr.net/npm/backendless@7.3.4/dist/backendless.min.js"></script>
+<style>
+*{margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Arial}
+body{background:#0A0A0A; color:#fff; padding:20px}
+.container{max-width:700px; margin:0 auto}
+h1{color:#8B5CF6; text-align:center; margin-bottom:20px}
+.card{background:#1A1A1A; padding:20px; border-radius:16px; margin-bottom:20px}
+input, select{width:100%; padding:12px; margin:10px 0; background:#0f274d; border:none; color:#fff; border-radius:8px; font-size:14px}
+.btn{width:100%; padding:14px; background:#8B5CF6; color:#fff; border:none; border-radius:8px; font-weight:bold; cursor:pointer; margin-top:10px}
+.btn-red{background:#EF4444}
+.btn-green{background:#22C55E}
+.user-info{background:#222; padding:15px; border-radius:12px; margin:10px 0}
+.success{color:#22C55E}.error{color:#EF4444}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>MORGAN BANK ADMIN PANEL</h1>
+
+  <!-- LOGIN -->
+  <div class="card" id="adminLogin">
+    <h3>Admin Login</h3>
+    <input id="adminEmail" type="email" placeholder="Admin Email">
+    <input id="adminPass" type="password" placeholder="Password">
+    <button class="btn" onclick="adminLogin()">Login</button>
+    <p id="loginMsg"></p>
+  </div>
+
+<input id="txType" placeholder="Transaction Type e.g Deposit">
+<input id="txAmount" type="number" placeholder="Amount. Use - for debit">
+<input id="txDate" type="datetime-local">
+
+<div class="card">
+  <h3>Create New User Account</h3>
+  <input id="newName" placeholder="Full Name">
+  <input id="newEmail" type="email" placeholder="Email">
+  <input id="newPass" type="password" placeholder="Temporary Password">
+  <button class="btn" onclick="createUser()">Create Account</button>
+  <p id="createMsg"></p>
+</div>
+  <!-- DASHBOARD -->
+  <div id="adminPanel" style="display:none">
+    
+    <!-- SEARCH USER -->
+    <div class="card">
+      <h3>Search User</h3>
+      <input id="searchEmail" type="email" placeholder="Enter user email">
+      <button class="btn" onclick="searchUser()">Search</button>
+      <div id="userResult"></div>
+    </div>
+
+    <!-- ADD BALANCE -->
+    <div class="card" id="balanceCard" style="display:none">
+      <h3>Add/Deduct Balance</h3>
+      <p>Current Balance: $<span id="currentBal">0</span></p>
+      <input id="amount" type="number" placeholder="Amount">
+      <select id="actionType">
+        <option value="add">Add Money</option>
+        <option value="deduct">Deduct Money</option>
+      </select>
+      <button class="btn btn-green" onclick="updateBalance()">Update Balance</button>
+      <p id="balMsg"></p>
+    </div>
+
+    <!-- ADD TRANSACTION -->
+    <div class="card" id="txCard" style="display:none">
+      <h3>Add Transaction History</h3>
+      <input id="txType" placeholder="Transaction Type e.g Deposit, Transfer">
+      <input id="txAmount" type="number" placeholder="Amount. Use - for debit">
+      <button class="btn" onclick="addTransaction()">Add Transaction</button>
+      <p id="txMsg"></p>
+    </div>
+
+    <button class="btn btn-red" onclick="adminLogout()">Logout</button>
+  </div>
+</div>
+
+<script>
+Backendless.initApp('65ABB198-A187-4B5A-B7D3-0839AEA80B26', 'CDA94D34-9A3F-46AB-8B13-65193E45A1B0');
+let selectedUser = null;
+const ADMIN_EMAIL = "admin@morganbank.com"; // CHANGE THIS TO YOUR ADMIN EMAIL
+
+async function adminLogin(){
+  let email = document.getElementById('adminEmail').value;
+  let pass = document.getElementById('adminPass').value;
+  
+  if(email!== ADMIN_EMAIL) return document.getElementById('loginMsg').innerHTML = '<span class="error">Not an admin account</span>';
+  
+async function createUser(){
+  let name = document.getElementById('newName').value;
+  let email = document.getElementById('newEmail').value;
+  let pass = document.getElementById('newPass').value;
+  try{
+    let user = new Backendless.User();
+    user.name = name; user.email = email; user.password = pass;
+    user.balance = 0; 
+    user.accountNumber = 'MB' + Math.floor(100000 + Math.random() * 900000);
+    user.site = 'morganbank';
+    await Backendless.UserService.register(user);
+    document.getElementById('createMsg').innerHTML = '<span class="success">User created! Tell them to login with: '+email+'</span>';
+  }catch(e){document.getElementById('createMsg').innerHTML = '<span class="error">'+e.message+'</span>'}
+}
+  try{
+    await Backendless.UserService.login(email, pass, true);
+    document.getElementById('adminLogin').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+  }catch(e){
+    document.getElementById('loginMsg').innerHTML = '<span class="error">'+e.message+'</span>';
+  }
+}
+
+async function addTransaction(){
+  let type = document.getElementById('txType').value;
+  let amount = parseFloat(document.getElementById('txAmount').value);
+  let date = document.getElementById('txDate').value;
+  if(!type ||!amount) return alert('Fill all fields');
+  
+  let tx = {
+    type, 
+    amount, 
+    userId: selectedUser.objectId, 
+    site: 'morganbank', 
+    date: date ? new Date(date) : new Date()
+  };
+  await Backendless.Data.of('Transactions').save(tx);
+  document.getElementById('txMsg').innerHTML = '<span class="success">Transaction added with date!</span>';
+}
+
+async function searchUser(){
+  let email = document.getElementById('searchEmail').value;
+  if(!email) return alert('Enter email');
+  
+  let query = new Backendless.DataQuery(); 
+  query.whereClause = `email = '${email}' AND site = 'morganbank'`;
+  let users = await Backendless.Data.of(Backendless.User).find(query);
+  
+  if(users.length === 0){
+    document.getElementById('userResult').innerHTML = '<span class="error">User not found</span>';
+    document.getElementById('balanceCard').style.display = 'none';
+    document.getElementById('txCard').style.display = 'none';
+    return;
+  }
+  
+  selectedUser = users[0];
+  document.getElementById('userResult').innerHTML = `
+    <div class="user-info">
+      <b>Name:</b> ${selectedUser.name}<br>
+      <b>Email:</b> ${selectedUser.email}<br>
+      <b>Acc No:</b> ${selectedUser.accountNumber}<br>
+      <b>Balance:</b> $${(selectedUser.balance || 0).toFixed(2)}
+    </div>
+  `;
+  document.getElementById('currentBal').innerText = (selectedUser.balance || 0).toFixed(2);
+  document.getElementById('balanceCard').style.display = 'block';
+  document.getElementById('txCard').style.display = 'block';
+}
+
+// 1. ADD/DEDUCT BALANCE
+async function updateBalance(){
+  let amount = parseFloat(document.getElementById('amount').value);
+  let type = document.getElementById('actionType').value;
+  if(!amount || amount <= 0) return alert('Enter valid amount');
+  
+  if(type === 'add'){
+    selectedUser.balance = (selectedUser.balance || 0) + amount;
+    await saveTransaction('Admin Credit', amount);
+  } else {
+    selectedUser.balance = (selectedUser.balance || 0) - amount;
+    await saveTransaction('Admin Debit', -amount);
+  }
+  
+  await Backendless.Data.of(Backendless.User).save(selectedUser);
+  document.getElementById('balMsg').innerHTML = '<span class="success">Balance updated!</span>';
+  document.getElementById('currentBal').innerText = selectedUser.balance.toFixed(2);
+  document.getElementById('amount').value = '';
+  localStorage.setItem('currentUser', JSON.stringify(selectedUser)); // update if user is logged in
+}
+
+// 2. ADD TRANSACTION HISTORY
+async function addTransaction(){
+  let type = document.getElementById('txType').value;
+  let amount = parseFloat(document.getElementById('txAmount').value);
+  if(!type ||!amount) return alert('Fill all fields');
+  
+  await saveTransaction(type, amount, selectedUser.objectId);
+  document.getElementById('txMsg').innerHTML = '<span class="success">Transaction added!</span>';
+  document.getElementById('txType').value = '';
+  document.getElementById('txAmount').value = '';
+}
+
+async function saveTransaction(type, amount, userId = selectedUser.objectId){
+  let tx = {type, amount, userId, site: 'morganbank', date: new Date()};
+  await Backendless.Data.of('Transactions').save(tx);
+}
+
+async function adminLogout(){
+  await Backendless.UserService.logout();
+  location.reload();
+}
+</script>
+</body>
+</html>
