@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Morgan Bank Dashboard - DEBUG FIX</title>
+<title>Morgan Bank Dashboard</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.jsdelivr.net/npm/backendless@7.3.4/dist/backendless.min.js"></script>
 <style>
@@ -55,7 +55,6 @@ input,select,textarea{width:100%;padding:12px;margin:10px 0;background:#1F2937;b
   <div><b>Last Transaction</b><p id="lastTx" style="font-size:12px;color:#9CA3AF">None</p></div>
   <div style="text-align:right"><p id="lastTxDate" style="font-size:12px">Today</p><p id="lastTxTime">--:--</p></div>
 </div>
-<div id="debug" style="padding:10px 20px;color:#f59e0b;font-size:12px"></div>
 <div id="actionForm"></div>
 <div class="bottom-nav">
   <div class="nav-item active" id="navHome" onclick="goHome()"><div class="nav-icon">🏠</div>Home</div>
@@ -65,8 +64,8 @@ input,select,textarea{width:100%;padding:12px;margin:10px 0;background:#1F2937;b
 </div>
 <script>
 // DEBUG LOGGER
-function log(msg){ document.getElementById('debug').innerHTML = new Date().toLocaleTimeString()+': '+msg; console.log(msg); }
-window.onerror = function(m, s, l){ log('ERROR: '+m); alert('JS Error: '+m); }
+function log(msg){ console.log(msg); }
+window.onerror = function(m,s,l){ console.log('ERROR: '+m); }
 Backendless.initApp('65ABB198-A187-4B5A-B7D3-0839AEA80B26', 'CDA94D34-9A3F-46AB-8B13-65193E45A1B0');
 let currentUser = JSON.parse(localStorage.getItem('currentUser'));
 if(!currentUser){ alert('Please login first'); window.location.href='index.html'; }
@@ -74,17 +73,17 @@ let verifiedRecipient=null;
 loadDashboard();
 async function loadDashboard(){
   try{
-    log('Loading dashboard...');
+    console.log('Loading dashboard');
     let fresh = await Backendless.Data.of("Users").findById(currentUser.objectId);
     if(fresh){ currentUser={...currentUser, ...fresh}; localStorage.setItem('currentUser', JSON.stringify(currentUser)); }
-  }catch(e){ log('Refresh failed, using local: '+e.message); }
+  }catch(e){ console.log(e.message); }
   document.getElementById('userName').innerText=(currentUser.name||'User').split(' ')[0];
   document.getElementById('balance').innerText='$'+(currentUser.balance||0).toFixed(2);
   document.getElementById('avatarText').innerText=(currentUser.name||'U').split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
   loadLastTx();
 }
 function handleAction(type){
-  log('Clicked '+type);
+  
   try{
     if(type==='toBank') showToBank();
     if(type==='morganPay') showMorganPay();
@@ -96,7 +95,7 @@ function goHome(){
   document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
   document.getElementById('navHome').classList.add('active');
   document.getElementById('actionForm').innerHTML='';
-  log('Home');
+  
 }
 function setActive(id){
   document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
@@ -104,7 +103,7 @@ function setActive(id){
 }
 // ===== HISTORY - SIMPLIFIED & ROBUST =====
 async function showHistory(){
-  log('Opening History...');
+  
   setActive('navHistory');
   try{
     let q = new Backendless.DataQuery(); 
@@ -112,7 +111,7 @@ async function showHistory(){
     q.sortBy=['created DESC'];
     q.pageSize=50;
     let txs = await Backendless.Data.of('Transactions').find(q);
-    log('Found '+txs.length+' txs');
+    
     let html=`<div class="modal"><h3>Transaction History</h3><p style="color:#9CA3AF;font-size:12px">Total: ${txs.length}</p>`;
     if(txs.length===0) html+=`<p style="margin:15px 0">No transactions yet</p>`;
     else txs.forEach(t=>{
@@ -123,23 +122,23 @@ async function showHistory(){
     document.getElementById('actionForm').innerHTML=html;
     window.scrollTo(0, document.body.scrollHeight);
   }catch(e){
-    log('History error: '+e.message);
+    
     alert('History failed: '+e.message+'\n\nMake sure Transactions table exists and has userId column');
     document.getElementById('actionForm').innerHTML=`<div class="modal"><h3>History Error</h3><p style="color:#EF4444">${e.message}</p><p style="font-size:12px;color:#aaa">Create Transactions table in Backendless if missing</p><button class="btn-secondary" onclick="closeModal()">Close</button></div>`;
   }
 }
 // ===== LOAN - WORKS EVEN WITHOUT TABLE (local fallback) =====
 async function showLoan(){
-  log('Opening Loan...');
+  
   setActive('navLoan');
   try{
     let loans=[];
     try{
       let q=new Backendless.DataQuery(); q.whereClause=`userId='${currentUser.objectId}'`; q.sortBy=['created DESC']; q.pageSize=20;
       loans = await Backendless.Data.of('Loans').find(q);
-      log('Found '+loans.length+' loans');
+      
     }catch(e){
-      log('Loans table missing, using local: '+e.message);
+      
       loans = JSON.parse(localStorage.getItem('myLoans')||'[]');
     }
     let pending = loans.find(l=>l.status==='pending');
@@ -172,7 +171,7 @@ async function showLoan(){
     html+=`<button class="btn-secondary" onclick="closeModal()">Close</button></div>`;
     document.getElementById('actionForm').innerHTML=html;
     window.scrollTo(0, document.body.scrollHeight);
-  }catch(e){ log('Loan error: '+e.message); alert('Loan error: '+e.message); }
+  }catch(e){  alert('Loan error: '+e.message); }
 }
 async function submitLoan(){
   try{
@@ -190,9 +189,9 @@ async function submitLoan(){
     let loan={userId:currentUser.objectId, userName:currentUser.name, userEmail:currentUser.email, accountNumber:currentUser.accountNumber, amount:amount, purpose:purpose, duration:duration, description:desc, status:'pending', site:'morganbank', created:new Date(), reviewedAt:null};
     try{
       await Backendless.Data.of('Loans').save(loan);
-      log('Loan saved to Backendless');
+      
     }catch(e){
-      log('Saving locally because: '+e.message);
+      
       let localLoans=JSON.parse(localStorage.getItem('myLoans')||'[]');
       loan.objectId='local_'+Date.now();
       localLoans.unshift(loan);
@@ -203,7 +202,7 @@ async function submitLoan(){
 }
 // ===== ME =====
 function showMe(){
-  log('Opening Me...');
+  
   setActive('navMe');
   try{
     let html=`<div class="modal" style="text-align:center"><div style="width:70px;height:70px;border-radius:50%;background:#2563EB;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 10px">${(currentUser.name||'U').slice(0,2).toUpperCase()}</div><h3>${currentUser.name||''}</h3><p style="color:#9CA3AF">${currentUser.email||''}</p><p style="color:#9CA3AF;font-size:12px;margin-top:5px">${currentUser.accountNumber||''}</p><div style="background:#1F2937;padding:15px;border-radius:12px;margin:20px 0;text-align:left"><p style="display:flex;justify-content:space-between"><span>Balance</span><b>$${(currentUser.balance||0).toFixed(2)}</b></p><p style="display:flex;justify-content:space-between;margin-top:8px"><span>Savings</span><b>$${(currentUser.savings||0).toFixed(2)}</b></p></div><button class="btn-primary" onclick="showLoan()">My Loans</button><button class="btn-secondary" onclick="showHistory()">History</button><button class="btn-secondary" onclick="logout()">Logout</button></div>`;
@@ -258,7 +257,7 @@ async function loadLastTx(){
     let q=new Backendless.DataQuery(); q.whereClause=`userId='${currentUser.objectId}'`; q.sortBy=['created DESC']; q.pageSize=1;
     let txs=await Backendless.Data.of('Transactions').find(q);
     if(txs.length>0){ document.getElementById('lastTx').innerText= (txs[0].amount>0?'+':'-')+'$'+Math.abs(txs[0].amount).toFixed(2)+' '+txs[0].type; document.getElementById('lastTxTime').innerText=new Date(txs[0].created||txs[0].date).toLocaleTimeString().slice(0,5); }
-  }catch(e){ log('lastTx error '+e.message); }
+  }catch(e){  }
 }
 function closeModal(){ document.getElementById('actionForm').innerHTML=''; }
 async function logout(){ await Backendless.UserService.logout(); localStorage.removeItem('currentUser'); window.location.href='index.html'; }
