@@ -111,7 +111,7 @@ function setActive(id){
 // ===== HISTORY =====
 async function showHistory(){
   setActive('navHistory');
-  let q = new Backendless.DataQuery(); q.whereClause = `userId = '${currentUser.objectId}' AND site = 'morganbank'`; q.sortBy=['date DESC']; q.pageSize=100;
+  let q = new Backendless.DataQuery(); q.whereClause = `userId = '${currentUser.objectId}'`; q.sortBy=['date DESC']; q.pageSize=100; // removed site filter to fix history
   let txs = await Backendless.Data.of('Transactions').find(q);
   let html = `<div class="modal"><h3 style="color:#2563EB; margin-bottom:15px">Transaction History</h3>`;
   if(txs.length==0) html+='<p style="color:#9CA3AF">No transactions yet</p>';
@@ -149,7 +149,7 @@ async function showLoan(){
   setActive('navLoan');
   let q = new Backendless.DataQuery(); q.whereClause = `userId = '${currentUser.objectId}' AND site='morganbank'`; q.sortBy=['created DESC']; q.pageSize=20;
   let loans = [];
-  try{ loans = await Backendless.Data.of('Loans').find(q); }catch(e){ console.log('No Loans table yet', e.message) }
+  try{ loans = await Backendless.Data.of('Loans').find(q); }catch(e){ console.error('Loans table error:', e); document.getElementById('actionForm').innerHTML += `<p class='error'>Loans table not found. Create Loans table in Backendless Console.</p>`; }
   currentLoans = loans;
   // check if has pending
   let pending = loans.find(l=>l.status==='pending');
