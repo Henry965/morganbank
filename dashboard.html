@@ -5,86 +5,98 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.jsdelivr.net/npm/backendless@7.3.4/dist/backendless.min.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial}
-body{background:#050A18;color:#fff;padding-bottom:100px}
-.topbar{display:flex;justify-content:space-between;align-items:center;padding:15px 20px}
-.avatar{width:38px;height:38px;border-radius:50%;background:#2563EB;display:flex;align-items:center;justify-content:center;font-weight:bold;cursor:pointer}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#111827;display:flex;justify-content:space-around;padding:12px 0;border-top:1px solid #1F2937;z-index:9999}
-.nav-item{text-align:center;font-size:11px;color:#6B7280;cursor:pointer;padding:5px 15px}
+*{margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Arial}
+body{background:#050A18; color:#fff; padding-bottom:80px}
+.topbar{display:flex; justify-content:space-between; align-items:center; padding:15px 20px}
+.profile{display:flex; align-items:center; gap:10px}
+.avatar{width:35px; height:35px; border-radius:50%; background:#2563EB; display:flex; align-items:center; justify-content:center; font-weight:bold; cursor:pointer}
+.topbar h2{font-size:16px}
+.icons{display:flex; gap:15px}
+.icons div{position:relative; font-size:20px; cursor:pointer}
+.badge{position:absolute; top:-5px; right:-5px; background:red; color:#fff; font-size:9px; padding:2px 5px; border-radius:50%}
+.balance-card{background:linear-gradient(90deg, #2563EB, #1D4ED8); margin:15px 20px; padding:20px; border-radius:12px; position:relative}
+.balance-top{display:flex; justify-content:space-between; font-size:13px; margin-bottom:8px; color:#BFDBFE}
+.balance-amount{font-size:30px; font-weight:bold}
+.add-money{position:absolute; right:15px; bottom:-15px; background:#000; color:#fff; padding:8px 16px; border:none; border-radius:20px; font-weight:bold; cursor:pointer; font-size:12px}
+.earnings{margin:25px 20px 15px; font-size:13px; color:#9CA3AF}
+.earnings span{color:#22C55E}
+.actions{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; padding:0 15px}
+.action-box{background:#111827; padding:20px 10px; border-radius:12px; text-align:center; cursor:pointer}
+.action-icon{font-size:26px; margin-bottom:8px; color:#9CA3AF}
+.action-box p{font-size:12px; color:#D1D5DB}
+.last-tx{background:#111827; margin:15px 20px; padding:15px; border-radius:12px; display:flex; justify-content:space-between; cursor:pointer}
+.last-tx b{font-size:14px}.last-tx p{font-size:12px; color:#9CA3AF}
+.bottom-nav{position:fixed; bottom:0; left:0; right:0; background:#111827; display:flex; justify-content:space-around; padding:10px 0; border-top:1px solid #1F2937; z-index:1000}
+.nav-item{text-align:center; font-size:11px; color:#6B7280; cursor:pointer}
 .nav-item.active{color:#2563EB}
-.nav-icon{font-size:22px}
-.balance-card{background:linear-gradient(135deg,#2563EB,#1D4ED8);margin:15px 20px;padding:22px;border-radius:18px;position:relative;box-shadow:0 10px 30px rgba(37,99,235,0.3)}
-.balance-top{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;color:#BFDBFE}
-.balance-amount{font-size:34px;font-weight:bold;letter-spacing:-1px}
-.add-money{position:absolute;right:15px;bottom:-15px;background:#fff;color:#000;padding:10px 18px;border:none;border-radius:20px;font-weight:bold;cursor:pointer;font-size:12px;box-shadow:0 5px 15px rgba(0,0,0,0.3)}
-.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:15px}
-.action-box{background:#111827;padding:20px 10px;border-radius:16px;text-align:center;cursor:pointer;border:1px solid #1F2937;transition:0.2s}
-.action-box:active{transform:scale(0.92);border-color:#2563EB}
-.last-tx{background:#111827;margin:15px 20px;padding:16px;border-radius:14px;display:flex;justify-content:space-between;cursor:pointer}
-.modal{background:#111827;padding:22px;border-radius:18px;margin:15px;border:1px solid #2563EB33;animation:up 0.3s ease}
-@keyframes up{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
-input,select,textarea{width:100%;padding:13px;margin:10px 0;background:#0f172a;border:1px solid #1e293b;color:#fff;border-radius:10px;font-size:14px}
-.btn-primary{width:100%;padding:14px;background:#2563EB;color:#fff;border:none;border-radius:12px;font-weight:bold;cursor:pointer;margin-top:12px;font-size:14px}
-.btn-secondary{width:100%;padding:13px;background:#1e293b;color:#fff;border:1px solid #334155;border-radius:12px;cursor:pointer;margin-top:10px}
-.btn-outline{width:100%;padding:12px;background:transparent;color:#9CA3AF;border:1px dashed #374151;border-radius:12px;cursor:pointer;margin-top:10px}
-.history-item{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #1F2937}
-.bank-details{background:linear-gradient(135deg,#0f172a,#1e293b);border:1px dashed #2563EB;padding:16px;border-radius:12px;margin:12px 0}
-.bank-row{display:flex;justify-content:space-between;padding:8px 0;font-size:13px;border-bottom:1px solid #1e293b}
-.bank-row:last-child{border:none}
-.bank-row b{color:#fff}
-.bank-row span{color:#9CA3AF}
-.copy-btn{background:#2563EB;color:#fff;border:none;padding:4px 10px;border-radius:6px;font-size:11px;cursor:pointer;margin-left:8px}
-/* CARDS STYLES */
-.card-preview{width:100%;height:200px;border-radius:16px;padding:20px;position:relative;overflow:hidden;margin:15px 0;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,0.4)}
-.card-visa{background:linear-gradient(135deg,#1e3a8a,#3b82f6); }
-.card-verve{background:linear-gradient(135deg,#065f46,#10b981); }
-.card-mastercard{background:linear-gradient(135deg,#7c2d12,#f97316); }
-.card-mastercard::before{content:'';position:absolute;top:20px;right:20px;width:50px;height:50px;background:radial-gradient(circle at 30% 30%, #ef4444 40%, #f59e0b 60%);border-radius:50%;opacity:0.9}
-.card-visa::after{content:'VISA';position:absolute;bottom:20px;right:20px;font-weight:bold;font-style:italic;letter-spacing:2px;font-size:22px}
-.card-verve::after{content:'Verve';position:absolute;bottom:20px;right:20px;font-weight:bold;font-size:20px;letter-spacing:1px}
-.card-chip{width:45px;height:32px;background:linear-gradient(135deg,#fde68a,#f59e0b);border-radius:6px;margin-bottom:20px}
-.card-number{font-size:18px;letter-spacing:3px;margin:15px 0;font-family:monospace}
-.card-bottom{display:flex;justify-content:space-between;margin-top:20px;font-size:12px;opacity:0.9}
-.card-request-box{background:#1e293b;border:2px dashed #334155;padding:25px;border-radius:16px;text-align:center;margin:15px 0}
-.status-badge{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:bold}
-.status-pending{background:#f59e0b22;color:#f59e0b}
-.status-approved{background:#22C55E22;color:#22C55E}
-.status-rejected{background:#EF444422;color:#EF4444}
-.loan-card{background:#1e293b;padding:15px;border-radius:12px;margin:10px 0;border-left:4px solid #f59e0b}
+.nav-icon{font-size:22px; margin-bottom:4px}
+input,select,textarea{width:100%; padding:12px; margin:10px 0; background:#1F2937; border:none; color:#fff; border-radius:8px; font-size:14px}
+.modal{background:#111827; padding:20px; border-radius:16px; margin:15px; border:1px solid #2563EB33}
+.btn-primary{width:100%; padding:12px; background:#2563EB; color:#fff; border:none; border-radius:8px; font-weight:bold; cursor:pointer; margin-top:10px}
+.btn-secondary{width:100%; padding:12px; background:#1F2937; color:#fff; border:1px solid #374151; border-radius:8px; cursor:pointer; margin-top:10px}
+.history-item{display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid #1F2937}
+.bank-details{background:#0f172a; border:1px dashed #2563EB; padding:15px; border-radius:12px; margin:10px 0}
+.bank-row{display:flex; justify-content:space-between; padding:7px 0; font-size:13px; border-bottom:1px solid #1e293b}
+.copy-btn{background:#2563EB; color:#fff; border:none; padding:3px 8px; border-radius:5px; font-size:10px; cursor:pointer; margin-left:6px}
+.card-preview{width:100%; height:190px; border-radius:16px; padding:20px; position:relative; color:#fff; margin:15px 0; box-shadow:0 8px 25px rgba(0,0,0,0.4)}
+.card-visa{background:linear-gradient(135deg,#1e3a8a,#3b82f6)}
+.card-verve{background:linear-gradient(135deg,#065f46,#10b981)}
+.card-mastercard{background:linear-gradient(135deg,#7c2d12,#f97316)}
+.card-chip{width:40px; height:28px; background:linear-gradient(135deg,#fde68a,#f59e0b); border-radius:5px; margin-bottom:15px}
+.card-number{font-size:17px; letter-spacing:2px; margin:12px 0; font-family:monospace}
+.card-bottom{display:flex; justify-content:space-between; margin-top:18px; font-size:11px; opacity:0.9}
+.loan-card{background:#1e293b; padding:14px; border-radius:12px; margin:10px 0; border-left:4px solid #f59e0b}
+.status-badge{padding:4px 10px; border-radius:20px; font-size:10px; font-weight:bold}
+.status-pending{background:#f59e0b22; color:#f59e0b}
+.status-approved{background:#22C55E22; color:#22C55E}
+.status-rejected{background:#EF444422; color:#EF4444}
+.card-request-box{background:#1e293b; border:2px dashed #334155; padding:20px; border-radius:14px; text-align:center; margin:12px 0}
+.success{color:#22C55E} .error{color:#EF4444}
 </style>
 </head>
 <body>
 <div class="topbar">
-  <div style="display:flex;align-items:center;gap:10px"><div class="avatar" id="avatarText" onclick="document.getElementById('fileInput').click()">U</div><h2>Hi, <span id="userName">User</span></h2></div>
-  <div style="display:flex;gap:15px;font-size:20px"><span onclick="showHistory()">🔔</span><span onclick="showMe()">👤</span></div>
+  <div class="profile">
+    <div class="avatar" onclick="document.getElementById('fileInput').click()" id="avatarText">US</div>
+    <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="uploadPic(event)">
+    <h2>Hi, <span id="userName">NH</span></h2>
+  </div>
+  <div class="icons">
+    <div onclick="showSupport()">🎧</div>
+    <div onclick="showHistory()">🔔<span class="badge" id="txCount">0</span></div>
+  </div>
 </div>
-<input type="file" id="fileInput" accept="image/*" style="display:none" onchange="uploadPic(event)">
 <div class="balance-card">
-  <div class="balance-top"><span>Available Balance</span><span onclick="showHistory()" style="cursor:pointer">History ></span></div>
-  <div class="balance-amount" id="balance">$0.00</div>
-  <button class="add-money" onclick="showAddMoney()">+ Add Money</button>
+  <div class="balance-top">
+    <span>Available Balance</span>
+    <span onclick="showHistory()" style="cursor:pointer">History ></span>
+  </div>
+  <div class="balance-amount" id="balance">$0.00 ></div>
+  <button class="add-money" onclick="showAddMoney()">Add Money</button>
 </div>
+<div class="earnings">Yesterday's Earnings: <span id="earn">+$0.00</span></div>
 <div class="actions">
-  <div class="action-box" onclick="showToBank()"><div style="font-size:28px">🏦</div><p style="margin-top:6px;font-size:11px">To Bank</p></div>
-  <div class="action-box" onclick="showMorganPay()"><div style="font-size:28px">👤</div><p style="margin-top:6px;font-size:11px">MorganPay</p></div>
-  <div class="action-box" onclick="showSavings()"><div style="font-size:28px">🐷</div><p style="margin-top:6px;font-size:11px">Savings</p></div>
-  <div class="action-box" onclick="showCards()"><div style="font-size:28px">💳</div><p style="margin-top:6px;font-size:11px">Cards</p></div>
+  <div class="action-box" onclick="showToBank()"><div class="action-icon">🏦</div><p>To Bank</p></div>
+  <div class="action-box" onclick="showMorganPay()"><div class="action-icon">👤</div><p>MorganPay</p></div>
+  <div class="action-box" onclick="showSavings()"><div class="action-icon">🐷</div><p>Savings</p></div>
+  <div class="action-box" onclick="showCards()"><div class="action-icon">💳</div><p>Cards</p></div>
 </div>
 <div class="last-tx" onclick="showHistory()">
-  <div><b>Last Transaction</b><p id="lastTx" style="font-size:12px;color:#9CA3AF">None</p></div>
-  <div style="text-align:right"><p id="lastTxDate" style="font-size:11px">Today</p><p id="lastTxTime" style="font-size:12px">--:--</p></div>
+  <div><b>Last Transaction</b><p id="lastTx">None</p></div>
+  <div style="text-align:right"><p>Today <span id="lastTxTime">--:--</span></p></div>
 </div>
-<div id="actionForm"></div>
 <div class="bottom-nav">
   <div class="nav-item active" id="navHome" onclick="goHome()"><div class="nav-icon">🏠</div>Home</div>
   <div class="nav-item" id="navLoan" onclick="showLoan()"><div class="nav-icon">💼</div>Loan</div>
-  <div class="nav-item" id="navHistory" onclick="showHistory()"><div class="nav-icon">📈</div>History</div>
+  <div class="nav-item" id="navWealth" onclick="showHistory()"><div class="nav-icon">📈</div>Wealth</div>
+  <div class="nav-item" id="navReward" onclick="showMe()"><div class="nav-icon">🎁</div>Reward</div>
   <div class="nav-item" id="navMe" onclick="showMe()"><div class="nav-icon">😊</div>Me</div>
 </div>
+<div id="actionForm"></div>
 <script>
 Backendless.initApp('65ABB198-A187-4B5A-B7D3-0839AEA80B26', 'CDA94D34-9A3F-46AB-8B13-65193E45A1B0');
 let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-if(!currentUser){ alert('Login first'); window.location.href='index.html'; }
+if(!currentUser){ alert('Please login first'); window.location.href='index.html'; }
 let verifiedRecipient=null;
 loadDashboard();
 async function loadDashboard(){
@@ -92,205 +104,164 @@ async function loadDashboard(){
     let fresh = await Backendless.Data.of("Users").findById(currentUser.objectId);
     if(fresh){ currentUser={...currentUser, ...fresh}; localStorage.setItem('currentUser', JSON.stringify(currentUser)); }
   }catch(e){}
-  document.getElementById('userName').innerText=(currentUser.name||'User').split(' ')[0];
-  document.getElementById('balance').innerText='$'+(currentUser.balance||0).toFixed(2);
+  document.getElementById('userName').innerText=(currentUser.name||'User').split(' ')[0].toUpperCase();
   document.getElementById('avatarText').innerText=(currentUser.name||'U').split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
-  loadLastTx();
+  document.getElementById('balance').innerText='$'+(currentUser.balance||0).toFixed(2)+' >';
+  if(currentUser.profilePic){
+    document.getElementById('avatarText').style.backgroundImage=`url(${currentUser.profilePic})`;
+    document.getElementById('avatarText').style.backgroundSize='cover';
+    document.getElementById('avatarText').innerText='';
+  }
+  loadLastTransaction();
+  loadTxCount();
 }
-function setActive(id){ document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active')); let e=document.getElementById(id); if(e) e.classList.add('active'); }
+async function loadTxCount(){
+  try{
+    let c=await Backendless.Data.of('Transactions').getObjectCount({whereClause:`userId='${currentUser.objectId}'`});
+    document.getElementById('txCount').innerText=c;
+    document.getElementById('earn').innerText='+$'+(c*2.5).toFixed(2);
+  }catch(e){ document.getElementById('txCount').innerText='0'; }
+}
+function setActive(id){ document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active')); let el=document.getElementById(id); if(el) el.classList.add('active'); }
 function goHome(){ setActive('navHome'); document.getElementById('actionForm').innerHTML=''; }
 function closeModal(){ document.getElementById('actionForm').innerHTML=''; }
-// ===== HISTORY =====
+function copyText(t){ navigator.clipboard.writeText(t); alert('Copied: '+t); }
+// ===== HISTORY - FIXED =====
 async function showHistory(){
-  setActive('navHistory');
+  setActive('navWealth');
   try{
-    let q={whereClause:`userId='${currentUser.objectId}'`, sortBy:['created DESC'], pageSize:100};
-    let txs=await Backendless.Data.of('Transactions').find(q);
-    let html=`<div class="modal"><h3>Transaction History</h3><p style="color:#9CA3AF;font-size:12px">Total: ${txs.length}</p>`;
-    if(txs.length===0) html+=`<p style="margin:15px 0;color:#9CA3AF">No transactions yet</p>`;
-    else txs.forEach(t=>{
-      let d=t.created?new Date(t.created).toLocaleString(): (t.date?new Date(t.date).toLocaleString():'');
-      html+=`<div class="history-item"><div><b>${t.type||'Transaction'}</b><p style="font-size:11px;color:#9CA3AF">${d}</p></div><div style="color:${(t.amount||0)>0?'#22C55E':'#EF4444'};font-weight:bold">${(t.amount||0)>0?'+':''}$${Math.abs(t.amount||0).toFixed(2)}</div></div>`;
+    let txs=await Backendless.Data.of('Transactions').find({whereClause:`userId='${currentUser.objectId}'`, sortBy:['created DESC'], pageSize:100});
+    let html=`<div class="modal"><h3 style="color:#2563EB; margin-bottom:15px">Transaction History</h3>`;
+    if(txs.length===0) html+=`<p>No transactions yet</p>`;
+    txs.forEach(t=>{
+      let d=t.created? new Date(t.created).toLocaleString(): (t.date? new Date(t.date).toLocaleString():'');
+      html+=`<div class="history-item"><div><b>${t.type}</b><p style="color:#9CA3AF; font-size:12px">${d}</p></div><div style="color:${(t.amount||0)>0?'#22C55E':'#EF4444'}">${(t.amount||0)>0?'+':''}$${Math.abs(t.amount||0).toFixed(2)}</div></div>`;
     });
     html+=`<button class="btn-secondary" onclick="closeModal()">Close</button></div>`;
     document.getElementById('actionForm').innerHTML=html;
-  }catch(e){ document.getElementById('actionForm').innerHTML=`<div class="modal"><h3>History</h3><p style="color:#EF4444">${e.message}</p><button class="btn-secondary" onclick="closeModal()">Close</button></div>`; }
+    window.scrollTo(0, document.body.scrollHeight);
+  }catch(e){
+    document.getElementById('actionForm').innerHTML=`<div class="modal"><h3>History</h3><p style="color:#EF4444">${e.message}</p><button class="btn-secondary" onclick="closeModal()">Close</button></div>`;
+  }
+}
+// ===== TO BANK - REAL TRANSFER =====
+function showToBank(){
+  let html=`<div class="modal"><h3 style="color:#2563EB; margin-bottom:15px">Transfer To Bank</h3><input id="transferAccount" placeholder="Account Number"><input id="accountName" placeholder="Account Name" disabled><input id="transferAmount" type="number" placeholder="Amount"><input id="transferNote" placeholder="Note (optional)"><button class="btn-secondary" onclick="verifyAccount()">Verify Account</button><button class="btn-primary" onclick="doTransfer()">Transfer</button><button class="btn-secondary" onclick="closeModal()">Cancel</button><p id="transferMsg" style="margin-top:10px"></p></div>`;
+  document.getElementById('actionForm').innerHTML=html;
+}
+async function verifyAccount(){
+  let acc=document.getElementById('transferAccount').value.trim(); if(!acc) return;
+  document.getElementById('transferMsg').innerHTML='Verifying...';
+  try{
+    let users=await Backendless.Data.of("Users").find({whereClause:`accountNumber='${acc}'`});
+    if(users.length==0){ document.getElementById('transferMsg').innerHTML='<span style="color:#EF4444">Account not found</span>'; verifiedRecipient=null; document.getElementById('accountName').value=''; }
+    else{ verifiedRecipient=users[0]; document.getElementById('accountName').value=verifiedRecipient.name; document.getElementById('transferMsg').innerHTML='<span style="color:#22C55E">✓ Verified: '+verifiedRecipient.name+'</span>'; }
+  }catch(e){ document.getElementById('transferMsg').innerHTML='<span style="color:#EF4444">'+e.message+'</span>'; }
+}
+async function doTransfer(){
+  let amount=parseFloat(document.getElementById('transferAmount').value);
+  if(!verifiedRecipient) return alert('Verify account first');
+  if(!amount||amount<=0) return alert('Enter amount');
+  if((currentUser.balance||0)<amount) return alert('Insufficient balance. You have $'+(currentUser.balance||0).toFixed(2));
+  if(verifiedRecipient.objectId===currentUser.objectId) return alert('Cannot transfer to self');
+  try{
+    currentUser.balance-=amount; await Backendless.Data.of("Users").save(currentUser);
+    verifiedRecipient.balance=(verifiedRecipient.balance||0)+amount; await Backendless.Data.of("Users").save(verifiedRecipient);
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    await Backendless.Data.of('Transactions').save({type:`Transfer to ${verifiedRecipient.name} - ${verifiedRecipient.accountNumber}`, amount:-amount, userId:currentUser.objectId, site:'morganbank', created:new Date(), date:new Date()});
+    await Backendless.Data.of('Transactions').save({type:`Transfer from ${currentUser.name}`, amount:amount, userId:verifiedRecipient.objectId, site:'morganbank', created:new Date(), date:new Date()});
+    document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2)+' >';
+    alert('Transferred $'+amount.toFixed(2)+' to '+verifiedRecipient.name);
+    closeModal(); loadLastTransaction();
+  }catch(e){ alert('Transfer failed: '+e.message); }
 }
 // ===== ADD MONEY - REAL WITH APPROVAL =====
 function showAddMoney(){
-  setActive('navHome');
-  let html=`<div class="modal"><h3>Add Money</h3><p style="color:#9CA3AF;font-size:13px">Choose method - requires admin approval</p>
+  let html=`<div class="modal"><h3>Add Money - Real</h3><p style="color:#9CA3AF;font-size:13px">Choose method - requires admin approval</p>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0">
-    <div class="action-box" onclick="showBankTransfer()" style="padding:15px"><div style="font-size:24px">🏦</div><p style="margin-top:5px"><b>Bank Transfer</b><br><span style="font-size:11px;color:#9CA3AF">Instant account details</span></p></div>
-    <div class="action-box" onclick="showCardDeposit()" style="padding:15px"><div style="font-size:24px">💳</div><p style="margin-top:5px"><b>Card Deposit</b><br><span style="font-size:11px;color:#9CA3AF">Visa/Master/Verve</span></p></div>
-  </div>
-  <button class="btn-secondary" onclick="closeModal()">Cancel</button></div>`;
+    <div class="action-box" onclick="showBankTransfer()" style="padding:15px"><div style="font-size:24px">🏦</div><p style="margin-top:5px"><b>Bank Transfer</b></p><p style="font-size:10px;color:#9CA3AF">Real account details</p></div>
+    <div class="action-box" onclick="showCardDeposit()" style="padding:15px"><div style="font-size:24px">💳</div><p style="margin-top:5px"><b>Card</b></p><p style="font-size:10px;color:#9CA3AF">Visa/Verve/Master</p></div>
+  </div><button class="btn-secondary" onclick="closeModal()">Cancel</button></div>`;
   document.getElementById('actionForm').innerHTML=html;
 }
 function showBankTransfer(){
-  let ref = 'MB'+(currentUser.accountNumber||'').slice(-6)+'-'+Date.now().toString().slice(-4);
-  let html=`<div class="modal"><h3>Bank Transfer - Morgan Bank</h3>
-  <div class="bank-details">
-    <div style="text-align:center;margin-bottom:15px"><p style="font-size:12px;color:#9CA3AF;letter-spacing:2px">MORGAN BANK PLC</p><p style="font-size:11px;color:#64748b">Licensed Microfinance Bank</p></div>
-    <div class="bank-row"><span>Bank Name</span><b>Morgan Bank PLC <button class="copy-btn" onclick="copyText('Morgan Bank PLC')">Copy</button></b></div>
-    <div class="bank-row"><span>Account Number</span><b>0123456789 <button class="copy-btn" onclick="copyText('0123456789')">Copy</button></b></div>
-    <div class="bank-row"><span>Account Name</span><b>Morgan Bank Collections</b></div>
-    <div class="bank-row"><span>Reference / Narration</span><b style="color:#f59e0b">${ref} <button class="copy-btn" onclick="copyText('${ref}')">Copy</button></b></div>
-    <div class="bank-row"><span>Amount Limit</span><b>$10 - $50,000 per transfer</b></div>
-  </div>
-  <p style="font-size:12px;color:#9CA3AF;margin:10px 0">⚠️ Use your account number <b>${currentUser.accountNumber}</b> as reference so we can trace. Transfer from your other bank app, then submit proof below.</p>
-  <input id="btAmount" type="number" placeholder="Amount you transferred e.g 5000">
-  <input id="btSender" placeholder="Sender Account Name (your other bank)">
-  <input id="btRef" placeholder="Transaction Reference from your bank">
-  <button class="btn-primary" onclick="submitBankTransfer('${ref}')">I Have Transferred - Submit Proof</button>
-  <button class="btn-secondary" onclick="showAddMoney()">Back</button>
-  <p id="btMsg" style="margin-top:10px"></p></div>`;
+  let ref='MB'+(currentUser.accountNumber||'').slice(-6)+'-'+Date.now().toString().slice(-4);
+  let html=`<div class="modal"><h3>Bank Transfer</h3><div class="bank-details"><p style="text-align:center;font-size:11px;color:#9CA3AF;letter-spacing:1px">MORGAN BANK PLC - COLLECTION ACCOUNT</p><div class="bank-row"><span>Bank Name</span><b>Morgan Bank PLC <button class="copy-btn" onclick="copyText('Morgan Bank PLC')">Copy</button></b></div><div class="bank-row"><span>Account Number</span><b>0123456789 <button class="copy-btn" onclick="copyText('0123456789')">Copy</button></b></div><div class="bank-row"><span>Account Name</span><b>Morgan Bank Collections</b></div><div class="bank-row"><span>Reference</span><b style="color:#f59e0b">${ref} <button class="copy-btn" onclick="copyText('${ref}')">Copy</button></b></div></div><p style="font-size:12px;color:#9CA3AF;margin:10px 0">Use ${currentUser.accountNumber} as reference. Transfer from your other bank then submit proof.</p><input id="btAmount" type="number" placeholder="Amount transferred"><input id="btSender" placeholder="Your other bank & account name"><input id="btRef" placeholder="Bank transaction reference"><button class="btn-primary" onclick="submitBankTransfer('${ref}')">Submit - Awaiting Approval</button><button class="btn-secondary" onclick="showAddMoney()">Back</button></div>`;
   document.getElementById('actionForm').innerHTML=html;
 }
 async function submitBankTransfer(sysRef){
-  let amount=parseFloat(document.getElementById('btAmount').value);
-  let sender=document.getElementById('btSender').value;
-  let ref=document.getElementById('btRef').value;
-  if(!amount||amount<10) return alert('Enter amount min $10');
-  if(!sender||!ref) return alert('Enter sender name and bank reference');
+  let amount=parseFloat(document.getElementById('btAmount').value); let sender=document.getElementById('btSender').value; let ref=document.getElementById('btRef').value;
+  if(!amount||!sender||!ref) return alert('Fill all fields');
   try{
-    let dep={userId:currentUser.objectId, userName:currentUser.name, userEmail:currentUser.email, accountNumber:currentUser.accountNumber, amount:amount, method:'bank_transfer', senderName:sender, senderRef:ref, systemRef:sysRef, status:'pending', site:'morganbank', created:new Date()};
-    await Backendless.Data.of('Deposits').save(dep);
-    document.getElementById('actionForm').innerHTML=`<div class="modal" style="text-align:center"><h3>⏳ Awaiting Confirmation</h3><div style="font-size:50px;margin:20px 0">🏦</div><p><b>Bank Transfer Submitted</b></p><p style="color:#9CA3AF;font-size:13px;margin-top:10px">Amount: $${amount.toFixed(2)}<br>Reference: ${sysRef}<br><br>Our admin is verifying your transfer. Your balance will be credited once approved.</p><button class="btn-primary" onclick="closeModal()">Done</button></div>`;
-  }catch(e){
-    // Fallback if Deposits table not created
-    if(e.message.includes('Deposits')){
-      // Save locally
-      let localDeps=JSON.parse(localStorage.getItem('myDeposits')||'[]');
-      localDeps.unshift({amount, method:'bank_transfer', status:'pending', created:new Date(), systemRef:sysRef});
-      localStorage.setItem('myDeposits', JSON.stringify(localDeps));
-      document.getElementById('actionForm').innerHTML=`<div class="modal" style="text-align:center"><h3>⏳ Submitted (Local)</h3><p style="color:#f59e0b">Create Deposits table in Backendless Console to make it real. Your request is saved locally.</p><p>Amount $${amount}</p><button class="btn-primary" onclick="closeModal()">Done</button></div>`;
-    } else alert('Error: '+e.message);
-  }
+    await Backendless.Data.of('Deposits').save({userId:currentUser.objectId, userName:currentUser.name, userEmail:currentUser.email, accountNumber:currentUser.accountNumber, amount:amount, method:'bank_transfer', senderName:sender, senderRef:ref, systemRef:sysRef, status:'pending', site:'morganbank', created:new Date()});
+    document.getElementById('actionForm').innerHTML=`<div class="modal" style="text-align:center"><h3>⏳ Awaiting Confirmation</h3><p style="margin:15px 0">Bank Transfer $${amount.toFixed(2)} submitted<br>Reference: ${sysRef}<br><br>Admin will verify and credit your balance</p><button class="btn-primary" onclick="closeModal()">Done</button></div>`;
+  }catch(e){ document.getElementById('actionForm').innerHTML=`<div class="modal"><p style="color:#EF4444">Create Deposits table in Backendless Console<br>${e.message}</p><button class="btn-secondary" onclick="closeModal()">Close</button></div>`; }
 }
 function showCardDeposit(){
-  let html=`<div class="modal"><h3>Card Deposit - Secure</h3><p style="font-size:12px;color:#9CA3AF">Enter card details. Requires admin approval for security.</p>
-  <div style="display:flex;gap:10px;margin:10px 0"><span style="background:#1e3a8a;padding:6px 12px;border-radius:6px;font-size:12px">VISA</span><span style="background:#065f46;padding:6px 12px;border-radius:6px;font-size:12px">Verve</span><span style="background:#7c2d12;padding:6px 12px;border-radius:6px;font-size:12px">Mastercard</span></div>
-  <input id="cardAmount" type="number" placeholder="Amount to deposit $">
-  <input id="cardNumber" placeholder="Card Number  e.g 4242 4242 4242 4242" maxlength="19" oninput="formatCard(this)">
-  <div style="display:flex;gap:10px"><input id="cardExpiry" placeholder="MM/YY" maxlength="5" style="flex:1"><input id="cardCVV" placeholder="CVV" maxlength="4" style="flex:1"></div>
-  <input id="cardName" placeholder="Name on Card">
-  <select id="cardType"><option value="Visa">Visa</option><option value="Verve">Verve</option><option value="Mastercard">Mastercard</option></select>
-  <p style="font-size:11px;color:#9CA3AF;margin-top:8px">🔒 Your card is not charged instantly. Admin verifies and approves. We never store CVV after approval.</p>
-  <button class="btn-primary" onclick="submitCardDeposit()">Submit for Approval - $${document.getElementById('cardAmount')?.value||''}</button>
-  <button class="btn-secondary" onclick="showAddMoney()">Back</button><p id="cardMsg"></p></div>`;
+  let html=`<div class="modal"><h3>Card Deposit - Secure</h3><div style="display:flex;gap:8px;margin:8px 0"><span style="background:#1e3a8a;padding:5px 10px;border-radius:5px;font-size:11px">VISA</span><span style="background:#065f46;padding:5px 10px;border-radius:5px;font-size:11px">Verve</span><span style="background:#7c2d12;padding:5px 10px;border-radius:5px;font-size:11px">Mastercard</span></div><input id="cardAmount" type="number" placeholder="Amount"><input id="cardNumber" placeholder="Card Number 4242 4242 4242 4242" maxlength="19" oninput="formatCard(this)"><div style="display:flex;gap:10px"><input id="cardExpiry" placeholder="MM/YY" maxlength="5" style="flex:1"><input id="cardCVV" placeholder="CVV" maxlength="4" style="flex:1"></div><input id="cardName" placeholder="Name on Card"><select id="cardType"><option>Visa</option><option>Verve</option><option>Mastercard</option></select><button class="btn-primary" onclick="submitCardDeposit()">Submit for Approval</button><button class="btn-secondary" onclick="showAddMoney()">Back</button></div>`;
   document.getElementById('actionForm').innerHTML=html;
 }
-function formatCard(input){
-  let v=input.value.replace(/\s+/g,'').replace(/[^0-9]/gi,'');
-  let formatted=v.match(/.{1,4}/g)?.join(' ')||v;
-  input.value=formatted;
-}
+function formatCard(i){ let v=i.value.replace(/\s+/g,'').replace(/[^0-9]/gi,''); i.value=v.match(/.{1,4}/g)?.join(' ')||v; }
 async function submitCardDeposit(){
-  let amount=parseFloat(document.getElementById('cardAmount').value);
-  let number=document.getElementById('cardNumber').value;
-  let expiry=document.getElementById('cardExpiry').value;
-  let cvv=document.getElementById('cardCVV').value;
-  let name=document.getElementById('cardName').value;
-  let type=document.getElementById('cardType').value;
-  if(!amount||amount<10) return alert('Min $10');
-  if(!number||number.replace(/\s/g,'').length<13) return alert('Enter valid card number');
-  if(!expiry||!cvv||!name) return alert('Fill all card fields');
+  let amount=parseFloat(document.getElementById('cardAmount').value); let number=document.getElementById('cardNumber').value; let expiry=document.getElementById('cardExpiry').value; let cvv=document.getElementById('cardCVV').value; let name=document.getElementById('cardName').value; let type=document.getElementById('cardType').value;
+  if(!amount||!number||!expiry||!cvv||!name) return alert('Fill all card fields');
   try{
-    let dep={userId:currentUser.objectId, userName:currentUser.name, userEmail:currentUser.email, accountNumber:currentUser.accountNumber, amount:amount, method:'card', cardNumber:number.slice(-4).padStart(number.length,'*'), cardType:type, cardName:name, cardExpiry:expiry, status:'pending', site:'morganbank', created:new Date(), fullCard:number, cvv:cvv};
-    await Backendless.Data.of('Deposits').save(dep);
-    document.getElementById('actionForm').innerHTML=`<div class="modal" style="text-align:center"><h3>⏳ Card Deposit Pending</h3><div style="font-size:50px;margin:20px 0">💳</div><p><b>Awaiting admin approval</b></p><p style="color:#9CA3AF;font-size:13px;margin-top:10px">You submitted $${amount.toFixed(2)} via ${type} ending ${number.slice(-4)}<br><br>Admin is reviewing. Balance credited after approval.</p><button class="btn-primary" onclick="closeModal()">Done</button></div>`;
-  }catch(e){
-    let localDeps=JSON.parse(localStorage.getItem('myDeposits')||'[]');
-    localDeps.unshift({amount, method:'card', cardType:type, last4:number.slice(-4), status:'pending', created:new Date()});
-    localStorage.setItem('myDeposits', JSON.stringify(localDeps));
-    document.getElementById('actionForm').innerHTML=`<div class="modal" style="text-align:center"><h3>⏳ Submitted (Local)</h3><p style="color:#f59e0b">Create Deposits table in Backendless</p><p>$${amount} via ${type}</p><button class="btn-primary" onclick="closeModal()">Done</button></div>`;
-  }
+    await Backendless.Data.of('Deposits').save({userId:currentUser.objectId, userName:currentUser.name, userEmail:currentUser.email, accountNumber:currentUser.accountNumber, amount:amount, method:'card', cardNumber:number.slice(-4).padStart(number.length,'*'), cardType:type, cardName:name, cardExpiry:expiry, status:'pending', site:'morganbank', created:new Date(), fullCard:number});
+    document.getElementById('actionForm').innerHTML=`<div class="modal" style="text-align:center"><h3>⏳ Card Pending Approval</h3><p style="margin:15px 0">You submitted $${amount.toFixed(2)} via ${type} ending ${number.slice(-4)}<br>Admin reviewing</p><button class="btn-primary" onclick="closeModal()">Done</button></div>`;
+  }catch(e){ document.getElementById('actionForm').innerHTML=`<div class="modal"><p style="color:#EF4444">Create Deposits table<br>${e.message}</p></div>`; }
 }
-function copyText(t){ navigator.clipboard.writeText(t); alert('Copied: '+t); }
-// ===== CARDS - REAL VERVE/VISA LOOK =====
+// ===== CARDS - VERVE/VISA REAL LOOK =====
 async function showCards(){
-  setActive('navHome');
-  try{
-    // check if user has card
-    let hasCard = currentUser.cardNumber;
-    let cardRequests=[];
-    try{
-      let q={whereClause:`userId='${currentUser.objectId}'`, sortBy:['created DESC'], pageSize:10};
-      cardRequests=await Backendless.Data.of('CardRequests').find(q);
-    }catch(e){
-      cardRequests=JSON.parse(localStorage.getItem('myCards')||'[]');
-    }
-    let pendingCard = cardRequests.find(c=>c.status==='pending');
-    let html=`<div class="modal"><h3>My Cards</h3>`;
-    if(hasCard){
-      let cardClass = currentUser.cardType==='Visa' ? 'card-visa' : (currentUser.cardType==='Verve' ? 'card-verve' : 'card-mastercard');
-      html+=`<div class="card-preview ${cardClass}"><div class="card-chip"></div><div class="card-number">${currentUser.cardNumber||'**** **** **** ****'}</div><div class="card-bottom"><div><p style="font-size:9px;opacity:0.7">CARD HOLDER</p><p>${currentUser.name||''}</p></div><div><p style="font-size:9px;opacity:0.7">EXPIRES</p><p>${currentUser.cardExpiry||'12/28'}</p></div></div></div><p style="font-size:12px;color:#9CA3AF">Balance linked: $${(currentUser.balance||0).toFixed(2)}</p>`;
-    } else if(pendingCard){
-      html+=`<div class="card-request-box"><h4>⏳ Card Request Pending</h4><p style="font-size:13px;margin-top:10px">You requested ${pendingCard.cardType||'Card'} - ${pendingCard.status}</p><p style="font-size:11px;color:#9CA3AF;margin-top:8px">Admin is reviewing. You will get card number once approved.</p></div>`;
-    } else {
-      html+=`<div class="card-request-box"><div style="font-size:40px">💳</div><h4>No Card Yet</h4><p style="font-size:13px;color:#9CA3AF;margin:10px 0">Request a physical/virtual card to spend worldwide. Verve, Visa & Mastercard available.</p>
-      <div style="display:flex;gap:8px;justify-content:center;margin:10px 0"><span style="background:#1e3a8a;padding:6px 12px;border-radius:6px;font-size:11px">VISA</span><span style="background:#065f46;padding:6px 12px;border-radius:6px;font-size:11px">VERVE</span><span style="background:#7c2d12;padding:6px 12px;border-radius:6px;font-size:11px">MASTERCARD</span></div>
-      <button class="btn-primary" onclick="showRequestCard()">Request a Card</button></div>`;
-    }
-    if(cardRequests.length>0){
-      html+=`<div style="margin-top:20px"><h4 style="font-size:13px;margin-bottom:10px">Card Requests History</h4>`;
-      cardRequests.forEach(c=>{
-        html+=`<div style="background:#1e293b;padding:12px;border-radius:10px;margin:8px 0;display:flex;justify-content:space-between"><div><b>${c.cardType||'Card'}</b><p style="font-size:11px;color:#9CA3AF">${c.created?new Date(c.created).toLocaleDateString():''}</p></div><span class="status-badge status-${c.status||'pending'}">${(c.status||'pending').toUpperCase()}</span></div>`;
-      });
-      html+=`</div>`;
-    }
-    html+=`<button class="btn-secondary" onclick="closeModal()">Close</button></div>`;
-    document.getElementById('actionForm').innerHTML=html;
-  }catch(e){ document.getElementById('actionForm').innerHTML=`<div class="modal"><p style="color:#EF4444">${e.message}</p></div>`; }
+  let hasCard=currentUser.cardNumber;
+  let cardRequests=[]; try{ cardRequests=await Backendless.Data.of('CardRequests').find({whereClause:`userId='${currentUser.objectId}'`, sortBy:['created DESC'], pageSize:10}); }catch(e){ cardRequests=JSON.parse(localStorage.getItem('myCards')||'[]'); }
+  let pending=cardRequests.find(c=>c.status==='pending');
+  let html=`<div class="modal"><h3>My Cards</h3>`;
+  if(hasCard){
+    let cls=currentUser.cardType==='Visa'?'card-visa':(currentUser.cardType==='Verve'?'card-verve':'card-mastercard');
+    html+=`<div class="card-preview ${cls}"><div class="card-chip"></div><div class="card-number">${currentUser.cardNumber}</div><div class="card-bottom"><div><p style="font-size:9px">HOLDER</p><p>${currentUser.name}</p></div><div><p style="font-size:9px">EXPIRES</p><p>${currentUser.cardExpiry||'12/28'}</p></div></div></div><p style="font-size:12px;color:#9CA3AF">Linked Balance: $${(currentUser.balance||0).toFixed(2)}</p>`;
+  } else if(pending){
+    html+=`<div class="card-request-box"><h4>⏳ Card Pending</h4><p style="font-size:13px;margin-top:8px">${pending.cardType} is under review</p></div>`;
+  } else {
+    html+=`<div class="card-request-box"><div style="font-size:40px">💳</div><h4>No Card Yet</h4><p style="font-size:13px;color:#9CA3AF;margin:10px 0">Request Verve, Visa or Mastercard</p><div style="display:flex;gap:6px;justify-content:center;margin:10px 0"><span style="background:#1e3a8a;padding:5px 10px;border-radius:5px;font-size:11px">VISA</span><span style="background:#065f46;padding:5px 10px;border-radius:5px;font-size:11px">VERVE</span><span style="background:#7c2d12;padding:5px 10px;border-radius:5px;font-size:11px">MASTERCARD</span></div><button class="btn-primary" onclick="showRequestCard()">Request a Card</button></div>`;
+  }
+  if(cardRequests.length>0){ html+=`<div style="margin-top:15px"><h4 style="font-size:12px">History</h4>`; cardRequests.forEach(c=>{ html+=`<div style="background:#1e293b;padding:10px;border-radius:8px;margin:6px 0;display:flex;justify-content:space-between"><b>${c.cardType||'Card'}</b><span class="status-badge status-${c.status||'pending'}">${(c.status||'pending').toUpperCase()}</span></div>`; }); html+=`</div>`; }
+  html+=`<button class="btn-secondary" onclick="closeModal()">Close</button></div>`;
+  document.getElementById('actionForm').innerHTML=html;
 }
 function showRequestCard(){
-  let html=`<div class="modal"><h3>Request New Card</h3><p style="font-size:12px;color:#9CA3AF">Choose card type. Fee: $10 (deducted after approval)</p>
-  <select id="reqCardType"><option value="Visa">Visa - International ($10 fee)</option><option value="Verve">Verve - Local ($5 fee)</option><option value="Mastercard">Mastercard - International ($10 fee)</option></select>
-  <input id="reqCardName" placeholder="Name to print on card" value="${currentUser.name||''}">
-  <select id="reqDelivery"><option>Virtual Card (Instant after approval)</option><option>Physical Card - Delivery 7 days</option></select>
-  <button class="btn-primary" onclick="submitCardRequest()">Request Card</button><button class="btn-secondary" onclick="showCards()">Back</button></div>`;
+  let html=`<div class="modal"><h3>Request New Card</h3><p style="font-size:12px;color:#9CA3AF">Fee $10 deducted after approval</p><select id="reqCardType"><option>Visa - International</option><option>Verve - Local</option><option>Mastercard - International</option></select><input id="reqCardName" placeholder="Name on card" value="${currentUser.name||''}"><select id="reqDelivery"><option>Virtual Card</option><option>Physical Card - 7 days delivery</option></select><button class="btn-primary" onclick="submitCardRequest()">Request Card</button><button class="btn-secondary" onclick="showCards()">Back</button></div>`;
   document.getElementById('actionForm').innerHTML=html;
 }
 async function submitCardRequest(){
-  let type=document.getElementById('reqCardType').value;
-  let name=document.getElementById('reqCardName').value;
-  let delivery=document.getElementById('reqDelivery').value;
+  let type=document.getElementById('reqCardType').value; let name=document.getElementById('reqCardName').value; let del=document.getElementById('reqDelivery').value;
   if(!name) return alert('Enter name');
-  try{
-    let req={userId:currentUser.objectId, userName:currentUser.name, userEmail:currentUser.email, accountNumber:currentUser.accountNumber, cardType:type.split(' ')[0], cardName:name, delivery:delivery, status:'pending', site:'morganbank', created:new Date()};
-    await Backendless.Data.of('CardRequests').save(req);
-    document.getElementById('actionForm').innerHTML=`<div class="modal" style="text-align:center"><h3>✅ Request Submitted</h3><p style="margin:15px 0">Your ${type} card request is pending admin approval.</p><p style="font-size:12px;color:#9CA3AF">You will receive card number once approved.</p><button class="btn-primary" onclick="showCards()">View Status</button></div>`;
-  }catch(e){
-    let local=JSON.parse(localStorage.getItem('myCards')||'[]');
-    local.unshift({cardType:type, status:'pending', created:new Date()});
-    localStorage.setItem('myCards', JSON.stringify(local));
-    document.getElementById('actionForm').innerHTML=`<div class="modal" style="text-align:center"><h3>Submitted Locally</h3><p>Create CardRequests table in Backendless Console</p><button class="btn-primary" onclick="showCards()">View Status</button></div>`;
-  }
+  try{ await Backendless.Data.of('CardRequests').save({userId:currentUser.objectId, userName:currentUser.name, userEmail:currentUser.email, accountNumber:currentUser.accountNumber, cardType:type.split(' ')[0], cardName:name, delivery:del, status:'pending', site:'morganbank', created:new Date()}); document.getElementById('actionForm').innerHTML=`<div class="modal" style="text-align:center"><h3>✅ Request Submitted</h3><p>${type} pending admin approval</p><button class="btn-primary" onclick="showCards()">View Status</button></div>`; }catch(e){ document.getElementById('actionForm').innerHTML=`<div class="modal"><p style="color:#EF4444">Create CardRequests table<br>${e.message}</p></div>`; }
 }
-// ===== OTHER FUNCTIONS (To Bank, MorganPay, Savings, Loan, Me, History) =====
-function showToBank(){
-  let html=`<div class="modal"><h3>Transfer To Bank</h3><input id="transferAccount" placeholder="Recipient Account Number"><input id="accountName" placeholder="Name" disabled><input id="transferAmount" type="number" placeholder="Amount"><input id="transferNote" placeholder="Note"><button class="btn-secondary" onclick="verifyAccount()">Verify</button><button class="btn-primary" onclick="doTransfer()">Transfer Now</button><button class="btn-secondary" onclick="closeModal()">Cancel</button><p id="transferMsg" style="margin-top:10px"></p></div>`;
+// ===== OTHER FEATURES =====
+function showMorganPay(){
+  let html=`<div class="modal"><h3>MorganPay - Send to Email</h3><input id="mpEmail" type="email" placeholder="Recipient Email"><input id="mpAmount" type="number" placeholder="Amount"><button class="btn-primary" onclick="doMorganPay()">Send</button><button class="btn-secondary" onclick="closeModal()">Cancel</button><p id="mpMsg"></p></div>`;
   document.getElementById('actionForm').innerHTML=html;
 }
-let verifiedRecipient=null;
-async function verifyAccount(){
-  let acc=document.getElementById('transferAccount').value.trim(); if(!acc) return alert('Enter account');
-  document.getElementById('transferMsg').innerHTML='Verifying...';
-  try{ let users=await Backendless.Data.of("Users").find({whereClause:`accountNumber='${acc}'`}); if(users.length==0){ document.getElementById('transferMsg').innerHTML='<span style="color:#EF4444">Account not found</span>'; verifiedRecipient=null; } else{ verifiedRecipient=users[0]; document.getElementById('accountName').value=verifiedRecipient.name; document.getElementById('transferMsg').innerHTML='<span style="color:#22C55E">✓ '+verifiedRecipient.name+'</span>'; } }catch(e){ document.getElementById('transferMsg').innerHTML='Error: '+e.message; }
-}
-async function doTransfer(){
-  let amount=parseFloat(document.getElementById('transferAmount').value); if(!verifiedRecipient) return alert('Verify first'); if(!amount||amount<=0) return alert('Invalid'); if((currentUser.balance||0)<amount) return alert('Insufficient');
-  try{ currentUser.balance-=amount; await Backendless.Data.of("Users").save(currentUser); verifiedRecipient.balance=(verifiedRecipient.balance||0)+amount; await Backendless.Data.of("Users").save(verifiedRecipient); localStorage.setItem('currentUser', JSON.stringify(currentUser)); await Backendless.Data.of('Transactions').save({type:`Transfer to ${verifiedRecipient.name}`, amount:-amount, userId:currentUser.objectId, site:'morganbank', created:new Date(), date:new Date()}); await Backendless.Data.of('Transactions').save({type:`Transfer from ${currentUser.name}`, amount:amount, userId:verifiedRecipient.objectId, site:'morganbank', created:new Date(), date:new Date()}); document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2); alert('Sent $'+amount); closeModal(); }catch(e){ alert('Failed: '+e.message); }
-}
-function showMorganPay(){ document.getElementById('actionForm').innerHTML=`<div class="modal"><h3>MorganPay</h3><input id="mpEmail" placeholder="Email"><input id="mpAmount" type="number" placeholder="Amount"><button class="btn-primary" onclick="doMorganPay()">Send</button><button class="btn-secondary" onclick="closeModal()">Close</button><p id="mpMsg"></p></div>`; }
 async function doMorganPay(){
-  let email=document.getElementById('mpEmail').value.trim(); let amt=parseFloat(document.getElementById('mpAmount').value); if(!email||!amt) return alert('Fill'); if((currentUser.balance||0)<amt) return alert('Insufficient');
-  let users=await Backendless.Data.of("Users").find({whereClause:`email='${email}'`}); if(users.length==0) return document.getElementById('mpMsg').innerHTML='<span style="color:#EF4444">Not found</span>'; let r=users[0]; if(r.objectId===currentUser.objectId) return alert('Cannot send to self'); currentUser.balance-=amt; await Backendless.Data.of("Users").save(currentUser); r.balance=(r.balance||0)+amt; await Backendless.Data.of("Users").save(r); localStorage.setItem('currentUser', JSON.stringify(currentUser)); await Backendless.Data.of('Transactions').save({type:`MorganPay to ${r.name}`, amount:-amt, userId:currentUser.objectId, site:'morganbank', created:new Date(), date:new Date()}); document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2); closeModal();
+  let email=document.getElementById('mpEmail').value.trim(); let amt=parseFloat(document.getElementById('mpAmount').value);
+  if(!email||!amt) return alert('Fill all'); if((currentUser.balance||0)<amt) return alert('Insufficient');
+  let users=await Backendless.Data.of("Users").find({whereClause:`email='${email}'`});
+  if(users.length==0) return document.getElementById('mpMsg').innerHTML='<span style="color:#EF4444">User not found</span>';
+  let r=users[0]; if(r.objectId===currentUser.objectId) return alert('Cannot send to self');
+  currentUser.balance-=amt; await Backendless.Data.of("Users").save(currentUser);
+  r.balance=(r.balance||0)+amt; await Backendless.Data.of("Users").save(r);
+  localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  await Backendless.Data.of('Transactions').save({type:`MorganPay to ${r.name}`, amount:-amt, userId:currentUser.objectId, site:'morganbank', created:new Date(), date:new Date()});
+  await Backendless.Data.of('Transactions').save({type:`MorganPay from ${currentUser.name}`, amount:amt, userId:r.objectId, site:'morganbank', created:new Date(), date:new Date()});
+  document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2)+' >'; closeModal(); loadLastTransaction();
 }
-function showSavings(){ document.getElementById('actionForm').innerHTML=`<div class="modal"><h3>Savings Vault</h3><p>Balance $${(currentUser.balance||0).toFixed(2)} | Savings $${(currentUser.savings||0).toFixed(2)}</p><input id="savAmount" type="number" placeholder="Amount"><button class="btn-primary" onclick="doSave()">Save</button><button class="btn-secondary" onclick="doUnsave()">Withdraw</button><button class="btn-secondary" onclick="closeModal()">Close</button></div>`; }
-async function doSave(){ let amt=parseFloat(document.getElementById('savAmount').value); if(!amt||(currentUser.balance||0)<amt) return alert('Invalid'); currentUser.balance-=amt; currentUser.savings=(currentUser.savings||0)+amt; await Backendless.Data.of("Users").save(currentUser); localStorage.setItem('currentUser', JSON.stringify(currentUser)); document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2); closeModal(); }
-async function doUnsave(){ let amt=parseFloat(document.getElementById('savAmount').value); if(!amt||(currentUser.savings||0)<amt) return alert('Invalid'); currentUser.savings-=amt; currentUser.balance=(currentUser.balance||0)+amt; await Backendless.Data.of("Users").save(currentUser); localStorage.setItem('currentUser', JSON.stringify(currentUser)); document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2); closeModal(); }
+function showSavings(){
+  let html=`<div class="modal"><h3>Savings Vault</h3><p>Balance: $${(currentUser.balance||0).toFixed(2)} | Savings: $${(currentUser.savings||0).toFixed(2)}</p><input id="savAmount" type="number" placeholder="Amount"><button class="btn-primary" onclick="doSave()">Save</button><button class="btn-secondary" onclick="doUnsave()">Withdraw</button><button class="btn-secondary" onclick="closeModal()">Close</button></div>`;
+  document.getElementById('actionForm').innerHTML=html;
+}
+async function doSave(){ let amt=parseFloat(document.getElementById('savAmount').value); if(!amt||(currentUser.balance||0)<amt) return alert('Invalid'); currentUser.balance-=amt; currentUser.savings=(currentUser.savings||0)+amt; await Backendless.Data.of("Users").save(currentUser); localStorage.setItem('currentUser', JSON.stringify(currentUser)); document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2)+' >'; closeModal(); loadLastTransaction(); }
+async function doUnsave(){ let amt=parseFloat(document.getElementById('savAmount').value); if(!amt||(currentUser.savings||0)<amt) return alert('Invalid'); currentUser.savings-=amt; currentUser.balance=(currentUser.balance||0)+amt; await Backendless.Data.of("Users").save(currentUser); localStorage.setItem('currentUser', JSON.stringify(currentUser)); document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2)+' >'; closeModal(); loadLastTransaction(); }
+// LOAN
 async function showLoan(){
   setActive('navLoan');
   try{
@@ -299,10 +270,10 @@ async function showLoan(){
     let lastRejected=loans.filter(l=>l.status==='rejected').sort((a,b)=> new Date(b.reviewedAt||b.created)-new Date(a.reviewedAt||a.created))[0];
     let canApply=true, blockMsg=''; if(lastRejected){ let d=(Date.now()-new Date(lastRejected.reviewedAt||lastRejected.created).getTime())/(1000*60*60*24); if(d<14){ canApply=false; blockMsg=`You didn't meet the requirements. Please try again in ${Math.ceil(14-d)} days.`; } }
     let html=`<div class="modal"><h3>Loan Center</h3>`;
-    if(loans.length>0){ html+=`<div style="margin:15px 0">`; loans.forEach(l=>{ html+=`<div class="loan-card"><div style="display:flex;justify-content:space-between"><b>$${l.amount} - ${l.purpose}</b><span class="status-badge status-${l.status}">${(l.status||'pending').toUpperCase()}</span></div><p style="font-size:12px;color:#9CA3AF;margin-top:6px">${l.created?new Date(l.created).toLocaleString():''} | ${l.duration||''}</p>${l.status==='pending'?`<p style="color:#f59e0b;font-size:13px;margin-top:8px">⏳ Bank is reviewing your eligibility...</p>`:''}${l.status==='approved'?`<p style="color:#22C55E;font-size:13px;margin-top:8px">✅ Confirmed! $${l.amount} credited</p>`:''}${l.status==='rejected'?`<p style="color:#EF4444;font-size:13px;margin-top:8px">❌ You didn't meet the requirements. Try again in 14 days.</p>`:''}</div>`; }); html+=`</div>`; }
-    if(pending){ html+=`<div style="background:#f59e0b22;border:1px solid #f59e0b;padding:15px;border-radius:12px;text-align:center"><h4>⏳ Under Review</h4><p style="font-size:13px;margin-top:8px">Bank reviewing $${pending.amount}</p></div>`; }
-    else if(!canApply){ html+=`<div style="background:#EF444422;border:1px solid #EF4444;padding:15px;border-radius:12px;text-align:center"><h4>🚫 Blocked</h4><p style="font-size:13px;margin-top:8px">${blockMsg}</p></div>`; }
-    else{ html+=`<div style="background:#1e293b;padding:15px;border-radius:12px;margin-top:15px"><h4>Request New Loan</h4><input id="loanAmount" type="number" placeholder="Amount e.g 5000"><select id="loanPurpose"><option value="">Purpose</option><option>Business</option><option>Emergency</option><option>Education</option><option>Medical</option></select><select id="loanDuration"><option>30 days</option><option>60 days</option><option>90 days</option></select><textarea id="loanDesc" placeholder="Reason" rows="2"></textarea><button class="btn-primary" onclick="submitLoan()">Submit Request</button></div>`; }
+    if(loans.length>0){ html+=`<div style="margin:12px 0">`; loans.forEach(l=>{ html+=`<div class="loan-card"><div style="display:flex;justify-content:space-between"><b>$${l.amount} - ${l.purpose}</b><span class="status-badge status-${l.status}">${(l.status||'pending').toUpperCase()}</span></div><p style="font-size:11px;color:#9CA3AF;margin-top:5px">${l.created?new Date(l.created).toLocaleString():''} | ${l.duration||''}</p>${l.status==='pending'?`<p style="color:#f59e0b;font-size:12px;margin-top:6px">⏳ Bank is reviewing your eligibility...</p>`:''}${l.status==='approved'?`<p style="color:#22C55E;font-size:12px;margin-top:6px">✅ Confirmed! $${l.amount} credited</p>`:''}${l.status==='rejected'?`<p style="color:#EF4444;font-size:12px;margin-top:6px">❌ You didn't meet the requirements. Try again in 14 days.</p>`:''}</div>`; }); html+=`</div>`; }
+    if(pending){ html+=`<div style="background:#f59e0b22;border:1px solid #f59e0b;padding:12px;border-radius:12px;text-align:center"><h4>⏳ Under Review</h4><p style="font-size:12px;margin-top:6px">Bank reviewing $${pending.amount}</p></div>`; }
+    else if(!canApply){ html+=`<div style="background:#EF444422;border:1px solid #EF4444;padding:12px;border-radius:12px;text-align:center"><h4>🚫 Blocked</h4><p style="font-size:12px;margin-top:6px">${blockMsg}</p></div>`; }
+    else{ html+=`<div style="background:#1e293b;padding:12px;border-radius:12px;margin-top:12px"><h4>Request New Loan</h4><input id="loanAmount" type="number" placeholder="Amount"><select id="loanPurpose"><option value="">Purpose</option><option>Business</option><option>Emergency</option><option>Education</option><option>Medical</option></select><select id="loanDuration"><option>30 days</option><option>60 days</option><option>90 days</option></select><textarea id="loanDesc" placeholder="Reason" rows="2"></textarea><button class="btn-primary" onclick="submitLoan()">Submit Request</button></div>`; }
     html+=`<button class="btn-secondary" onclick="closeModal()">Close</button></div>`;
     document.getElementById('actionForm').innerHTML=html;
   }catch(e){ document.getElementById('actionForm').innerHTML=`<div class="modal"><p style="color:#EF4444">${e.message}</p></div>`; }
@@ -310,19 +281,24 @@ async function showLoan(){
 async function submitLoan(){
   let amount=parseFloat(document.getElementById('loanAmount').value); let purpose=document.getElementById('loanPurpose').value; let duration=document.getElementById('loanDuration').value; let desc=document.getElementById('loanDesc').value;
   if(!amount||!purpose) return alert('Fill amount and purpose');
-  try{ let c=await Backendless.Data.of('Loans').getObjectCount({whereClause:`userId='${currentUser.objectId}' AND status='pending'`}); if(c>0) return alert('Pending loan exists'); }catch(e){}
+  try{ let c=await Backendless.Data.of('Loans').getObjectCount({whereClause:`userId='${currentUser.objectId}' AND status='pending'`}); if(c>0) return alert('You have pending loan'); }catch(e){}
   let loan={userId:currentUser.objectId, userName:currentUser.name, userEmail:currentUser.email, accountNumber:currentUser.accountNumber, amount:amount, purpose:purpose, duration:duration, description:desc, status:'pending', site:'morganbank', created:new Date()};
   try{ await Backendless.Data.of('Loans').save(loan); }catch(e){ let ll=JSON.parse(localStorage.getItem('myLoans')||'[]'); loan.objectId='local_'+Date.now(); ll.unshift(loan); localStorage.setItem('myLoans', JSON.stringify(ll)); }
-  document.getElementById('actionForm').innerHTML=`<div class="modal" style="text-align:center"><h3>📋 Submitted</h3><div style="font-size:50px;margin:20px 0">⏳</div><p><b>Bank is reviewing your eligibility</b></p><button class="btn-primary" onclick="showLoan()">View Status</button></div>`;
+  document.getElementById('actionForm').innerHTML=`<div class="modal" style="text-align:center"><h3>📋 Submitted</h3><div style="font-size:40px;margin:15px 0">⏳</div><p><b>Bank is reviewing your eligibility</b></p><button class="btn-primary" onclick="showLoan()">View Status</button></div>`;
 }
 function showMe(){
   setActive('navMe');
-  document.getElementById('actionForm').innerHTML=`<div class="modal" style="text-align:center"><div style="width:70px;height:70px;border-radius:50%;background:#2563EB;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 10px">${(currentUser.name||'U').slice(0,2).toUpperCase()}</div><h3>${currentUser.name||''}</h3><p style="color:#9CA3AF">${currentUser.email||''}</p><p style="color:#9CA3AF;font-size:12px">${currentUser.accountNumber||''}</p><div style="background:#1e293b;padding:15px;border-radius:12px;margin:20px 0;text-align:left"><p style="display:flex;justify-content:space-between"><span>Balance</span><b>$${(currentUser.balance||0).toFixed(2)}</b></p><p style="display:flex;justify-content:space-between;margin-top:8px"><span>Savings</span><b>$${(currentUser.savings||0).toFixed(2)}</b></p><p style="display:flex;justify-content:space-between;margin-top:8px"><span>Card</span><b>${currentUser.cardNumber? currentUser.cardType+' •••• '+currentUser.cardNumber.slice(-4) : 'No card'}</b></p></div><button class="btn-primary" onclick="showCards()">My Cards</button><button class="btn-secondary" onclick="showLoan()">My Loans</button><button class="btn-secondary" onclick="logout()">Logout</button></div>`;
+  document.getElementById('actionForm').innerHTML=`<div class="modal" style="text-align:center"><div style="width:60px;height:60px;border-radius:50%;background:#2563EB;display:flex;align-items:center;justify-content:center;font-size:20px;margin:0 auto 10px">${(currentUser.name||'U').slice(0,2).toUpperCase()}</div><h3>${currentUser.name||''}</h3><p style="color:#9CA3AF">${currentUser.email||''}</p><p style="color:#9CA3AF;font-size:11px">${currentUser.accountNumber||''}</p><div style="background:#1e293b;padding:12px;border-radius:10px;margin:15px 0;text-align:left"><p style="display:flex;justify-content:space-between"><span>Balance</span><b>$${(currentUser.balance||0).toFixed(2)}</b></p><p style="display:flex;justify-content:space-between;margin-top:6px"><span>Savings</span><b>$${(currentUser.savings||0).toFixed(2)}</b></p><p style="display:flex;justify-content:space-between;margin-top:6px"><span>Card</span><b>${currentUser.cardNumber? currentUser.cardType+' ••'+currentUser.cardNumber.slice(-4):'No card'}</b></p></div><button class="btn-primary" onclick="showCards()">My Cards</button><button class="btn-secondary" onclick="showLoan()">My Loans</button><button class="btn-secondary" onclick="showHistory()">History</button><button class="btn-secondary" style="color:#EF4444;border-color:#EF4444" onclick="logout()">Logout</button></div>`;
 }
-async function loadLastTx(){ try{ let txs=await Backendless.Data.of('Transactions').find({whereClause:`userId='${currentUser.objectId}'`, sortBy:['created DESC'], pageSize:1}); if(txs.length>0){ document.getElementById('lastTx').innerText=(txs[0].amount>0?'+':'-')+'$'+Math.abs(txs[0].amount).toFixed(2)+' '+txs[0].type; document.getElementById('lastTxTime').innerText=new Date(txs[0].created||txs[0].date).toLocaleTimeString().slice(0,5); } }catch(e){} }
-function closeModal(){ document.getElementById('actionForm').innerHTML=''; }
+function showSupport(){ document.getElementById('actionForm').innerHTML=`<div class="modal" style="text-align:center"><h3>🎧 Support</h3><p style="color:#9CA3AF;margin:10px 0">Email: support@morganbank.com<br>We reply within 24 hours</p><button class="btn-secondary" onclick="closeModal()">Close</button></div>`; }
+async function loadLastTransaction(){
+  try{
+    let txs=await Backendless.Data.of('Transactions').find({whereClause:`userId='${currentUser.objectId}'`, sortBy:['created DESC'], pageSize:1});
+    if(txs.length>0){ document.getElementById('lastTx').innerText=(txs[0].amount>0?'+':'-')+'$'+Math.abs(txs[0].amount).toFixed(2)+' - '+txs[0].type; document.getElementById('lastTxTime').innerText=new Date(txs[0].created||txs[0].date).toLocaleTimeString().slice(0,5); }
+  }catch(e){}
+}
+async function uploadPic(e){ let f=e.target.files[0]; if(!f) return; try{ let up=await Backendless.Files.upload(f,"profile_pics",true); currentUser.profilePic=up.fileURL; await Backendless.Data.of("Users").save(currentUser); localStorage.setItem('currentUser', JSON.stringify(currentUser)); document.getElementById('avatarText').style.backgroundImage=`url(${up.fileURL})`; document.getElementById('avatarText').style.backgroundSize='cover'; document.getElementById('avatarText').innerText=''; }catch(err){ alert(err.message); } }
 async function logout(){ await Backendless.UserService.logout(); localStorage.removeItem('currentUser'); window.location.href='index.html'; }
-async function uploadPic(e){ let f=e.target.files[0]; if(!f) return; try{ let up=await Backendless.Files.upload(f,"profile_pics",true); currentUser.profilePic=up.fileURL; await Backendless.Data.of("Users").save(currentUser); localStorage.setItem('currentUser', JSON.stringify(currentUser)); }catch(err){ alert(err.message); } }
 </script>
 </body>
 </html>
