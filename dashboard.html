@@ -5,37 +5,45 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.jsdelivr.net/npm/backendless@7.3.4/dist/backendless.min.js"></script>
 <style>
-*{margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Arial}
-body{background:#050A18; color:#fff; padding-bottom:90px}
-.topbar{display:flex; justify-content:space-between; align-items:center; padding:15px 20px}
-.profile{display:flex; align-items:center; gap:10px}
-.avatar{width:35px; height:35px; border-radius:50%; background:#2563EB; display:flex; align-items:center; justify-content:center; font-weight:bold; cursor:pointer; background-size:cover; background-position:center}
-.icons{display:flex; gap:15px}
-.icons div{position:relative; font-size:20px; cursor:pointer}
-.badge{position:absolute; top:-5px; right:-5px; background:red; color:#fff; font-size:9px; padding:2px 5px; border-radius:50%}
-.balance-card{background:linear-gradient(90deg, #2563EB, #1D4ED8); margin:15px 20px; padding:20px; border-radius:12px; position:relative}
-.balance-top{display:flex; justify-content:space-between; font-size:13px; margin-bottom:8px; color:#BFDBFE}
-.balance-amount{font-size:30px; font-weight:bold}
-.add-money{position:absolute; right:15px; bottom:-15px; background:#000; color:#fff; padding:8px 16px; border:none; border-radius:20px; font-weight:bold; cursor:pointer; font-size:12px}
-.earnings{margin:25px 20px 15px; font-size:13px; color:#9CA3AF}
-.earnings span{color:#22C55E}
-.actions{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; padding:0 15px}
-.action-box{background:#111827; padding:20px 10px; border-radius:12px; text-align:center; cursor:pointer}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial}
+body{background:#050A18;color:#fff;padding-bottom:90px}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:15px 20px}
+.profile{display:flex;align-items:center;gap:10px}
+.avatar{width:38px;height:38px;border-radius:50%;background:#2563EB;display:flex;align-items:center;justify-content:center;font-weight:bold;cursor:pointer;background-size:cover;background-position:center}
+.icons{display:flex;gap:15px}.icons div{position:relative;font-size:20px;cursor:pointer}
+.badge{position:absolute;top:-6px;right:-6px;background:red;color:#fff;font-size:9px;padding:2px 6px;border-radius:50%}
+.balance-card{background:linear-gradient(90deg,#2563EB,#1D4ED8);margin:15px 20px;padding:20px;border-radius:16px;position:relative}
+.balance-top{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;color:#BFDBFE}
+.balance-amount{font-size:32px;font-weight:bold}
+.add-money{position:absolute;right:15px;bottom:-15px;background:#000;color:#fff;padding:8px 16px;border:none;border-radius:20px;font-weight:bold;cursor:pointer;font-size:12px}
+.earnings{margin:25px 20px 15px;font-size:13px;color:#9CA3AF}.earnings span{color:#22C55E}
+.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:0 15px}
+.action-box{background:#111827;padding:20px 10px;border-radius:12px;text-align:center;cursor:pointer}
 .action-box:hover{background:#1F2937}
-.action-icon{font-size:26px; margin-bottom:8px; color:#9CA3AF}
-.action-box p{font-size:12px; color:#D1D5DB}
-.last-tx{background:#111827; margin:15px 20px; padding:15px; border-radius:12px; display:flex; justify-content:space-between}
-.bottom-nav{position:fixed; bottom:0; left:0; right:0; background:#111827; display:flex; justify-content:space-around; padding:10px 0; border-top:1px solid #1F2937}
-.nav-item{text-align:center; font-size:11px; color:#6B7280; cursor:pointer}
+.action-icon{font-size:26px;margin-bottom:8px}
+.action-box p{font-size:12px;color:#D1D5DB}
+.last-tx{background:#111827;margin:15px 20px;padding:15px;border-radius:12px;display:flex;justify-content:space-between;cursor:pointer}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#111827;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #1F2937;z-index:100}
+.nav-item{text-align:center;font-size:11px;color:#6B7280;cursor:pointer}
 .nav-item.active{color:#2563EB}
-.nav-icon{font-size:22px; margin-bottom:4px}
-input, select{width:100%; padding:12px; margin:10px 0; background:#1F2937; border:none; color:#fff; border-radius:8px; font-size:14px}
-.modal{background:#111827; padding:20px; border-radius:16px; margin:15px; border:1px solid #2563EB44}
-.btn-primary{width:100%; padding:12px; background:#2563EB; color:#fff; border:none; border-radius:8px; font-weight:bold; cursor:pointer; margin-top:10px}
-.btn-secondary{width:100%; padding:12px; background:#1F2937; color:#fff; border:1px solid #374151; border-radius:8px; cursor:pointer; margin-top:10px}
-.history-item{display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid #1F2937}
-.success{color:#22C55E} .error{color:#EF4444}
-.warning-box{background:#111827; border:1px solid #374151; padding:15px; border-radius:12px; text-align:center}
+.nav-icon{font-size:22px;margin-bottom:4px}
+input,select,textarea{width:100%;padding:12px;margin:10px 0;background:#1F2937;border:1px solid #2a3447;color:#fff;border-radius:8px;font-size:14px}
+.modal{background:#111827;padding:20px;border-radius:16px;margin:15px;border:1px solid #2563EB44}
+.btn-primary{width:100%;padding:12px;background:#2563EB;color:#fff;border:none;border-radius:8px;font-weight:bold;cursor:pointer;margin-top:10px}
+.btn-secondary{width:100%;padding:12px;background:#1F2937;color:#fff;border:1px solid #374151;border-radius:8px;cursor:pointer;margin-top:10px}
+.btn-green{background:#22C55E;color:#000}
+.btn-red{background:#EF4444;color:#fff}
+.history-item{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #1F2937}
+.loan-card{background:#111827;padding:15px;border-radius:12px;margin:10px 0;border-left:4px solid #f59e0b}
+.loan-card.approved{border-left-color:#22C55E}
+.loan-card.rejected{border-left-color:#EF4444}
+.loan-card.pending{border-left-color:#f59e0b}
+.status-badge{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:bold;display:inline-block}
+.status-pending{background:#f59e0b22;color:#f59e0b}
+.status-approved{background:#22C55E22;color:#22C55E}
+.status-rejected{background:#EF444422;color:#EF4444}
+.me-card{background:#111827;padding:20px;border-radius:16px;margin:15px;text-align:center}
+.success{color:#22C55E}.error{color:#EF4444}
 </style>
 </head>
 <body>
@@ -47,14 +55,11 @@ input, select{width:100%; padding:12px; margin:10px 0; background:#1F2937; borde
   </div>
   <div class="icons">
     <div onclick="showHistory()">🔔<span class="badge" id="txCount">0</span></div>
-    <div onclick="logout()">⚙️</div>
+    <div onclick="showMe()">👤</div>
   </div>
 </div>
 <div class="balance-card">
-  <div class="balance-top">
-    <span>Available Balance</span>
-    <span onclick="showHistory()" style="cursor:pointer">History ></span>
-  </div>
+  <div class="balance-top"><span>Available Balance</span><span onclick="showHistory()" style="cursor:pointer">History ></span></div>
   <div class="balance-amount" id="balance">$0.00</div>
   <button class="add-money" onclick="showAddMoney()">+ Add Money</button>
 </div>
@@ -65,30 +70,31 @@ input, select{width:100%; padding:12px; margin:10px 0; background:#1F2937; borde
   <div class="action-box" onclick="showSavings()"><div class="action-icon">🐷</div><p>Savings</p></div>
   <div class="action-box" onclick="showCards()"><div class="action-icon">💳</div><p>Cards</p></div>
 </div>
-<div class="last-tx">
+<div class="last-tx" onclick="showHistory()">
   <div><b>Last Transaction</b><p id="lastTx">None</p></div>
   <div style="text-align:right"><p id="lastTxDate">Today</p><p id="lastTxTime">--:--</p></div>
 </div>
 <div id="actionForm"></div>
 <div class="bottom-nav">
-  <div class="nav-item active"><div class="nav-icon">🏠</div>Home</div>
-  <div class="nav-item" onclick="showSavings()"><div class="nav-icon">💼</div>Loan</div>
-  <div class="nav-item" onclick="showHistory()"><div class="nav-icon">📈</div>History</div>
-  <div class="nav-item" onclick="logout()"><div class="nav-icon">😊</div>Me</div>
+  <div class="nav-item active" id="navHome" onclick="closeModal(); setActive('navHome')"><div class="nav-icon">🏠</div>Home</div>
+  <div class="nav-item" id="navLoan" onclick="showLoan(); setActive('navLoan')"><div class="nav-icon">💼</div>Loan</div>
+  <div class="nav-item" id="navHistory" onclick="showHistory(); setActive('navHistory')"><div class="nav-icon">📈</div>History</div>
+  <div class="nav-item" id="navMe" onclick="showMe(); setActive('navMe')"><div class="nav-icon">😊</div>Me</div>
 </div>
 <script>
 Backendless.initApp('65ABB198-A187-4B5A-B7D3-0839AEA80B26', 'CDA94D34-9A3F-46AB-8B13-65193E45A1B0');
 let currentUser = JSON.parse(localStorage.getItem('currentUser'));
 if(!currentUser){ alert('Please login first'); window.location.href='index.html'; }
+let currentLoans = [];
 loadDashboard();
 async function loadDashboard(){
   try{
-    // refresh user from server
     let fresh = await Backendless.Data.of("Users").findById(currentUser.objectId);
     if(fresh){ currentUser = {...currentUser, ...fresh}; localStorage.setItem('currentUser', JSON.stringify(currentUser)); }
   }catch(e){}
   document.getElementById('userName').innerText = (currentUser.name||"User").split(' ')[0].toUpperCase();
-  document.getElementById('avatarText').innerText = (currentUser.name||"U").split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
+  let initials = (currentUser.name||"U").split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
+  document.getElementById('avatarText').innerText = initials;
   document.getElementById('balance').innerText = '$' + (currentUser.balance||0).toFixed(2);
   if(currentUser.profilePic){
     document.getElementById('avatarText').style.backgroundImage = `url(${currentUser.profilePic})`;
@@ -96,26 +102,16 @@ async function loadDashboard(){
   }
   loadLastTransaction();
   loadTxCount();
+  checkLoanStatus();
 }
-async function loadTxCount(){
-  let q = new Backendless.DataQuery(); q.whereClause = `userId = '${currentUser.objectId}' AND site = 'morganbank'`;
-  let count = await Backendless.Data.of('Transactions').getObjectCount(q);
-  document.getElementById('txCount').innerText = count;
-}
-async function uploadPic(e){
-  const file = e.target.files[0]; if(!file) return;
-  try{
-    let up = await Backendless.Files.upload(file, "profile_pics", true);
-    currentUser.profilePic = up.fileURL;
-    await Backendless.Data.of("Users").save(currentUser);
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    document.getElementById('avatarText').style.backgroundImage = `url(${up.fileURL})`;
-    document.getElementById('avatarText').innerText = '';
-  }catch(err){ alert('Upload failed: '+err.message) }
+function setActive(id){
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 }
 // ===== HISTORY =====
 async function showHistory(){
-  let q = new Backendless.DataQuery(); q.whereClause = `userId = '${currentUser.objectId}' AND site = 'morganbank'`; q.sortBy=['date DESC']; q.pageSize=50;
+  setActive('navHistory');
+  let q = new Backendless.DataQuery(); q.whereClause = `userId = '${currentUser.objectId}' AND site = 'morganbank'`; q.sortBy=['date DESC']; q.pageSize=100;
   let txs = await Backendless.Data.of('Transactions').find(q);
   let html = `<div class="modal"><h3 style="color:#2563EB; margin-bottom:15px">Transaction History</h3>`;
   if(txs.length==0) html+='<p style="color:#9CA3AF">No transactions yet</p>';
@@ -123,185 +119,198 @@ async function showHistory(){
     html+=`<div class="history-item"><div><b>${t.type}</b><p style="color:#9CA3AF; font-size:12px">${new Date(t.date).toLocaleString()}</p></div><div style="color:${t.amount>0?'#22C55E':'#EF4444'}; font-weight:bold">${t.amount>0?'+':''}$${Math.abs(t.amount).toFixed(2)}</div></div>`;
   });
   html+=`<button class="btn-secondary" onclick="closeModal()">Close</button></div>`;
-  document.getElementById('actionForm').innerHTML=html; window.scrollTo(0, document.body.scrollHeight);
+  document.getElementById('actionForm').innerHTML=html;
 }
-// ===== ADD MONEY (DEMO DEPOSIT) =====
+// ===== ME PAGE =====
+function showMe(){
+  setActive('navMe');
+  let html = `<div class="me-card">
+    <div style="width:80px;height:80px;border-radius:50%;background:#2563EB;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:bold;margin:0 auto 15px;background-size:cover;background-position:center" id="meAvatar">${(currentUser.name||'U').split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase()}</div>
+    <h3>${currentUser.name||''}</h3>
+    <p style="color:#9CA3AF; margin:5px 0">${currentUser.email||''}</p>
+    <p style="color:#9CA3AF; font-size:13px">Account: ${currentUser.accountNumber||'N/A'}</p>
+    <div style="background:#1F2937; padding:15px; border-radius:12px; margin:20px 0; text-align:left">
+      <p style="display:flex; justify-content:space-between"><span>Available Balance</span><b>$${(currentUser.balance||0).toFixed(2)}</b></p>
+      <p style="display:flex; justify-content:space-between; margin-top:10px"><span>Savings</span><b>$${(currentUser.savings||0).toFixed(2)}</b></p>
+      <p style="display:flex; justify-content:space-between; margin-top:10px"><span>Member Since</span><b>${currentUser.created ? new Date(currentUser.created).toLocaleDateString() : '2026'}</b></p>
+    </div>
+    <button class="btn-primary" onclick="showLoan()">My Loans</button>
+    <button class="btn-secondary" onclick="showHistory()">Transaction History</button>
+    <button class="btn-secondary" onclick="document.getElementById('fileInput').click()">Change Profile Picture</button>
+    <button class="btn-secondary" style="border-color:#EF4444; color:#EF4444" onclick="logout()">Logout</button>
+  </div>`;
+  document.getElementById('actionForm').innerHTML=html;
+  if(currentUser.profilePic){
+    let el = document.getElementById('meAvatar'); if(el){ el.style.backgroundImage=`url(${currentUser.profilePic})`; el.innerText=''; }
+  }
+}
+// ===== LOAN SYSTEM =====
+async function showLoan(){
+  setActive('navLoan');
+  let q = new Backendless.DataQuery(); q.whereClause = `userId = '${currentUser.objectId}' AND site='morganbank'`; q.sortBy=['created DESC']; q.pageSize=20;
+  let loans = [];
+  try{ loans = await Backendless.Data.of('Loans').find(q); }catch(e){ console.log('No Loans table yet', e.message) }
+  currentLoans = loans;
+  // check if has pending
+  let pending = loans.find(l=>l.status==='pending');
+  let lastRejected = loans.filter(l=>l.status==='rejected').sort((a,b)=> new Date(b.reviewedAt||b.created)-new Date(a.reviewedAt||a.created))[0];
+  let canApply = true;
+  let blockMsg = '';
+  if(lastRejected){
+    let daysSince = (Date.now() - new Date(lastRejected.reviewedAt||lastRejected.created).getTime())/(1000*60*60*24);
+    if(daysSince < 14){ canApply = false; let daysLeft = Math.ceil(14-daysSince); blockMsg = `You didn't meet the requirements. Please try again in ${daysLeft} days. Last rejection: ${new Date(lastRejected.reviewedAt).toLocaleDateString()}`; }
+  }
+  let html = `<div class="modal"><h3 style="color:#2563EB">Loan Center</h3>`;
+  // Show loan status cards
+  if(loans.length>0){
+    html+=`<div style="margin:15px 0"><h4 style="margin-bottom:10px">My Loan Requests</h4>`;
+    loans.forEach(l=>{
+      let statusClass = l.status;
+      html+=`<div class="loan-card ${statusClass}"><div style="display:flex; justify-content:space-between; align-items:center">
+        <b>$${l.amount} - ${l.purpose}</b><span class="status-badge status-${l.status}">${l.status.toUpperCase()}</span></div>
+        <p style="font-size:12px; color:#9CA3AF; margin-top:6px">Applied: ${new Date(l.created).toLocaleString()} | ${l.duration||'30 days'}</p>
+        ${l.status==='pending' ? `<p style="font-size:13px; color:#f59e0b; margin-top:8px">⏳ Bank is reviewing your eligibility...</p>` : ''}
+        ${l.status==='approved' ? `<p style="font-size:13px; color:#22C55E; margin-top:8px">✅ Confirmed! $${l.amount} credited to your balance on ${new Date(l.reviewedAt).toLocaleString()}</p>` : ''}
+        ${l.status==='rejected' ? `<p style="font-size:13px; color:#EF4444; margin-top:8px">❌ You didn't meet the requirements. Please try again in 14 days.</p>` : ''}
+      </div>`;
+    });
+    html+=`</div>`;
+  }
+  if(pending){
+    html+=`<div style="background:#f59e0b22; border:1px solid #f59e0b; padding:15px; border-radius:12px; text-align:center"><h4>⏳ Under Review</h4><p style="font-size:13px; margin-top:8px; color:#fff">Bank is reviewing your eligibility for $${pending.amount}. You will be notified once admin reviews it.</p><p style="font-size:12px; color:#9CA3AF; margin-top:8px">Request ID: ${pending.objectId.slice(-6)}</p></div>`;
+  } else if(!canApply){
+    html+=`<div style="background:#EF444422; border:1px solid #EF4444; padding:15px; border-radius:12px; text-align:center"><h4>🚫 Cannot Apply Yet</h4><p style="font-size:13px; margin-top:8px">${blockMsg}</p></div>`;
+  } else {
+    html+=`<div style="margin-top:20px; background:#1F2937; padding:15px; border-radius:12px"><h4>Request New Loan</h4>
+      <input id="loanAmount" type="number" placeholder="Amount e.g 5000 (max $50000)">
+      <select id="loanPurpose"><option value="">Select Purpose</option><option>Business</option><option>Emergency</option><option>Education</option><option>Medical</option><option>Housing</option></select>
+      <select id="loanDuration"><option value="30 days">30 days - 5% interest</option><option value="60 days">60 days - 8% interest</option><option value="90 days">90 days - 12% interest</option></select>
+      <textarea id="loanDesc" placeholder="Why do you need this loan? (optional)" rows="3"></textarea>
+      <button class="btn-primary" onclick="submitLoan()">Submit Loan Request</button>
+    </div>`;
+  }
+  html+=`<button class="btn-secondary" onclick="closeModal()">Close</button></div>`;
+  document.getElementById('actionForm').innerHTML=html;
+}
+async function submitLoan(){
+  let amount = parseFloat(document.getElementById('loanAmount').value);
+  let purpose = document.getElementById('loanPurpose').value;
+  let duration = document.getElementById('loanDuration').value;
+  let desc = document.getElementById('loanDesc').value;
+  if(!amount || amount<=0) return alert('Enter valid amount');
+  if(amount>50000) return alert('Maximum loan is $50,000');
+  if(!purpose) return alert('Select purpose');
+  
+  // double check 14 days block
+  let q = new Backendless.DataQuery(); q.whereClause = `userId = '${currentUser.objectId}' AND site='morganbank' AND status='rejected'`; q.sortBy=['reviewedAt DESC']; q.pageSize=1;
+  try{
+    let rejected = await Backendless.Data.of('Loans').find(q);
+    if(rejected.length>0){
+      let daysSince = (Date.now() - new Date(rejected[0].reviewedAt).getTime())/(1000*60*60*24);
+      if(daysSince<14) return alert(`You didn't meet the requirements. Please try again in ${Math.ceil(14-daysSince)} days.`);
+    }
+  }catch(e){}
+  let pendingQ = new Backendless.DataQuery(); pendingQ.whereClause = `userId='${currentUser.objectId}' AND site='morganbank' AND status='pending'`;
+  let pendingCount = await Backendless.Data.of('Loans').getObjectCount(pendingQ);
+  if(pendingCount>0) return alert('You already have a pending loan under review');
+  let btn = document.querySelector('#actionForm .btn-primary'); btn.innerText='Submitting...'; btn.disabled=true;
+  try{
+    let loan = {
+      userId: currentUser.objectId,
+      userName: currentUser.name,
+      userEmail: currentUser.email,
+      accountNumber: currentUser.accountNumber,
+      amount: amount,
+      purpose: purpose,
+      duration: duration,
+      description: desc,
+      status: 'pending',
+      site: 'morganbank',
+      created: new Date(),
+      reviewedAt: null
+    };
+    await Backendless.Data.of('Loans').save(loan);
+    // show reviewing
+    document.getElementById('actionForm').innerHTML = `<div class="modal" style="text-align:center"><h3>📋 Application Submitted</h3><div style="font-size:50px; margin:20px 0">⏳</div><p style="font-size:16px"><b>Bank is reviewing your eligibility</b></p><p style="color:#9CA3AF; font-size:13px; margin-top:10px">Loan amount: $${amount.toFixed(2)}<br>We will notify you once admin confirms.</p><button class="btn-primary" onclick="showLoan()">View Status</button></div>`;
+  }catch(e){ alert('Failed: '+e.message); btn.disabled=false; btn.innerText='Submit Loan Request'; }
+}
+async function checkLoanStatus(){
+  try{
+    let q = new Backendless.DataQuery(); q.whereClause = `userId='${currentUser.objectId}' AND site='morganbank'`; q.sortBy=['created DESC']; q.pageSize=5;
+    let loans = await Backendless.Data.of('Loans').find(q);
+    // if any approved that we haven't reflected? Actually admin will credit balance, but we refresh balance anyway
+    let newlyApproved = loans.filter(l=>l.status==='approved' && new Date(l.reviewedAt) > new Date(Date.now()-60000)); // approved within last minute
+    if(newlyApproved.length>0){
+      // refresh balance
+      loadDashboard();
+    }
+  }catch(e){}
+}
+// ===== OTHER FEATURES (same as before) =====
 function showAddMoney(){
-  let html = `<div class="modal"><h3 style="color:#22C55E">Add Money (Demo)</h3>
-  <p style="color:#9CA3AF; font-size:13px; margin:10px 0">Simulate a deposit. In production this would connect to payment gateway.</p>
-  <input id="addAmount" type="number" placeholder="Amount e.g 5000">
-  <select id="addMethod"><option>Bank Transfer</option><option>Card</option><option>USSD</option></select>
-  <button class="btn-primary" onclick="doAddMoney()">Credit Account</button>
-  <button class="btn-secondary" onclick="closeModal()">Cancel</button>
-  <p id="addMsg"></p></div>`;
+  let html = `<div class="modal"><h3 style="color:#22C55E">Add Money</h3><input id="addAmount" type="number" placeholder="Amount"><select id="addMethod"><option>Bank Transfer</option><option>Card</option></select><button class="btn-primary" onclick="doAddMoney()">Credit</button><button class="btn-secondary" onclick="closeModal()">Cancel</button><p id="addMsg"></p></div>`;
   document.getElementById('actionForm').innerHTML=html;
 }
 async function doAddMoney(){
-  let amt = parseFloat(document.getElementById('addAmount').value);
-  if(!amt || amt<=0) return alert('Enter valid amount');
-  let btn = document.querySelector('#actionForm .btn-primary'); btn.innerText='Processing...'; btn.disabled=true;
-  try{
-    currentUser.balance = (currentUser.balance||0) + amt;
-    await Backendless.Data.of("Users").save(currentUser);
-    await saveTx('Deposit - '+document.getElementById('addMethod').value, amt);
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    document.getElementById('balance').innerText = '$'+currentUser.balance.toFixed(2);
-    document.getElementById('addMsg').innerHTML='<span class="success">+$'+amt.toFixed(2)+' credited!</span>';
-    loadLastTransaction(); loadTxCount();
-    setTimeout(closeModal,1500);
-  }catch(e){ alert(e.message); btn.disabled=false; btn.innerText='Credit Account'; }
+  let amt=parseFloat(document.getElementById('addAmount').value); if(!amt||amt<=0) return alert('Enter amount');
+  currentUser.balance=(currentUser.balance||0)+amt; await Backendless.Data.of("Users").save(currentUser); localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  await saveTx('Deposit - '+document.getElementById('addMethod').value, amt);
+  document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2); loadLastTransaction(); closeModal();
 }
-// ===== TO BANK TRANSFER - REAL LOGIC =====
 function showToBank(){
-  let html = `<div class="modal"><h3 style="color:#2563EB">Transfer To Bank</h3>
-  <input id="transferAccount" placeholder="Recipient Account Number (e.g MB123456)">
-  <input id="accountName" placeholder="Account Name (auto-filled)" disabled>
-  <input id="transferAmount" type="number" placeholder="Amount">
-  <input id="transferNote" placeholder="Note (optional)">
-  <button class="btn-secondary" onclick="verifyAccount()">Verify Account</button>
-  <button class="btn-primary" onclick="doTransfer()">Transfer Now</button>
-  <button class="btn-secondary" onclick="closeModal()">Cancel</button>
-  <p id="transferMsg"></p></div>`;
+  let html=`<div class="modal"><h3 style="color:#2563EB">Transfer To Bank</h3><input id="transferAccount" placeholder="Account Number"><input id="accountName" placeholder="Name" disabled><input id="transferAmount" type="number" placeholder="Amount"><input id="transferNote" placeholder="Note"><button class="btn-secondary" onclick="verifyAccount()">Verify</button><button class="btn-primary" onclick="doTransfer()">Transfer</button><button class="btn-secondary" onclick="closeModal()">Cancel</button><p id="transferMsg"></p></div>`;
   document.getElementById('actionForm').innerHTML=html;
   document.getElementById('transferAccount').addEventListener('blur', verifyAccount);
 }
-let verifiedRecipient = null;
+let verifiedRecipient=null;
 async function verifyAccount(){
-  let accNo = document.getElementById('transferAccount').value.trim();
-  if(!accNo) return;
+  let acc=document.getElementById('transferAccount').value.trim(); if(!acc) return;
   document.getElementById('transferMsg').innerHTML='Verifying...';
-  let q = new Backendless.DataQuery(); q.whereClause = `accountNumber = '${accNo}' AND site = 'morganbank'`;
-  let users = await Backendless.Data.of("Users").find(q);
-  if(users.length==0){
-    document.getElementById('transferMsg').innerHTML='<span class="error">Account not found in Morgan Bank</span>';
-    document.getElementById('accountName').value='';
-    verifiedRecipient=null;
-  } else {
-    verifiedRecipient = users[0];
-    document.getElementById('accountName').value = verifiedRecipient.name;
-    document.getElementById('transferMsg').innerHTML='<span class="success">✓ Verified: '+verifiedRecipient.name+'</span>';
-  }
+  let q=new Backendless.DataQuery(); q.whereClause=`accountNumber='${acc}' AND site='morganbank'`;
+  let users=await Backendless.Data.of("Users").find(q);
+  if(users.length==0){ document.getElementById('transferMsg').innerHTML='<span class="error">Not found</span>'; verifiedRecipient=null; document.getElementById('accountName').value=''; }
+  else{ verifiedRecipient=users[0]; document.getElementById('accountName').value=verifiedRecipient.name; document.getElementById('transferMsg').innerHTML='<span class="success">✓ '+verifiedRecipient.name+'</span>'; }
 }
 async function doTransfer(){
-  let amount = parseFloat(document.getElementById('transferAmount').value);
-  let note = document.getElementById('transferNote').value || 'Bank Transfer';
-  if(!verifiedRecipient) { return alert('Please verify recipient account first'); }
-  if(!amount || amount<=0) return alert('Enter valid amount');
-  if(verifiedRecipient.objectId === currentUser.objectId) return alert('Cannot transfer to yourself');
-  if((currentUser.balance||0) < amount) return alert('Insufficient balance. You have $'+(currentUser.balance||0).toFixed(2));
-  
-  let btn = document.querySelector('#actionForm .btn-primary'); btn.innerText='Transferring...'; btn.disabled=true;
-  try{
-    // 1. Deduct from sender
-    currentUser.balance -= amount;
-    await Backendless.Data.of("Users").save(currentUser);
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    
-    // 2. Credit recipient
-    verifiedRecipient.balance = (verifiedRecipient.balance||0) + amount;
-    await Backendless.Data.of("Users").save(verifiedRecipient);
-    
-    // 3. Create transactions for both
-    await saveTx(`Transfer to ${verifiedRecipient.name} - ${verifiedRecipient.accountNumber}`, -amount);
-    // recipient transaction
-    let recipientTx = { type: `Transfer from ${currentUser.name} - ${currentUser.accountNumber}`, amount: amount, userId: verifiedRecipient.objectId, site: 'morganbank', date: new Date() };
-    await Backendless.Data.of('Transactions').save(recipientTx);
-    
-    document.getElementById('balance').innerText = '$'+currentUser.balance.toFixed(2);
-    document.getElementById('transferMsg').innerHTML='<span class="success">✓ Transferred $'+amount.toFixed(2)+' to '+verifiedRecipient.name+'</span>';
-    loadLastTransaction(); loadTxCount();
-    setTimeout(closeModal,2000);
-  }catch(e){
-    alert('Transfer failed: '+e.message);
-    btn.disabled=false; btn.innerText='Transfer Now';
-  }
+  let amount=parseFloat(document.getElementById('transferAmount').value); if(!verifiedRecipient) return alert('Verify first'); if(!amount||amount<=0) return alert('Invalid amount'); if((currentUser.balance||0)<amount) return alert('Insufficient');
+  if(verifiedRecipient.objectId===currentUser.objectId) return alert('Cannot transfer to self');
+  currentUser.balance-=amount; await Backendless.Data.of("Users").save(currentUser);
+  verifiedRecipient.balance=(verifiedRecipient.balance||0)+amount; await Backendless.Data.of("Users").save(verifiedRecipient);
+  localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  await saveTx(`Transfer to ${verifiedRecipient.name}`, -amount);
+  await Backendless.Data.of('Transactions').save({type:`Transfer from ${currentUser.name}`, amount:amount, userId:verifiedRecipient.objectId, site:'morganbank', date:new Date()});
+  document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2); loadLastTransaction(); closeModal();
 }
-// ===== MORGANPAY (INTERNAL) =====
 function showMorganPay(){
-  let html = `<div class="modal"><h3>MorganPay - Send to Email</h3>
-  <input id="mpEmail" type="email" placeholder="Recipient Email">
-  <input id="mpAmount" type="number" placeholder="Amount">
-  <button class="btn-primary" onclick="doMorganPay()">Send via MorganPay</button>
-  <button class="btn-secondary" onclick="closeModal()">Cancel</button><p id="mpMsg"></p></div>`;
+  let html=`<div class="modal"><h3>MorganPay</h3><input id="mpEmail" placeholder="Email"><input id="mpAmount" type="number" placeholder="Amount"><button class="btn-primary" onclick="doMorganPay()">Send</button><button class="btn-secondary" onclick="closeModal()">Cancel</button><p id="mpMsg"></p></div>`;
   document.getElementById('actionForm').innerHTML=html;
 }
 async function doMorganPay(){
-  let email = document.getElementById('mpEmail').value.trim();
-  let amt = parseFloat(document.getElementById('mpAmount').value);
-  if(!email || !amt) return alert('Fill all fields');
-  if((currentUser.balance||0)<amt) return alert('Insufficient balance');
-  let q = new Backendless.DataQuery(); q.whereClause=`email = '${email}' AND site='morganbank'`;
-  let users = await Backendless.Data.of("Users").find(q);
-  if(users.length==0) return document.getElementById('mpMsg').innerHTML='<span class="error">User not found</span>';
-  let recipient = users[0];
-  if(recipient.objectId===currentUser.objectId) return alert('Cannot send to self');
-  try{
-    currentUser.balance-=amt; await Backendless.Data.of("Users").save(currentUser);
-    recipient.balance=(recipient.balance||0)+amt; await Backendless.Data.of("Users").save(recipient);
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    await saveTx(`MorganPay to ${recipient.name}`, -amt);
-    await Backendless.Data.of('Transactions').save({type:`MorganPay from ${currentUser.name}`, amount:amt, userId:recipient.objectId, site:'morganbank', date:new Date()});
-    document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2);
-    document.getElementById('mpMsg').innerHTML='<span class="success">Sent $'+amt.toFixed(2)+'</span>';
-    loadLastTransaction(); setTimeout(closeModal,1500);
-  }catch(e){ alert(e.message) }
+  let email=document.getElementById('mpEmail').value.trim(); let amt=parseFloat(document.getElementById('mpAmount').value);
+  if(!email||!amt) return alert('Fill fields'); if((currentUser.balance||0)<amt) return alert('Insufficient');
+  let q=new Backendless.DataQuery(); q.whereClause=`email='${email}' AND site='morganbank'`; let users=await Backendless.Data.of("Users").find(q);
+  if(users.length==0) return document.getElementById('mpMsg').innerHTML='<span class="error">Not found</span>';
+  let r=users[0]; if(r.objectId===currentUser.objectId) return alert('Cannot send to self');
+  currentUser.balance-=amt; await Backendless.Data.of("Users").save(currentUser);
+  r.balance=(r.balance||0)+amt; await Backendless.Data.of("Users").save(r);
+  localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  await saveTx(`MorganPay to ${r.name}`, -amt);
+  await Backendless.Data.of('Transactions').save({type:`MorganPay from ${currentUser.name}`, amount:amt, userId:r.objectId, site:'morganbank', date:new Date()});
+  document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2); closeModal();
 }
-// ===== SAVINGS =====
 function showSavings(){
-  let html=`<div class="modal"><h3>Savings Vault</h3>
-  <p style="color:#9CA3AF; font-size:13px">Move money to savings to earn 2% daily (demo)</p>
-  <p>Current Balance: $${(currentUser.balance||0).toFixed(2)}</p>
-  <p>Savings: $${(currentUser.savings||0).toFixed(2)}</p>
-  <input id="savAmount" type="number" placeholder="Amount to save">
-  <button class="btn-primary" onclick="doSave()">Save</button>
-  <button class="btn-secondary" onclick="doUnsave()">Withdraw from Savings</button>
-  <button class="btn-secondary" onclick="closeModal()">Close</button></div>`;
+  let html=`<div class="modal"><h3>Savings</h3><p>Balance: $${(currentUser.balance||0).toFixed(2)} | Savings: $${(currentUser.savings||0).toFixed(2)}</p><input id="savAmount" type="number" placeholder="Amount"><button class="btn-primary" onclick="doSave()">Save</button><button class="btn-secondary" onclick="doUnsave()">Withdraw</button><button class="btn-secondary" onclick="closeModal()">Close</button></div>`;
   document.getElementById('actionForm').innerHTML=html;
 }
-async function doSave(){
-  let amt=parseFloat(document.getElementById('savAmount').value);
-  if(!amt || amt<=0 || (currentUser.balance||0)<amt) return alert('Invalid amount');
-  currentUser.balance-=amt; currentUser.savings=(currentUser.savings||0)+amt;
-  await Backendless.Data.of("Users").save(currentUser);
-  localStorage.setItem('currentUser', JSON.stringify(currentUser));
-  await saveTx('Transfer to Savings', -amt);
-  loadDashboard(); closeModal();
-}
-async function doUnsave(){
-  let amt=parseFloat(document.getElementById('savAmount').value);
-  if(!amt || amt<=0 || (currentUser.savings||0)<amt) return alert('Invalid amount');
-  currentUser.savings-=amt; currentUser.balance=(currentUser.balance||0)+amt;
-  await Backendless.Data.of("Users").save(currentUser);
-  localStorage.setItem('currentUser', JSON.stringify(currentUser));
-  await saveTx('Withdrawal from Savings', amt);
-  loadDashboard(); closeModal();
-}
-// ===== CARDS =====
+async function doSave(){ let amt=parseFloat(document.getElementById('savAmount').value); if(!amt||amt<=0||(currentUser.balance||0)<amt) return alert('Invalid'); currentUser.balance-=amt; currentUser.savings=(currentUser.savings||0)+amt; await Backendless.Data.of("Users").save(currentUser); localStorage.setItem('currentUser', JSON.stringify(currentUser)); await saveTx('To Savings', -amt); loadDashboard(); closeModal(); }
+async function doUnsave(){ let amt=parseFloat(document.getElementById('savAmount').value); if(!amt||amt<=0||(currentUser.savings||0)<amt) return alert('Invalid'); currentUser.savings-=amt; currentUser.balance=(currentUser.balance||0)+amt; await Backendless.Data.of("Users").save(currentUser); localStorage.setItem('currentUser', JSON.stringify(currentUser)); await saveTx('From Savings', amt); loadDashboard(); closeModal(); }
 function showCards(){
-  let html=`<div class="modal"><h3>My Cards</h3>
-  <div style="background:linear-gradient(135deg,#2563EB,#7C3AED); padding:20px; border-radius:12px; margin:15px 0">
-    <p style="font-size:12px; opacity:0.8">MORGAN BANK</p>
-    <p style="margin:15px 0; letter-spacing:2px; font-size:18px">${currentUser.accountNumber||'MBXXXXXX'}</p>
-    <p>${currentUser.name||''}</p>
-    <p style="font-size:12px; margin-top:10px">Balance: $${(currentUser.balance||0).toFixed(2)}</p>
-  </div>
-  <button class="btn-secondary" onclick="closeModal()">Close</button></div>`;
+  let html=`<div class="modal"><h3>My Card</h3><div style="background:linear-gradient(135deg,#2563EB,#7C3AED);padding:20px;border-radius:12px;margin:15px 0"><p style="font-size:12px;opacity:0.8">MORGAN BANK</p><p style="margin:15px 0;letter-spacing:2px;font-size:18px">${currentUser.accountNumber||''}</p><p>${currentUser.name||''}</p><p style="margin-top:10px">Balance: $${(currentUser.balance||0).toFixed(2)}</p></div><button class="btn-secondary" onclick="closeModal()">Close</button></div>`;
   document.getElementById('actionForm').innerHTML=html;
 }
-async function saveTx(type, amount){
-  let tx={type, amount, userId:currentUser.objectId, site:'morganbank', date:new Date()};
-  await Backendless.Data.of('Transactions').save(tx);
-}
-async function loadLastTransaction(){
-  let q=new Backendless.DataQuery(); q.whereClause=`userId = '${currentUser.objectId}' AND site='morganbank'`; q.sortBy=['date DESC']; q.pageSize=1;
-  let txs=await Backendless.Data.of('Transactions').find(q);
-  if(txs.length>0){
-    document.getElementById('lastTx').innerText=(txs[0].amount>0?'+':'-')+'$'+Math.abs(txs[0].amount).toFixed(2)+' - '+txs[0].type;
-    document.getElementById('lastTxTime').innerText=new Date(txs[0].date).toLocaleTimeString().slice(0,5);
-    document.getElementById('lastTxDate').innerText=new Date(txs[0].date).toLocaleDateString();
-    document.getElementById('yesterdayEarning').innerText='+$'+(Math.abs(txs[0].amount*0.02).toFixed(2));
-  }
-}
+async function saveTx(type, amount){ let tx={type, amount, userId:currentUser.objectId, site:'morganbank', date:new Date()}; await Backendless.Data.of('Transactions').save(tx); }
+async function loadLastTransaction(){ let q=new Backendless.DataQuery(); q.whereClause=`userId='${currentUser.objectId}' AND site='morganbank'`; q.sortBy=['date DESC']; q.pageSize=1; let txs=await Backendless.Data.of('Transactions').find(q); if(txs.length>0){ document.getElementById('lastTx').innerText=(txs[0].amount>0?'+':'-')+'$'+Math.abs(txs[0].amount).toFixed(2)+' - '+txs[0].type; document.getElementById('lastTxTime').innerText=new Date(txs[0].date).toLocaleTimeString().slice(0,5); document.getElementById('lastTxDate').innerText=new Date(txs[0].date).toLocaleDateString(); document.getElementById('yesterdayEarning').innerText='+$'+(Math.abs(txs[0].amount*0.02).toFixed(2)); } }
+async function uploadPic(e){ const file=e.target.files[0]; if(!file) return; try{ let up=await Backendless.Files.upload(file,"profile_pics",true); currentUser.profilePic=up.fileURL; await Backendless.Data.of("Users").save(currentUser); localStorage.setItem('currentUser', JSON.stringify(currentUser)); document.getElementById('avatarText').style.backgroundImage=`url(${up.fileURL})`; document.getElementById('avatarText').innerText=''; }catch(err){ alert('Upload failed: '+err.message) } }
 function closeModal(){ document.getElementById('actionForm').innerHTML=''; }
 async function logout(){ await Backendless.UserService.logout(); localStorage.removeItem('currentUser'); window.location.href='index.html'; }
 </script>
