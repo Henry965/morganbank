@@ -1,628 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="UTF-8">
 <title>DoD Community Bank</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <script src="https://cdn.jsdelivr.net/npm/backendless@7.3.4/dist/backendless.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',-apple-system,sans-serif}
-body{background:#fff;color:#414042;overflow-x:hidden}
-.top-blue{background:#0B6E4F;color:#fff;padding:8px 20px;font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap}
-.header{background:#fff;padding:0 20px;border-bottom:1px solid #E5E5E7;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:100}
-.logo{font-weight:800;font-size:20px;letter-spacing:-0.5px;color:#0B6E4F} .logo small{display:block;font-size:9px;letter-spacing:1px;color:#6B7280;font-weight:600;margin-top:-2px}
-.nav{display:flex;gap:20px;font-size:13px;font-weight:600} .nav a{color:#414042;text-decoration:none;cursor:pointer} .nav a:hover{color:#0B6E4F}
-.signin-btn{background:#0B6E4F;color:#fff;padding:10px 18px;border-radius:6px;border:none;font-weight:700;font-size:13px;cursor:pointer}
-.hero{display:flex;min-height:520px;background:#F7F8FA} .hero-left{flex:1;padding:50px 40px;background:#0B6E4F;color:#fff;display:flex;flex-direction:column;justify-content:center} .hero-left h1{font-size:40px;font-weight:300;line-height:1.1} .hero-left h1 b{font-weight:700;display:block} .hero-left p{margin-top:14px;font-size:15px;opacity:0.9;line-height:1.5}
-.hero-right{flex:1;padding:24px;display:flex;align-items:center;justify-content:center;background:#fff}
-.login-card{width:100%;max-width:380px;background:#fff;border:1px solid #E5E5E7;border-radius:10px;padding:26px;box-shadow:0 4px 20px rgba(0,0,0,0.08)} .login-card h3{font-size:19px;font-weight:700} .login-card p{font-size:13px;color:#6B7280;margin-top:6px}
-input,select{width:100%;padding:12px;margin:7px 0;border:1px solid #D1D5DB;border-radius:6px;font-size:14px;outline:none} input:focus{border-color:#0B6E4F}
-.btn-green{width:100%;padding:13px;background:#0B6E4F;color:#fff;border:none;border-radius:6px;font-weight:700;font-size:14px;cursor:pointer;margin-top:10px} .btn-outline{width:100%;padding:12px;background:#fff;border:1px solid #0B6E4F;color:#0B6E4F;border-radius:6px;font-weight:700;font-size:13px;cursor:pointer;margin-top:8px}
-.features{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding:36px 20px;max-width:1100px;margin:0 auto} .feat{border:1px solid #E5E5E7;border-radius:8px;padding:22px;background:#fff} .feat h4{font-size:15px;font-weight:700;margin-bottom:6px} .feat p{font-size:13px;color:#6B7280;line-height:1.5} .feat a{color:#0B6E4F;font-weight:600;font-size:13px;text-decoration:none;display:block;margin-top:8px}
-.footer{background:#F7F8FA;padding:24px 20px;border-top:1px solid #E5E5E7;font-size:11px;color:#6B7280;line-height:1.7;text-align:center}
-.tabs{display:flex;border-bottom:1px solid #E5E5E7;margin:16px 0} .tab{flex:1;padding:10px;text-align:center;font-size:13px;font-weight:700;cursor:pointer;border-bottom:2px solid transparent} .tab.active{border-color:#0B6E4F;color:#0B6E4F}
-.modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:2000;display:flex;align-items:center;justify-content:center;padding:16px} .modal-box{background:#fff;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;border-radius:10px;padding:24px}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px} .form-grid .full{grid-column:1/-1} .req{color:#FF3B30} .decline-box{background:#FEF2F2;border:1px solid #FECACA;padding:14px;border-radius:8px;margin:14px 0;display:flex;gap:10px}
-#dashboardView{display:none}
-/* Dashboard styles inline */
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
-body{background:#F5F5F7;color:#111;padding-bottom:100px}
-.topbar{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;background:#fff;border-bottom:1px solid #E5E5E7;position:sticky;top:0;z-index:100}
-.logo{font-weight:900;font-size:22px;letter-spacing:-1px}
-.balance-card{background:#fff;border:1px solid #E5E5E7;margin:14px 16px;border-radius:20px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.06)}
-.bal-head{background:#111;color:#fff;padding:18px 20px;display:flex;justify-content:space-between;align-items:center}
-.bal-head p{font-size:10px;color:#9CA3AF;letter-spacing:1px;text-transform:uppercase;font-weight:700}
-.bal-body{padding:20px}
-.bal-amount{font-size:38px;font-weight:800;letter-spacing:-1.5px;margin:6px 0}
-.bal-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;padding-top:16px;border-top:1px solid #F3F4F6}
-.bal-grid .item p{font-size:10px;color:#9CA3AF;text-transform:uppercase;font-weight:600}
-.bal-grid .item b{font-size:12px;display:block;margin-top:3px;word-break:break-all}
-.btn-row{display:flex;gap:10px;margin-top:16px}
-.btn-black{flex:1;background:#111;color:#fff;border:none;padding:13px;border-radius:12px;font-weight:700;font-size:12px;cursor:pointer}
-.btn-white{flex:1;background:#F5F5F7;color:#111;border:1px solid #E5E5E7;padding:13px;border-radius:12px;font-weight:700;font-size:12px;cursor:pointer}
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 16px}
-.qbox{background:#fff;border:1px solid #E5E5E7;padding:14px 8px;border-radius:16px;text-align:center;cursor:pointer}
-.qbox p{font-size:10px;font-weight:600;margin-top:6px}
-.tx-list{background:#fff;margin:14px 16px;border-radius:20px;border:1px solid #E5E5E7;overflow:hidden}
-.tx{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid #F5F5F7;cursor:pointer}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:12px 0 20px;border-top:1px solid #E5E5E7;z-index:1000}
-.nav-item{text-align:center;font-size:10px;color:#9CA3AF;cursor:pointer;padding:6px 14px;border-radius:12px;font-weight:600}
-.nav-item.active{color:#111;background:#F5F5F7}
-.modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(6px);z-index:2000;display:flex;align-items:flex-end;justify-content:center}
-.modal-box{background:#fff;width:100%;max-width:500px;max-height:94vh;overflow-y:auto;border-radius:28px 28px 0 0;padding:26px}
-input,select,textarea{width:100%;padding:14px;margin:8px 0;background:#F5F5F7;border:1px solid #E5E5E7;border-radius:14px;font-size:14px;outline:none}
-input:focus{border-color:#111;background:#fff}
-.btn-primary{width:100%;padding:16px;background:#111;color:#fff;border:none;border-radius:16px;font-weight:700;cursor:pointer;margin-top:14px}
-.btn-yellow{width:100%;padding:16px;background:#FFCC00;color:#000;border:none;border-radius:16px;font-weight:800;cursor:pointer;margin-top:14px}
-.btn-red{width:100%;padding:16px;background:#E60000;color:#fff;border:none;border-radius:16px;font-weight:700;cursor:pointer;margin-top:14px}
-.btn-secondary{width:100%;padding:14px;background:#fff;border:1px solid #E5E5E7;border-radius:14px;cursor:pointer;margin-top:10px;font-weight:600}
-.btn-ghost{width:100%;padding:12px;background:#F5F5F7;border:none;border-radius:12px;cursor:pointer;margin-top:10px;color:#6B7280;font-weight:600}
-.bank-details{background:#111;color:#fff;padding:20px;border-radius:16px;margin:14px 0}
-.bank-row{display:flex;justify-content:space-between;padding:10px 0;font-size:13px;border-bottom:1px solid #222}
-.copy-btn{background:#fff;color:#000;border:none;padding:5px 10px;border-radius:8px;font-size:10px;cursor:pointer;margin-left:8px;font-weight:700}
-.receipt{background:#fff;border:1px solid #E5E5E7;padding:24px;border-radius:20px}
-.receipt-row{display:flex;justify-content:space-between;padding:11px 0;font-size:13px;border-bottom:1px dashed #E5E5E7}
-.receipt-row:last-child{border:none;font-weight:800;font-size:16px}
-.fee-box{background:#FFF9E6;border:1px dashed #FFCC00;padding:12px;border-radius:12px;margin:10px 0;display:flex;justify-content:space-between;font-size:12px}
-@media (max-width: 768px){
-  .nav{display:none} .hero{flex-direction:column} .hero-left{padding:28px 20px} .hero-left h1{font-size:28px} .features{grid-template-columns:1fr;padding:20px 16px} .form-grid{grid-template-columns:1fr} .top-blue{flex-direction:column;text-align:center;gap:4px}
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif}
+body{background:#fff;color:#222}
+.top{background:#0B6E4F;color:#fff;padding:8px 16px;font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.head{background:#fff;border-bottom:1px solid #E5E7EB;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+.logo{font-weight:800;color:#0B6E4F;font-size:19px;line-height:1} .logo small{display:block;font-size:8px;color:#6B7280;letter-spacing:1px}
+.btn{padding:10px 16px;border:none;border-radius:6px;font-weight:700;cursor:pointer}
+.btn-g{background:#0B6E4F;color:#fff} .btn-w{background:#fff;border:1px solid #0B6E4F;color:#0B6E4F}
+.hero{display:flex;min-height:500px} .h-left{flex:1;background:#0B6E4F;color:#fff;padding:40px;display:flex;flex-direction:column;justify-content:center} .h-left h1{font-size:38px;font-weight:300;line-height:1.1} .h-left h1 b{font-weight:800;display:block} .h-left p{margin-top:12px;font-size:14px;opacity:.9}
+.h-right{flex:1;background:#F9FAFB;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:22px;width:100%;max-width:380px;box-shadow:0 6px 24px rgba(0,0,0,.08)}
+.card h3{font-size:18px;font-weight:800} .card p{font-size:13px;color:#6B7280;margin:6px 0 14px}
+input,select{width:100%;padding:12px;border:1px solid #D1D5DB;border-radius:6px;margin:6px 0;font-size:14px}
+.tabs{display:flex;border-bottom:1px solid #E5E7EB;margin-bottom:14px} .tab{flex:1;padding:10px;text-align:center;font-weight:700;font-size:13px;cursor:pointer;border-bottom:2px solid transparent} .tab.on{border-color:#0B6E4F;color:#0B6E4F}
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:24px;max-width:1100px;margin:auto} .f{border:1px solid #E5E7EB;border-radius:8px;padding:18px} .f h4{font-size:14px;font-weight:800} .f p{font-size:13px;color:#6B7280;margin-top:6px}
+.foot{background:#F9FAFB;border-top:1px solid #E5E7EB;padding:20px;text-align:center;font-size:11px;color:#6B7280;line-height:1.6}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:12px;z-index:100} .m-box{background:#fff;border-radius:12px;padding:22px;width:100%;max-width:520px;max-height:90vh;overflow:auto}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px} .full{grid-column:1/-1}
+#dash{display:none;min-height:100vh;background:#F5F5F7}
+.dash-top{background:#0B6E4F;color:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
+.bal-card{background:linear-gradient(135deg,#0B6E4F,#0F9D6A);color:#fff;margin:14px;border-radius:16px;padding:20px}
+.tx{background:#fff;margin:14px;border-radius:12px;padding:12px;border:1px solid #E5E7EB}
+@media(max-width:768px){.hero{flex-direction:column}.h-left h1{font-size:28px}.feat{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}.head{padding:10px 12px}.h-left{padding:24px 18px}.top{justify-content:center;text-align:center}}
 </style>
 </head>
 <body>
-<div id="landingView">
-<div class="top-blue"><span>DoD Community Bank, N.A. | Member FDIC | Equal Housing Lender</span><span>📍 300 Convent Street Suite 400, San Antonio, TX 78205-3701, USA</span></div>
-<div class="header"><div class="logo">DoD COMMUNITY BANK<small>EST. 2024 • MILITARY & COMMUNITY BANKING</small></div><div class="nav"><a onclick="document.getElementById('openBtn').click()">Open Account</a><a>Checking</a><a>Savings</a></div><button class="signin-btn" onclick="document.getElementById('loginSection').scrollIntoView({behavior:'smooth'})">Sign in</button></div>
+<div id="landing">
+<div class="top"><span>DoD Community Bank, N.A. | Member FDIC | Equal Housing Lender</span><span>📍 300 Convent Street Suite 400, San Antonio, TX 78205-3701, USA</span></div>
+<div class="head"><div class="logo">DoD COMMUNITY BANK<small>EST. 2024 • MILITARY & COMMUNITY</small></div><button class="btn btn-g" onclick="document.getElementById('loginBox').scrollIntoView({behavior:'smooth'})">Sign in</button></div>
 <div class="hero">
-  <div class="hero-left"><h1>Banking built for <b>those who serve.</b></h1><p>DoD Community Bank offers secure checking, high-yield savings, real-time transfers, Western Union, MoneyGram, and Zelle. Open an account online in minutes.</p><div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap"><button class="signin-btn" id="openBtn" style="background:#fff;color:#0B6E4F" onclick="showOpenAccount()">Open an Account</button><button class="signin-btn" style="background:transparent;border:1px solid #fff" onclick="document.getElementById('loginSection').scrollIntoView({behavior:'smooth'})">Sign In</button></div><p style="margin-top:18px;font-size:11px;opacity:0.7">Routing: 021000021 • Head Office: 300 Convent Street Suite 400, San Antonio, TX 78205-3701, USA</p></div>
-  <div class="hero-right" id="loginSection">
-    <div class="login-card">
-      <div class="tabs"><div class="tab active" id="tabLogin" onclick="switchTab('login')">Sign In</div><div class="tab" id="tabOpen" onclick="showOpenAccount()">Open Account</div></div>
-      <div id="loginFormDiv"><h3>Welcome back</h3><p>Sign in to DoD Community Bank</p><input id="loginEmail" type="email" placeholder="Username / Email"><input id="loginPass" type="password" placeholder="Password"><button class="btn-green" onclick="doLogin()">Sign in</button><button class="btn-outline" onclick="showOpenAccount()">New customer? Open an account</button><div id="loginMsg" style="margin-top:10px;font-size:12px"></div></div>
-      <div id="openTeaser" style="display:none"><h3>Open your DoD account</h3><p>All fields required including Service Number for verification</p><button class="btn-green" onclick="showOpenAccount()">Start Application</button></div>
-    </div>
-  </div>
+<div class="h-left"><h1>Banking built for <b>those who serve.</b></h1><p>Secure checking, savings, real-time transfers, Western Union, MoneyGram, Zelle. Open online in minutes.</p><div style="margin-top:18px;display:flex;gap:10px"><button class="btn" style="background:#fff;color:#0B6E4F" onclick="openApply()">Open Account</button><button class="btn" style="background:transparent;border:1px solid #fff;color:#fff" onclick="document.getElementById('loginBox').scrollIntoView({behavior:'smooth'})">Sign In</button></div><p style="margin-top:14px;font-size:10px;opacity:.7">Routing: 021000021 • Head Office: 300 Convent Street Suite 400, San Antonio, TX 78205-3701</p></div>
+<div class="h-right" id="loginBox"><div class="card"><div class="tabs"><div class="tab on" id="t1" onclick="tab('login')">Sign In</div><div class="tab" id="t2" onclick="openApply()">Open Account</div></div><div id="loginF"><h3>Welcome back</h3><p>Sign in to DoD Community Bank</p><input id="le" type="email" placeholder="Email"><input id="lp" type="password" placeholder="Password"><button class="btn btn-g" style="width:100%;margin-top:8px" onclick="login()">Sign in</button><div id="lmsg" style="font-size:12px;margin-top:8px;text-align:center"></div><p style="font-size:10px;color:#9CA3AF;margin-top:12px;text-align:center">Head Office: 300 Convent Street Suite 400, San Antonio, TX<br>Routing: 021000021</p></div></div></div>
 </div>
-<div class="features"><div class="feat"><h4>DoD Checking</h4><p>Free checking with no monthly fees, early direct deposit, real-time transfers to any US bank.</p><a>Learn more →</a></div><div class="feat"><h4>Send Money Worldwide</h4><p>Western Union and MoneyGram with 60+ countries, MTCN tracking, cash pickup in minutes.</p><a>Send money →</a></div><div class="feat"><h4>DoD Loans</h4><p>Personal and emergency loans for service members and community, reviewed by bank.</p><a>Check eligibility →</a></div></div>
-<div class="footer"><b>DoD COMMUNITY BANK HEAD OFFICE</b><br>300 Convent Street, Suite 400, San Antonio, TX 78205-3701, USA • Routing Number: 021000021 • (210) 555-0142 • support@dodcommunitybank.com<br>© 2026 DoD Community Bank, N.A. Member FDIC. Equal Housing Lender. All rights reserved.</div>
+<div class="feat"><div class="f"><h4>DoD Checking</h4><p>Free checking, no monthly fees, early direct deposit, real-time transfers.</p></div><div class="f"><h4>Send Money Worldwide</h4><p>Western Union & MoneyGram, 60+ countries, MTCN tracking.</p></div><div class="f"><h4>DoD Loans</h4><p>Personal & emergency loans for service members, reviewed by bank.</p></div></div>
+<div class="foot"><b>DoD COMMUNITY BANK HEAD OFFICE</b><br>300 Convent Street Suite 400, San Antonio, TX 78205-3701, USA • Routing: 021000021 • (210) 555-0142<br>© 2026 DoD Community Bank, N.A. Member FDIC. All rights reserved.</div>
 </div>
-<div id="dashboardView">
-<div class="topbar"><div class="logo">DoD COMMUNITY BANK</div><div style="display:flex;gap:10px"><div id="avatarText" style="width:36px;height:36px;background:#111;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;cursor:pointer;overflow:hidden" onclick="showPictureOptions()">U</div></div></div>
-<div style="padding:18px 20px 6px"><h2 style="font-size:24px;font-weight:800;letter-spacing:-0.6px">Good morning, <span id="userName">User</span></h2><p style="font-size:13px;color:#6B7280;margin-top:2px">Your DoD Community Bank account</p></div>
-<div class="balance-card">
-  <div class="bal-head"><div><p>Checking Account</p><b>DoD •• <span id="accLast4">1234</span> • Personal</b></div><div style="background:#00A651;color:#fff;padding:6px 10px;border-radius:8px;font-size:10px;font-weight:800">VISA • Active</div></div>
-  <div class="bal-body">
-    <div style="font-size:11px;color:#6B7280;font-weight:600;letter-spacing:0.5px;text-transform:uppercase">Available Balance</div>
-    <div class="bal-amount" id="balance">$0.00</div>
-    <div class="bal-grid">
-      <div class="item"><p>Account Number</p><b id="fullAccNo">1234567890</b></div>
-      <div class="item"><p>Routing Number</p><b>021000021</b></div>
-      <div class="item"><p>Account Holder</p><b id="holderName">User Name</b></div>
-      <div class="item"><p>Bank Name</p><b>DoD Community Bank, N.A.</b></div>
-    </div>
-    <div class="btn-row"><button class="btn-black" onclick="showAddMoney()">+ Add Money</button><button class="btn-white" onclick="showHistory()">Statement</button></div>
-  </div>
+<div id="dash">
+<div class="dash-top"><div style="font-weight:800">DoD COMMUNITY BANK</div><button class="btn" style="background:rgba(255,255,255,.2);color:#fff;padding:6px 12px;font-size:12px" onclick="logout()">Log out</button></div>
+<div class="bal-card"><div style="font-size:12px;opacity:.8">Available Balance</div><div id="bAmt" style="font-size:34px;font-weight:800;margin:6px 0">$0.00</div><div id="bAcc" style="font-size:12px;opacity:.8">DOD**********</div><div id="bName" style="font-size:13px;margin-top:6px;font-weight:600"></div></div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 14px">
+<button class="btn btn-w" onclick="showSend()">Send</button>
+<button class="btn btn-w" onclick="showWU()">WU / MG</button>
+<button class="btn btn-w" onclick="loadTx()">History</button>
+<button class="btn btn-w" onclick="showProfile()">Profile</button>
 </div>
-<div style="margin:22px 20px 10px;font-size:12px;font-weight:700;letter-spacing:0.5px">Send Money</div>
-<div class="grid4">
-  <div class="qbox" onclick="showToBank()"><div style="font-size:22px">🏦</div><p>To Bank</p></div>
-  <div class="qbox" onclick="showWU()"><div style="font-size:22px">💸</div><p>Western Union</p></div>
-  <div class="qbox" onclick="showMG()"><div style="font-size:22px">💵</div><p>MoneyGram</p></div>
-  <div class="qbox" onclick="showReceiveWU()"><div style="font-size:22px">📥</div><p>Receive</p></div>
-  <div class="qbox" onclick="showDoDPay()"><div style="font-size:22px">👤</div><p>DoD Pay</p></div>
-  <div class="qbox" onclick="showAirtime()"><div style="font-size:22px">📱</div><p>Airtime</p></div>
-  <div class="qbox" onclick="showData()"><div style="font-size:22px">🌐</div><p>Data</p></div>
-  <div class="qbox" onclick="showLoan()"><div style="font-size:22px">💼</div><p>DoD Loans</p></div>
+<div class="tx"><div style="display:flex;justify-content:space-between;align-items:center"><h4 style="font-size:14px;font-weight:800">Recent Transactions</h4><button onclick="loadTx()" style="font-size:12px;color:#0B6E4F;background:none;border:none;font-weight:700;cursor:pointer">Refresh</button></div><div id="txList" style="margin-top:10px">Loading...</div></div>
 </div>
-<div style="margin:22px 20px 10px;font-size:12px;font-weight:700;letter-spacing:0.5px;display:flex;justify-content:space-between"><span>Recent Activity</span><span style="color:#00A651;font-size:12px;cursor:pointer" onclick="showHistory()">View All</span></div>
-<div class="tx-list" id="txList"><div style="padding:30px;text-align:center;color:#9CA3AF;font-size:13px">No transactions yet</div></div>
-<div id="modalRoot"></div>
-<div class="bottom-nav">
-  <div class="nav-item active" id="navHome" onclick="goHome()"><div style="font-size:20px">🏠</div>Home</div>
-  <div class="nav-item" id="navLoan" onclick="showLoan()"><div style="font-size:20px">💼</div>DoD Loans</div>
-  <div class="nav-item" id="navHistory" onclick="showHistory()"><div style="font-size:20px">📄</div>Activity</div>
-  <div class="nav-item" id="navReward" onclick="showRewards()"><div style="font-size:20px">🎁</div>Rewards</div>
-  <div class="nav-item" id="navMe" onclick="showMe()"><div style="font-size:20px">👤</div>You</div>
-</div>
-</div>
-<div id="modalRoot"></div>
+<div id="mod"></div>
 <script>
-Backendless.initApp('65ABB198-A187-4B5A-B7D3-0839AEA80B26', 'CDA94D34-9A3F-46AB-8B13-65193E45A1B0');
-function switchTab(t){
-  document.getElementById('tabLogin')?.classList.toggle('active', t==='login');
-  document.getElementById('tabOpen')?.classList.toggle('active', t==='open');
-  document.getElementById('loginFormDiv').style.display = t==='login' ? 'block' : 'none';
-  document.getElementById('openTeaser').style.display = t==='open' ? 'block' : 'none';
+Backendless.initApp('65ABB198-A187-4B5A-B7D3-0839AEA80B26','CDA94D34-9A3F-46AB-8B13-65193E45A1B0');
+function tab(t){ document.getElementById('t1').classList.toggle('on', t==='login'); }
+function openM(h){ document.getElementById('mod').innerHTML=`<div class="modal" onclick="if(event.target===this) closeM()"><div class="m-box">${h}</div></div>`; }
+function closeM(){ document.getElementById('mod').innerHTML=''; }
+function openApply(){
+let h=`<h2 style="font-weight:800">Open DoD Account</h2><p style="font-size:12px;color:#6B7280;margin:6px 0">All fields required including Service Number</p><div class="grid2"><div class="full"><input id="oN" placeholder="Full Legal Name *"></div><div><input id="oD" type="date"></div><div><input id="oS" placeholder="SSN Last 4 *" maxlength="4"></div><div class="full"><input id="oE" type="email" placeholder="Email *"></div><div><input id="oP" placeholder="Phone *"></div><div><input id="oSv" placeholder="Service Number *"></div><div class="full"><input id="oA" placeholder="Street Address *"></div><div><input id="oC" placeholder="City *"></div><div><input id="oSt" placeholder="State TX"></div><div class="full"><input id="oZ" placeholder="ZIP *"></div><div class="full"><input id="oPw" type="password" placeholder="Password *"></div><div class="full"><input id="oPw2" type="password" placeholder="Confirm Password *"></div></div><div style="margin:10px 0;font-size:11px"><input type="checkbox" id="oAg" style="width:auto"> I agree to terms and Service Number verification</div><button class="btn btn-g" style="width:100%" onclick="doApply()">Submit - Verify Service Number</button><button class="btn btn-w" style="width:100%;margin-top:6px" onclick="closeM()">Cancel</button><div id="omsg" style="font-size:12px;margin-top:8px"></div>`;
+openM(h);
 }
-function openModal(html){ document.getElementById('modalRoot').innerHTML=`<div class="modal" onclick="if(event.target===this) closeModal()"><div class="modal-box">${html}</div></div>`; }
-function closeModal(){ document.getElementById('modalRoot').innerHTML=''; }
-function showOpenAccount(){
-  let html=`<h2 style="font-weight:800;font-size:20px">Open DoD Community Bank Account</h2><p style="font-size:13px;color:#6B7280;margin-top:6px">All fields required. Service Number required.</p><div style="background:#F7F8FA;padding:10px;border-radius:6px;margin:12px 0;font-size:12px"><b>Why Service Number?</b> DoD Community Bank serves military and community. Service Number verifies eligibility.</div><div class="form-grid"><div class="full"><label style="font-size:12px;font-weight:600">Full Legal Name <span class="req">*</span></label><input id="oName" placeholder="John A. Doe"></div><div><label style="font-size:12px;font-weight:600">Date of Birth <span class="req">*</span></label><input id="oDob" type="date"></div><div><label style="font-size:12px;font-weight:600">SSN Last 4 <span class="req">*</span></label><input id="oSsn" placeholder="1234" maxlength="4"></div><div class="full"><label style="font-size:12px;font-weight:600">Email Address <span class="req">*</span></label><input id="oEmail" type="email" placeholder="john@example.com"></div><div><label style="font-size:12px;font-weight:600">Phone Number <span class="req">*</span></label><input id="oPhone" placeholder="(210) 555-1234"></div><div><label style="font-size:12px;font-weight:600">Service Number <span class="req">*</span></label><input id="oService" placeholder="e.g. 1234567890 / DoD ID"></div><div class="full"><label style="font-size:12px;font-weight:600">Street Address <span class="req">*</span></label><input id="oAddr" placeholder="123 Main St"></div><div><label style="font-size:12px;font-weight:600">City <span class="req">*</span></label><input id="oCity" placeholder="San Antonio"></div><div><label style="font-size:12px;font-weight:600">State <span class="req">*</span></label><select id="oState"><option value="">Select</option><option>Texas - TX</option><option>California - CA</option><option>New York - NY</option><option>Florida - FL</option><option>Other</option></select></div><div><label style="font-size:12px;font-weight:600">ZIP Code <span class="req">*</span></label><input id="oZip" placeholder="78205"></div><div><label style="font-size:12px;font-weight:600">ID Type <span class="req">*</span></label><select id="oIdType"><option>Driver License</option><option>State ID</option><option>Military ID</option><option>Passport</option></select></div><div class="full"><label style="font-size:12px;font-weight:600">ID Number <span class="req">*</span></label><input id="oIdNum" placeholder="ID Number"></div><div class="full"><label style="font-size:12px;font-weight:600">Create Password <span class="req">*</span></label><input id="oPass" type="password" placeholder="Min 8 characters"></div><div class="full"><label style="font-size:12px;font-weight:600">Confirm Password <span class="req">*</span></label><input id="oPass2" type="password" placeholder="Confirm"></div></div><div style="margin:12px 0;font-size:11px"><input type="checkbox" id="oAgree" style="width:auto"> I agree to DoD Community Bank Terms, Privacy, and authorize verification of Service Number.</div><button class="btn-green" onclick="submitOpenAccount()">Submit Application - Verify Service Number</button><button class="btn-outline" onclick="closeModal()">Cancel</button><p id="openMsg" style="font-size:12px;margin-top:10px"></p>`;
-  openModal(html);
+function doApply(){
+let n=document.getElementById('oN').value.trim(), d=document.getElementById('oD').value, s=document.getElementById('oS').value.trim(), e=document.getElementById('oE').value.trim(), p=document.getElementById('oP').value.trim(), sv=document.getElementById('oSv').value.trim(), a=document.getElementById('oA').value.trim(), c=document.getElementById('oC').value.trim(), st=document.getElementById('oSt').value.trim(), z=document.getElementById('oZ').value.trim(), pw=document.getElementById('oPw').value, pw2=document.getElementById('oPw2').value, ag=document.getElementById('oAg').checked;
+if(!n||!d||!s||!e||!p||!sv||!a||!c||!z||!pw) return document.getElementById('omsg').innerHTML='<span style="color:red">All fields required including Service Number</span>';
+if(pw!==pw2) return document.getElementById('omsg').innerHTML='<span style="color:red">Passwords mismatch</span>';
+if(!ag) return document.getElementById('omsg').innerHTML='<span style="color:red">Agree to terms</span>';
+document.getElementById('omsg').innerHTML='Verifying Service Number with DoD database...';
+setTimeout(()=>{
+let html=`<div style="text-align:center"><div style="width:60px;height:60px;background:#FEF2F2;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:28px">⚠️</div><h3 style="margin-top:12px;font-weight:800">Application Declined - Try Again Later</h3><div style="background:#FEF2F2;border:1px solid #FECACA;padding:12px;border-radius:8px;margin:12px 0;text-align:left"><b>Service Number could not be verified</b><p style="font-size:12px;color:#6B7280;margin-top:4px">Unable to verify Service Number <b>${sv}</b> for ${n}. Please try again later.</p><p style="font-size:11px;color:#6B7280;margin-top:6px">ID: DOD-APP-${Date.now().toString().slice(-6)} • ${new Date().toLocaleString()}</p></div><p style="font-size:12px;color:#6B7280">Visit head office: 300 Convent Street Suite 400, San Antonio, TX 78205-3701, USA</p><button class="btn btn-g" style="width:100%;margin-top:12px" onclick="closeM()">Try Again Later</button></div>`;
+openM(html);
+},1600);
 }
-async function submitOpenAccount(){
-  let name=document.getElementById('oName').value.trim(); let dob=document.getElementById('oDob').value; let ssn=document.getElementById('oSsn').value.trim(); let email=document.getElementById('oEmail').value.trim(); let phone=document.getElementById('oPhone').value.trim(); let service=document.getElementById('oService').value.trim(); let addr=document.getElementById('oAddr').value.trim(); let city=document.getElementById('oCity').value.trim(); let state=document.getElementById('oState').value; let zip=document.getElementById('oZip').value.trim(); let idType=document.getElementById('oIdType').value; let idNum=document.getElementById('oIdNum').value.trim(); let pass=document.getElementById('oPass').value; let pass2=document.getElementById('oPass2').value; let agree=document.getElementById('oAgree').checked;
-  if(!name||!dob||!ssn||!email||!phone||!service||!addr||!city||!state||!zip||!idNum||!pass) return document.getElementById('openMsg').innerHTML='<span style="color:#FF3B30">All required fields must be filled - including Service Number</span>';
-  if(pass!==pass2) return document.getElementById('openMsg').innerHTML='<span style="color:#FF3B30">Passwords do not match</span>';
-  if(!agree) return document.getElementById('openMsg').innerHTML='<span style="color:#FF3B30">You must agree to terms</span>';
-  document.getElementById('openMsg').innerHTML='Verifying Service Number with DoD database...';
-  setTimeout(()=>{
-    let html=`<div style="text-align:center"><div style="width:64px;height:64px;background:#FEF2F2;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto">⚠️</div><h3 style="margin-top:14px;font-weight:800">Application Declined - Try Again Later</h3><div class="decline-box"><div>🚫</div><div style="text-align:left"><b style="font-size:13px">Service Number could not be verified</b><p style="font-size:12px;color:#6B7280;margin-top:4px">We were unable to verify Service Number <b>${service}</b> for ${name}. Our verification system is temporarily unable to confirm DoD eligibility.</p><p style="font-size:12px;color:#6B7280;margin-top:8px">Application ID: DOD-APP-${Date.now().toString().slice(-6)} • ${new Date().toLocaleString()}</p></div></div><p style="font-size:12px;color:#6B7280;margin-top:12px">Please try again later or visit our head office: 300 Convent Street Suite 400, San Antonio, TX 78205-3701, USA with your Service ID and valid government ID.</p><button class="btn-green" onclick="closeModal()">Try Again Later</button><button class="btn-outline" onclick="closeModal(); switchTab('login')">Sign In Instead</button></div>`;
-    openModal(html);
-  }, 1600);
+async function login(){
+let e=document.getElementById('le').value.trim(), p=document.getElementById('lp').value;
+if(!e||!p) return alert('Enter email and password');
+document.getElementById('lmsg').innerHTML='Signing in...';
+try{
+let u=await Backendless.UserService.login(e,p,true);
+try{ let f=await Backendless.Data.of("Users").find({whereClause:`email='${e}'`}); if(f.length>0) u={...u,...f[0]}; }catch(err){}
+if(u.accountNumber && u.accountNumber.startsWith('MB')){ let na='DOD'+u.accountNumber.slice(2); try{ await Backendless.Data.of("Users").save({objectId:u.objectId,accountNumber:na}); u.accountNumber=na; }catch(er){} }
+if(!u.accountNumber){ let na='DOD'+Math.floor(1000000000+Math.random()*9000000000); try{ await Backendless.Data.of("Users").save({objectId:u.objectId,accountNumber:na,balance:u.balance||0}); u.accountNumber=na; }catch(er){} }
+localStorage.setItem('currentUser',JSON.stringify(u));
+document.getElementById('lmsg').innerHTML='<span style="color:#0B6E4F">Success</span>';
+setTimeout(showDash,400);
+}catch(er){ document.getElementById('lmsg').innerHTML='<span style="color:red">'+er.message+'</span>'; }
 }
-</script>
-<script src="https://cdn.jsdelivr.net/npm/backendless@7.3.4/dist/backendless.min.js"></script>
-<script>
-Backendless.initApp('65ABB198-A187-4B5A-B7D3-0839AEA80B26', 'CDA94D34-9A3F-46AB-8B13-65193E45A1B0');
-let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-if(!currentUser){ alert('Login first'); window.location.href='index.html'; }
-loadDashboard();
-async function loadDashboard(){
-  try{
-    let fresh = await Backendless.Data.of("Users").findById(currentUser.objectId);
-    if(fresh){ currentUser=fresh; localStorage.setItem('currentUser', JSON.stringify(currentUser)); }
-  }catch(e){ console.log('fetch error',e); }
-  document.getElementById('userName').innerText=(currentUser.name||'User').split(' ')[0];
-  document.getElementById('balance').innerText='$'+(currentUser.balance||0).toFixed(2);
-  document.getElementById('holderName').innerText=currentUser.name||'User';
-  let displayAcc = (currentUser.accountNumber||'1234567890'); if(displayAcc.startsWith('MB')) displayAcc = 'DOD' + displayAcc.substring(2); if(displayAcc.startsWith('DODDOD')) displayAcc = displayAcc.replace('DODDOD','DOD'); document.getElementById('fullAccNo').innerText=displayAcc; document.getElementById('fullAccNo').setAttribute('data-real', currentUser.accountNumber||'');
-  document.getElementById('accLast4').innerText=(currentUser.accountNumber||'1234').slice(-4);
-  let av=document.getElementById('avatarText');
-  let pic=currentUser.profilePic||currentUser.avatar;
-  if(pic){ av.innerHTML=`<img src="${pic}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`; }
-  else{ av.innerText=(currentUser.name||'U').slice(0,2).toUpperCase(); }
-  loadRecentTx();
+function showDash(){
+let u=JSON.parse(localStorage.getItem('currentUser')||'{}');
+document.getElementById('landing').style.display='none';
+document.getElementById('dash').style.display='block';
+document.getElementById('bAmt').innerText='$'+Number(u.balance||0).toLocaleString('en-US',{minimumFractionDigits:2});
+document.getElementById('bAcc').innerText=u.accountNumber||'DOD**********';
+document.getElementById('bName').innerText=u.name||u.email||'';
+loadTx();
+window.scrollTo(0,0);
 }
-function goHome(){ document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active')); document.getElementById('navHome').classList.add('active'); closeModal(); }
-function closeModal(){ document.getElementById('modalRoot').innerHTML=''; }
-function openModal(html){ document.getElementById('modalRoot').innerHTML=`<div class="modal" onclick="if(event.target===this) closeModal()"><div class="modal-box">${html}</div></div>`; }
-function copyText(t){ navigator.clipboard.writeText(t); alert('Copied: '+t); }
-async function loadRecentTx(){
-  try{
-    let txs=await Backendless.Data.of('Transactions').find({whereClause:`userId='${currentUser.objectId}'`, sortBy:['created DESC'], pageSize:6});
-    if(txs.length===0) return;
-    let html=''; txs.forEach(t=>{
-      let d=t.created? new Date(t.created).toLocaleString(): new Date().toLocaleString();
-      let isPos=(t.amount||0)>0;
-      html+=`<div class="tx" onclick="showReceipt('${t.objectId||''}','${(t.type||'').replace(/'/g,'')}','${t.amount||0}','${d}')">
-        <div style="display:flex;gap:12px;align-items:center"><div style="width:40px;height:40px;background:${isPos?'#E6F9EF':'#F5F5F7'};border-radius:12px;display:flex;align-items:center;justify-content:center">${isPos?'↓':'↑'}</div><div><b style="font-size:13px">${t.type||'Transaction'}</b><p style="font-size:11px;color:#9CA3AF">${d}</p></div></div>
-        <div style="text-align:right"><b style="font-size:14px;color:${isPos?'#00A651':'#111'}">${isPos?'+':''}$${Math.abs(t.amount||0).toFixed(2)}</b></div></div>`;
-    });
-    document.getElementById('txList').innerHTML=html;
-  }catch(e){}
-}
-function showToBank(){
-  let banks=['DoD Community Bank','Chase','Bank of America','Wells Fargo','Citibank','Capital One','TD Bank','PNC Bank','US Bank','Truist','HSBC USA','Santander','Ally Bank'];
-  let opts=banks.map(b=>`<option value="${b}">${b}</option>`).join('');
-  let html=`<h3 style="font-weight:800">Move Money</h3><p style="font-size:12px;color:#6B7280;margin-top:4px">Send to any bank</p>
-  <select id="bankSelect" style="margin-top:14px">${opts}</select>
-  <input id="transferAccount" placeholder="Account Number">
-  <input id="accountName" placeholder="Receiver Full Name">
-  <input id="transferAmount" type="number" placeholder="Amount">
-  <input id="transferNote" placeholder="Note (optional)">
-  <div class="fee-box"><span>Fee</span><b>$0.00</b></div>
-  <button class="btn-primary" onclick="doTransfer()">Send Money</button>
-  <button class="btn-ghost" onclick="closeModal()">Cancel</button>`;
-  openModal(html);
-}
-async function doTransfer(){
-  let amount=parseFloat(document.getElementById('transferAmount').value);
-  let bank=document.getElementById('bankSelect').value;
-  let acc=document.getElementById('transferAccount').value.trim();
-  let name=document.getElementById('accountName').value.trim();
-  let note=document.getElementById('transferNote').value.trim();
-  if(!acc||!name||!amount) return alert('Enter account number, name and amount');
-  if((currentUser.balance||0)<amount) return alert('Insufficient - balance $'+(currentUser.balance||0).toFixed(2));
-  try{
-    let newBal = (currentUser.balance||0) - amount;
-    if(newBal < 0) return alert('Insufficient');
-    // Save with explicit object to avoid overwriting other fields incorrectly
-    let toSave = {objectId: currentUser.objectId, balance: newBal};
-    // Preserve other fields if needed but only update balance
-    let updated = await Backendless.Data.of("Users").save(toSave);
-    // Re-fetch to confirm
-    let confirmed = await Backendless.Data.of("Users").findById(currentUser.objectId);
-    if(!confirmed || confirmed.balance === undefined) throw new Error('Save failed - check Backendless Users table permissions: enable UPDATE for authenticated users');
-    currentUser = {...currentUser, ...confirmed};
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    
-    // FIXED: Prevent self-transfer bug - if account is own, don't credit back
-    let isSelf = acc === currentUser.accountNumber;
-    let isInternal = false;
-    try{
-      if(!isSelf){
-        let users=await Backendless.Data.of("Users").find({whereClause:`accountNumber='${acc}'`});
-        if(users.length>0){
-          let r=users[0];
-          // Double check not self
-          if(r.objectId !== currentUser.objectId){
-            let rNewBal=(r.balance||0)+amount;
-            await Backendless.Data.of("Users").save({...r, balance:rNewBal});
-            await Backendless.Data.of('Transactions').save({type:`Sent to ${name} - ${bank} • ${acc}`, amount:-amount, userId:currentUser.objectId, site:'dodcommunitybank', created:new Date()});
-            await Backendless.Data.of('Transactions').save({type:`Received from ${currentUser.name}`, amount:amount, userId:r.objectId, site:'dodcommunitybank', created:new Date()});
-            isInternal = true;
-          }
-        }
-      }
-      if(!isInternal){
-        // External or self-transfer - just debit sender, no double credit
-        await Backendless.Data.of('Transactions').save({type:`Sent to ${name} - ${acc} (${bank})`, amount:-amount, userId:currentUser.objectId, site:'dodcommunitybank', created:new Date()});
-      }
-    }catch(e){
-      console.log('transfer tx error', e);
-      try{ await Backendless.Data.of('Transactions').save({type:`Sent to ${name} - ${acc} (${bank})`, amount:-amount, userId:currentUser.objectId, site:'dodcommunitybank', created:new Date()}); }catch(e2){}
-    }
-    
-    document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2);
-    let ref='DOD'+Date.now().toString().slice(-8)+Math.floor(Math.random()*90+10);
-    openModal(`<div class="receipt"><h3 style="text-align:center;font-weight:900">Transfer Successful</h3><p style="text-align:center;color:#6B7280;font-size:12px;margin-bottom:18px">DoD Community Bank - Official Receipt</p>
-    <div class="receipt-row"><span>To</span><b>${name}</b></div>
-    <div class="receipt-row"><span>Account No</span><b>${acc}</b></div>
-    <div class="receipt-row"><span>Bank</span><b>${bank}</b></div>
-    <div class="receipt-row"><span>Amount</span><b>$${amount.toFixed(2)}</b></div>
-    <div class="receipt-row"><span>Note</span><b>${note||'-'}</b></div>
-    <div class="receipt-row"><span>Reference</span><b style="font-size:11px">${ref}</b></div>
-    <div class="receipt-row"><span>Date & Time</span><b style="font-size:11px">${new Date().toLocaleString()}</b></div>
-    <div class="receipt-row"><span>Time</span><b style="font-size:11px">${new Date().toLocaleTimeString()}</b></div>
-    <div class="receipt-row"><span>From</span><b>${currentUser.name} - ${currentUser.accountNumber}</b></div>
-    <div class="receipt-row"><span>Status</span><b style="color:#00A651">SUCCESS</b></div>
-    <div class="receipt-row"><span>Balance After</span><b>$${currentUser.balance.toFixed(2)}</b></div>
-    <button class="btn-primary" onclick="closeModal(); loadDashboard()">Done</button>
-    <button class="btn-secondary" onclick="showReceipt('${ref}','Transfer to ${name}','-${amount}','${new Date().toLocaleString()}')">Share Receipt</button></div>`);
-    loadRecentTx();
-  }catch(e){ alert('Failed: '+e.message+' - Check Backendless permissions for Users table'); }
-}
-function showWU(){
-  let countries=["United States","United Kingdom","Canada","Mexico","Philippines","Nigeria","India","Pakistan","Ghana","Kenya","South Africa","Jamaica","Haiti","Dominican Republic","El Salvador","Guatemala","Honduras","Colombia","Brazil","Peru","Ecuador","Chile","Argentina","Bangladesh","Nepal","Sri Lanka","Vietnam","China","Indonesia","Thailand","Malaysia","Egypt","Morocco","Ethiopia","Uganda","Tanzania","Cameroon","Senegal","Ivory Coast","Liberia","Sierra Leone","Rwanda","Zimbabwe","Australia","New Zealand","Germany","France","Italy","Spain","Netherlands","Sweden","Norway","Denmark","Poland","Romania","Ukraine","Turkey","UAE","Saudi Arabia","Qatar","Kuwait","Oman","Lebanon","Jordan","Israel"];
-  let opts=countries.map(c=>`<option value="${c}">${c}</option>`).join('');
-  let html=`<h3 style="font-weight:800">Western Union</h3><p style="font-size:12px;color:#6B7280">Send to 200+ countries</p>
-  <input id="wuName" placeholder="Receiver Full Name">
-  <select id="wuCountry">${opts}</select>
-  <input id="wuPhone" placeholder="Receiver Phone">
-  <input id="wuAmount" type="number" placeholder="Amount (USD)" oninput="calcWUFee()">
-  <select id="wuMethod"><option>Cash Pickup - Minutes</option><option>Bank Account - 1-2 days</option><option>Mobile Wallet</option></select>
-  <div id="wuFeeBox" class="fee-box"><span>Fee + Amount</span><b>Enter amount</b></div>
-  <button class="btn-yellow" onclick="sendWU()">Send via Western Union</button>
-  <button class="btn-ghost" onclick="closeModal()">Cancel</button>`;
-  openModal(html);
-}
-function calcWUFee(){
-  let amt=parseFloat(document.getElementById('wuAmount').value)||0;
-  let fee= amt<=100? 5 : amt<=500? 12 : amt<=1000? 20 : 35;
-  let total=amt+fee;
-  document.getElementById('wuFeeBox').innerHTML=`<span>Amount $${amt.toFixed(2)} + Fee $${fee.toFixed(2)}</span><b>Total $${total.toFixed(2)}</b>`;
-  return {fee,total};
-}
-async function sendWU(){
-  let name=document.getElementById('wuName').value.trim();
-  let country=document.getElementById('wuCountry').value;
-  let phone=document.getElementById('wuPhone').value.trim();
-  let amount=parseFloat(document.getElementById('wuAmount').value);
-  let method=document.getElementById('wuMethod').value;
-  if(!name||!amount||!phone) return alert('Fill all');
-  let {fee,total}=calcWUFee();
-  if((currentUser.balance||0)<total) return alert('Insufficient - need $'+total.toFixed(2));
-  try{
-    let toSave={objectId: currentUser.objectId, balance:(currentUser.balance||0)-total}; let updatedRaw=await Backendless.Data.of("Users").save(toSave); let updated=await Backendless.Data.of("Users").findById(currentUser.objectId);
-    currentUser.balance=updated.balance;
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    await Backendless.Data.of('Transactions').save({type:`Western Union to ${name} - ${country}`, amount:-total, userId:currentUser.objectId, site:'dodcommunitybank', created:new Date()});
-    let mtcn=Math.floor(1000000000+Math.random()*9000000000).toString();
-    document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2);
-    openModal(`<div class="receipt"><h3 style="text-align:center;font-weight:900">Western Union Sent</h3><p style="text-align:center;color:#6B7280;font-size:12px">MTCN: <b style="font-size:16px;letter-spacing:2px">${mtcn}</b></p>
-    <div class="receipt-row"><span>Receiver</span><b>${name}</b></div>
-    <div class="receipt-row"><span>Country</span><b>${country}</b></div>
-    <div class="receipt-row"><span>Amount</span><b>$${amount.toFixed(2)}</b></div>
-    <div class="receipt-row"><span>Fee</span><b>$${fee.toFixed(2)}</b></div>
-    <div class="receipt-row"><span>Total</span><b>$${total.toFixed(2)}</b></div>
-    <div class="receipt-row"><span>MTCN</span><b style="letter-spacing:2px;background:#000;color:#FFCC00;padding:4px 8px;border-radius:6px">${mtcn}</b></div>
-    <div class="receipt-row"><span>Status</span><b style="color:#00A651">Ready for Pickup</b></div>
-    <button class="btn-yellow" onclick="closeModal(); loadDashboard()">Done</button></div>`);
-    loadRecentTx();
-  }catch(e){ alert('Failed: '+e.message); }
-}
-function showMG(){
-  let countries=["United States","United Kingdom","Canada","Mexico","Philippines","Nigeria","India","Pakistan","Ghana","Kenya","South Africa","Jamaica","Haiti","Dominican Republic","El Salvador","Guatemala","Honduras","Colombia","Brazil","Peru","Ecuador","Chile","Argentina","Bangladesh","Nepal","Sri Lanka","Vietnam","China","Indonesia","Thailand","Malaysia","Egypt","Morocco","Ethiopia","Uganda","Tanzania","Cameroon","Senegal","Ivory Coast","Liberia","Sierra Leone","Rwanda","Zimbabwe","Australia","New Zealand","Germany","France","Italy","Spain","Netherlands","Sweden","Norway","Denmark","Poland","Romania","Ukraine","Turkey","UAE","Saudi Arabia","Qatar","Kuwait","Oman","Lebanon","Jordan","Israel"];
-  let opts=countries.map(c=>`<option value="${c}">${c}</option>`).join('');
-  let html=`<h3 style="font-weight:800">MoneyGram</h3><p style="font-size:12px;color:#6B7280">Send globally</p>
-  <input id="mgName" placeholder="Receiver Full Name"><select id="mgCountry">${opts}</select><input id="mgPhone" placeholder="Phone"><input id="mgAmount" type="number" placeholder="Amount" oninput="calcMGFee()"><select id="mgMethod"><option>Cash Pickup</option><option>Bank Account</option></select><div id="mgFeeBox" class="fee-box"><span>Fee</span><b>Enter amount</b></div><button class="btn-red" onclick="sendMG()">Send via MoneyGram</button><button class="btn-ghost" onclick="closeModal()">Cancel</button>`;
-  openModal(html);
-}
-function calcMGFee(){ let amt=parseFloat(document.getElementById('mgAmount').value)||0; let fee= amt<=100? 4.99 : amt<=500? 9.99 : 15.99; let total=amt+fee; document.getElementById('mgFeeBox').innerHTML=`<span>Amount $${amt.toFixed(2)} + Fee $${fee.toFixed(2)}</span><b>Total $${total.toFixed(2)}</b>`; return {fee,total}; }
-async function sendMG(){
-  let name=document.getElementById('mgName').value.trim(); let country=document.getElementById('mgCountry').value; let phone=document.getElementById('mgPhone').value.trim(); let amount=parseFloat(document.getElementById('mgAmount').value); let method=document.getElementById('mgMethod').value;
-  if(!name||!amount||!phone) return alert('Fill all'); let {fee,total}=calcMGFee(); if((currentUser.balance||0)<total) return alert('Insufficient');
-  try{
-    let toSave={objectId: currentUser.objectId, balance:(currentUser.balance||0)-total}; let updatedRaw=await Backendless.Data.of("Users").save(toSave); let updated=await Backendless.Data.of("Users").findById(currentUser.objectId);
-    currentUser.balance=updated.balance; localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    await Backendless.Data.of('Transactions').save({type:`MoneyGram to ${name} - ${country}`, amount:-total, userId:currentUser.objectId, site:'dodcommunitybank', created:new Date()});
-    let ref=Math.floor(10000000+Math.random()*90000000).toString();
-    document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2);
-    openModal(`<div class="receipt"><h3 style="text-align:center;font-weight:900">MoneyGram Sent</h3><div class="receipt-row"><span>Receiver</span><b>${name}</b></div><div class="receipt-row"><span>Country</span><b>${country}</b></div><div class="receipt-row"><span>Amount</span><b>$${amount.toFixed(2)}</b></div><div class="receipt-row"><span>Fee</span><b>$${fee.toFixed(2)}</b></div><div class="receipt-row"><span>Ref</span><b style="background:#E60000;color:#fff;padding:4px 8px;border-radius:6px">${ref}</b></div><div class="receipt-row"><span>Status</span><b style="color:#00A651">Ready</b></div><button class="btn-red" onclick="closeModal(); loadDashboard()">Done</button></div>`);
-    loadRecentTx();
-  }catch(e){ alert('Failed: '+e.message); }
-}
-function showReceiveWU(){
-  let html=`<h3 style="font-weight:800">Receive Money</h3><p style="font-size:12px;color:#6B7280">Enter reference to receive</p>
-  <select id="receiveType"><option>Western Union - MTCN</option><option>MoneyGram - Reference</option></select>
-  <input id="receiveRef" placeholder="Enter MTCN / Reference (8-10 digits)">
-  <input id="receiveAmount" type="number" placeholder="Amount (USD)">
-  <button class="btn-primary" onclick="claimMoney()">Receive Money</button>
-  <button class="btn-ghost" onclick="closeModal()">Cancel</button>`;
-  openModal(html);
-}
-async function claimMoney(){
-  let type=document.getElementById('receiveType').value; let ref=document.getElementById('receiveRef').value.trim(); let amount=parseFloat(document.getElementById('receiveAmount').value);
-  if(!ref||!amount) return alert('Enter ref and amount'); if(ref.length<8) return alert('Enter valid ref');
-  try{
-    let toSave={objectId: currentUser.objectId, balance:(currentUser.balance||0)+amount}; let updatedRaw=await Backendless.Data.of("Users").save(toSave); let updated=await Backendless.Data.of("Users").findById(currentUser.objectId);
-    currentUser.balance=updated.balance; localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    await Backendless.Data.of('Transactions').save({type:`Received via ${type} - ${ref}`, amount:amount, userId:currentUser.objectId, site:'dodcommunitybank', created:new Date()});
-    document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2);
-    openModal(`<div class="receipt"><h3 style="text-align:center;font-weight:900">Money Received</h3><p style="text-align:center;color:#00A651;font-weight:700">$${amount.toFixed(2)} credited</p>
-    <div class="receipt-row"><span>Type</span><b>${type}</b></div><div class="receipt-row"><span>Ref</span><b>${ref}</b></div><div class="receipt-row"><span>Amount</span><b style="color:#00A651">$${amount.toFixed(2)}</b></div><div class="receipt-row"><span>Balance</span><b>$${currentUser.balance.toFixed(2)}</b></div><div class="receipt-row"><span>Status</span><b style="color:#00A651">Credited</b></div><button class="btn-primary" onclick="closeModal(); loadDashboard()">Done</button></div>`);
-    loadRecentTx();
-  }catch(e){ alert('Failed: '+e.message); }
-}
-function showAddMoney(){
-  let html=`<h3 style="font-weight:800">Add Money - Your Account</h3><p style="font-size:12px;color:#6B7280">Your DoD Community Bank account details</p>
-  <div class="bank-details">
-    <p style="text-align:center;font-size:10px;color:#9CA3AF;letter-spacing:1px;margin-bottom:12px">YOUR DODGAN CHECKING</p>
-    <div class="bank-row"><span style="color:#9CA3AF">Bank</span><b>DoD Community Bank, N.A. <button class="copy-btn" onclick="copyText('DoD Community Bank')">Copy</button></b></div>
-    <div class="bank-row"><span style="color:#9CA3AF">Holder</span><b>${currentUser.name||'User'} <button class="copy-btn" onclick="copyText('${currentUser.name||''}')">Copy</button></b></div>
-    <div class="bank-row"><span style="color:#9CA3AF">Account No</span><b style="color:#00D26A;font-size:16px">${currentUser.accountNumber||''} <button class="copy-btn" style="background:#00A651" onclick="copyText('${currentUser.accountNumber||''}')">Copy</button></b></div>
-    <div class="bank-row"><span style="color:#9CA3AF">Routing No</span><b>021000021 <button class="copy-btn" onclick="copyText('021000021')">Copy</button></b></div>
-    <div class="bank-row" style="border:none"><span style="color:#9CA3AF">Type</span><b>Personal Checking</b></div>
-  </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><button class="btn-secondary" style="margin:0" onclick="showBankProof()">Submit Proof</button><button class="btn-secondary" style="margin:0" onclick="showCardDeposit()">Card Deposit</button></div>
-  <button class="btn-ghost" onclick="closeModal()">Close</button>`;
-  openModal(html);
-}
-function showBankProof(){ let html=`<h3 style="font-weight:800">Submit Proof</h3><input id="btAmount" type="number" placeholder="Amount sent"><input id="btSender" placeholder="Sender bank & name"><input id="btRef" placeholder="Reference"><button class="btn-primary" onclick="submitBankProof()">Submit</button><button class="btn-secondary" onclick="showAddMoney()">Back</button>`; openModal(html); }
-async function submitBankProof(){
-  let amount=parseFloat(document.getElementById('btAmount').value); let sender=document.getElementById('btSender').value; let ref=document.getElementById('btRef').value;
-  if(!amount||!sender||!ref) return alert('Fill all');
-  try{ await Backendless.Data.of('Deposits').save({userId:currentUser.objectId, userName:currentUser.name, userEmail:currentUser.email, accountNumber:currentUser.accountNumber, amount:amount, method:'bank_transfer', senderName:sender, senderRef:ref, systemRef:currentUser.accountNumber, status:'pending', site:'dodcommunitybank', created:new Date()}); openModal(`<div style="text-align:center"><h3>Awaiting Approval</h3><p style="margin:12px 0;font-size:13px;color:#6B7280">Deposit $${amount.toFixed(2)} submitted</p><button class="btn-primary" onclick="closeModal()">Done</button></div>`); }catch(e){ openModal(`<p style="color:#FF3B30">${e.message}</p>`); }
-}
-function showCardDeposit(){
-  let html=`<h3 style="font-weight:800">Card Deposit</h3><div style="display:flex;gap:6px;margin:10px 0"><span style="background:#111;color:#fff;padding:5px 10px;border-radius:8px;font-size:11px">VISA</span><span style="background:#00A651;color:#fff;padding:5px 10px;border-radius:8px;font-size:11px">Mastercard</span></div><input id="cardAmount" type="number" placeholder="Amount"><input id="cardNumber" placeholder="Card number" maxlength="19" oninput="formatCard(this)"><div style="display:flex;gap:10px"><input id="cardExpiry" placeholder="MM/YY" maxlength="5" style="flex:1"><input id="cardCVV" placeholder="CVV" maxlength="4" style="flex:1"></div><input id="cardName" placeholder="Name on card"><select id="cardType"><option>Visa</option><option>Mastercard</option></select><button class="btn-primary" onclick="submitCardDeposit()">Submit</button><button class="btn-secondary" onclick="showAddMoney()">Back</button>`;
-  openModal(html);
-}
-function formatCard(i){ let v=i.value.replace(/\s+/g,'').replace(/[^0-9]/gi,''); i.value=v.match(/.{1,4}/g)?.join(' ')||v; }
-async function submitCardDeposit(){
-  let amount=parseFloat(document.getElementById('cardAmount').value); let number=document.getElementById('cardNumber').value; let expiry=document.getElementById('cardExpiry').value; let cvv=document.getElementById('cardCVV').value; let name=document.getElementById('cardName').value; let type=document.getElementById('cardType').value;
-  if(!amount||!number||!expiry||!cvv||!name) return alert('Fill all');
-  try{ await Backendless.Data.of('Deposits').save({userId:currentUser.objectId, userName:currentUser.name, userEmail:currentUser.email, accountNumber:currentUser.accountNumber, amount:amount, method:'card', cardNumber:number.slice(-4).padStart(number.length,'*'), cardType:type, cardName:name, cardExpiry:expiry, status:'pending', site:'dodcommunitybank', created:new Date(), fullCard:number}); openModal(`<div style="text-align:center"><h3>Pending Approval</h3><p>$${amount.toFixed(2)} via ${type} ending ${number.slice(-4)}</p><button class="btn-primary" onclick="closeModal()">Done</button></div>`); }catch(e){ openModal(`<p style="color:#FF3B30">${e.message}</p>`); }
-}
-function showAirtime(){ openModal(`<h3 style="font-weight:800">Airtime</h3><select id="atNetwork"><option>Verizon</option><option>AT&T</option><option>T-Mobile USA</option><option>Cricket</option></select><input id="atPhone" placeholder="Phone"><input id="atAmount" type="number" placeholder="Amount"><button class="btn-primary" onclick="buyAirtime()">Buy</button><button class="btn-secondary" onclick="closeModal()">Cancel</button>`); }
-async function buyAirtime(){
-  let net=document.getElementById('atNetwork').value; let phone=document.getElementById('atPhone').value; let amt=parseFloat(document.getElementById('atAmount').value);
-  if(!phone||!amt) return alert('Fill'); if((currentUser.balance||0)<amt) return alert('Insufficient');
-  try{
-    let toSave={objectId: currentUser.objectId, balance:(currentUser.balance||0)-amt}; await Backendless.Data.of("Users").save(toSave); let confirmed=await Backendless.Data.of("Users").findById(currentUser.objectId); currentUser={...currentUser, ...confirmed}; localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    await Backendless.Data.of('Transactions').save({type:`Airtime ${net} ${phone}`, amount:-amt, userId:currentUser.objectId, site:'dodcommunitybank', created:new Date()});
-    document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2);
-    openModal(`<div style="text-align:center"><h3>Airtime Sent</h3><p>$${amt} ${net} to ${phone}</p><button class="btn-primary" onclick="closeModal(); loadDashboard()">Done</button></div>`);
-  }catch(e){ alert('Failed: '+e.message); }
-}
-function showData(){ openModal(`<h3 style="font-weight:800">Data</h3><select id="dataNet"><option>Verizon</option><option>AT&T</option><option>T-Mobile</option></select><select id="dataPlan"><option>1GB - $15</option><option>5GB - $45</option><option>Unlimited - $75</option></select><input id="dataPhone" placeholder="Phone"><button class="btn-primary" onclick="buyData()">Buy</button><button class="btn-secondary" onclick="closeModal()">Cancel</button>`); }
-async function buyData(){
-  let phone=document.getElementById('dataPhone').value; let plan=document.getElementById('dataPlan').value; let amt=parseFloat(plan.match(/\$(\d+)/)?.[1]||15);
-  if(!phone) return alert('Enter phone'); if((currentUser.balance||0)<amt) return alert('Insufficient');
-  try{
-    let toSave={objectId: currentUser.objectId, balance:(currentUser.balance||0)-amt}; await Backendless.Data.of("Users").save(toSave); let confirmed=await Backendless.Data.of("Users").findById(currentUser.objectId); currentUser={...currentUser, ...confirmed}; localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    await Backendless.Data.of('Transactions').save({type:`Data ${plan} to ${phone}`, amount:-amt, userId:currentUser.objectId, site:'dodcommunitybank', created:new Date()});
-    document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2);
-    openModal(`<div style="text-align:center"><h3>Data Sent</h3><p>${plan}</p><button class="btn-primary" onclick="closeModal()">Done</button></div>`);
-  }catch(e){ alert('Failed: '+e.message); }
-}
-function showDoDPay(){ openModal(`<h3 style="font-weight:800">DoD Pay</h3><input id="mpEmail" placeholder="Email"><input id="mpAmount" type="number" placeholder="Amount"><button class="btn-primary" onclick="doDoDPay()">Send</button><button class="btn-secondary" onclick="closeModal()">Cancel</button><p id="mpMsg"></p>`); }
-async function doDoDPay(){
-  let email=document.getElementById('mpEmail').value.trim(); let amt=parseFloat(document.getElementById('mpAmount').value);
-  if(!email||!amt) return alert('Fill'); if((currentUser.balance||0)<amt) return alert('Insufficient');
-  let users=await Backendless.Data.of("Users").find({whereClause:`email='${email}'`});
-  if(users.length==0) return document.getElementById('mpMsg').innerHTML='<span style="color:#FF3B30">Not found</span>';
-  let r=users[0];
-  try{
-    let toSave={objectId: currentUser.objectId, balance:(currentUser.balance||0)-amt}; await Backendless.Data.of("Users").save(toSave); let rSave={objectId: r.objectId, balance:(r.balance||0)+amt}; await Backendless.Data.of("Users").save(rSave); let confirmed=await Backendless.Data.of("Users").findById(currentUser.objectId); currentUser={...currentUser, ...confirmed}; localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    await Backendless.Data.of('Transactions').save({type:`Sent to ${r.name}`, amount:-amt, userId:currentUser.objectId, site:'dodcommunitybank', created:new Date()});
-    await Backendless.Data.of('Transactions').save({type:`Received from ${currentUser.name}`, amount:amt, userId:r.objectId, site:'dodcommunitybank', created:new Date()});
-    document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2); closeModal(); loadDashboard();
-  }catch(e){ alert('Failed: '+e.message); }
-}
-async function showLoan(){
-  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active')); document.getElementById('navLoan').classList.add('active');
-  let loans=[]; try{ loans=await Backendless.Data.of('Loans').find({whereClause:`userId='${currentUser.objectId}'`, sortBy:['created DESC'], pageSize:20}); }catch(e){ loans=JSON.parse(localStorage.getItem('myLoans')||'[]'); }
-  let pending=loans.find(l=>l.status==='pending');
-  let html=`<h3 style="font-weight:800">DoD Loans</h3>`;
-  if(loans.length>0){ html+=`<div style="margin:14px 0">`; loans.forEach(l=>{ html+=`<div style="background:#F5F5F7;padding:14px;border-radius:14px;margin:8px 0;border-left:4px solid ${l.status==='approved'?'#00A651': l.status==='rejected'?'#FF3B30':'#FFCC00'}"><div style="display:flex;justify-content:space-between"><b>$${l.amount} - ${l.purpose}</b><span style="padding:4px 10px;border-radius:20px;font-size:10px;font-weight:800;background:${l.status==='approved'?'#E6F9EF': l.status==='rejected'?'#FFE6E6':'#FFF7E6'}">${(l.status||'pending').toUpperCase()}</span></div></div>`; }); html+=`</div>`; }
-  if(pending){ html+=`<div style="background:#FFF7E6;padding:14px;border-radius:14px;text-align:center"><h4>Under Review</h4><p style="font-size:12px;margin-top:6px">$${pending.amount}</p></div>`; }
-  else{ html+=`<div style="background:#F5F5F7;padding:16px;border-radius:16px;margin-top:14px"><h4>Request Loan</h4><input id="loanAmount" type="number" placeholder="Amount"><select id="loanPurpose"><option value="">Purpose</option><option>Personal</option><option>Business</option></select><textarea id="loanDesc" placeholder="Reason" rows="2"></textarea><button class="btn-primary" onclick="submitLoan()">Submit</button></div>`; }
-  html+=`<button class="btn-secondary" onclick="closeModal()">Close</button>`;
-  openModal(html);
-}
-async function submitLoan(){
-  let amount=parseFloat(document.getElementById('loanAmount').value); let purpose=document.getElementById('loanPurpose').value; let desc=document.getElementById('loanDesc').value;
-  if(!amount||!purpose) return alert('Fill');
-  let loan={userId:currentUser.objectId, userName:currentUser.name, userEmail:currentUser.email, accountNumber:currentUser.accountNumber, amount:amount, purpose:purpose, description:desc, status:'pending', site:'dodcommunitybank', created:new Date()};
-  try{ await Backendless.Data.of('Loans').save(loan); }catch(e){ let ll=JSON.parse(localStorage.getItem('myLoans')||'[]'); loan.objectId='local_'+Date.now(); ll.unshift(loan); localStorage.setItem('myLoans', JSON.stringify(ll)); }
-  openModal(`<div style="text-align:center"><h3>Submitted</h3><p style="margin:12px 0">Bank reviewing</p><button class="btn-primary" onclick="showLoan()">View</button></div>`);
-}
-async function showHistory(){
-  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active')); document.getElementById('navHistory').classList.add('active');
-  try{
-    let txs=await Backendless.Data.of('Transactions').find({whereClause:`userId='${currentUser.objectId}'`, sortBy:['created DESC'], pageSize:100});
-    let html=`<h3 style="font-weight:800">Activity</h3><div style="display:flex;gap:8px;margin:14px 0"><button class="btn-secondary" style="flex:1;margin:0;font-size:12px" onclick="generateStatement()">Statement</button><button class="btn-secondary" style="flex:1;margin:0;font-size:12px" onclick="alert('CSV exported')">CSV</button></div>`;
-    if(txs.length===0) html+=`<p style="color:#9CA3AF;text-align:center;margin:30px 0">No activity yet</p>`;
-    else txs.forEach(t=>{
-      let d=t.created? new Date(t.created).toLocaleString(): new Date().toLocaleString();
-      let isPos=(t.amount||0)>0;
-      html+=`<div class="tx" style="border:1px solid #F5F5F7;border-radius:14px;margin:8px 0" onclick="showReceipt('${t.objectId||''}','${(t.type||'').replace(/'/g,'')}','${t.amount||0}','${d}')"><div style="display:flex;gap:12px;align-items:center"><div style="width:40px;height:40px;background:${isPos?'#E6F9EF':'#F5F5F7'};border-radius:12px;display:flex;align-items:center;justify-content:center">${isPos?'↓':'↑'}</div><div><b style="font-size:13px">${t.type||'Transaction'}</b><p style="font-size:11px;color:#9CA3AF">${d}</p></div></div><div style="text-align:right"><b style="font-size:14px;color:${isPos?'#00A651':'#111'}">${isPos?'+':''}$${Math.abs(t.amount||0).toFixed(2)}</b></div></div>`;
-    });
-    html+=`<button class="btn-secondary" onclick="closeModal()">Close</button>`;
-    openModal(html);
-  }catch(e){ openModal(`<p style="color:#FF3B30">${e.message}</p>`); }
-}
-function showReceipt(id,type,amount,date){ let fullDateTime = date ? date : new Date().toLocaleString(); // includes time
-  let timeOnly = new Date().toLocaleTimeString();
-  let amt=parseFloat(amount)||0; let ref='DOD'+Date.now().toString().slice(-8);
-  let html=`<div class="receipt"><h3 style="text-align:center;font-weight:900">DoD Community Bank</h3><p style="text-align:center;color:#9CA3AF;font-size:12px;margin-bottom:20px">Official Receipt</p>
-  <div class="receipt-row"><span>Type</span><b>${type||'Transfer'}</b></div>
-  <div class="receipt-row"><span>Amount</span><b style="color:${amt>0?'#00A651':'#111'}">$${Math.abs(amt).toFixed(2)}</b></div>
-  <div class="receipt-row"><span>Date & Time</span><b style="font-size:11px">${fullDateTime||date||new Date().toLocaleString()}</b></div>
-  <div class="receipt-row"><span>Time</span><b style="font-size:11px">${timeOnly||new Date().toLocaleTimeString()}</b></div>
-  <div class="receipt-row"><span>Ref</span><b style="font-size:11px">${ref}</b></div>
-  <div class="receipt-row"><span>Account</span><b>${currentUser.accountNumber||''}</b></div>
-  <div class="receipt-row"><span>Status</span><b style="color:#00A651">Completed</b></div>
-  <div class="receipt-row"><span>Balance</span><b>$${(currentUser.balance||0).toFixed(2)}</b></div>
-  <button class="btn-primary" onclick="alert('Receipt shared! ${ref}')">Share</button>
-  <button class="btn-secondary" onclick="closeModal()">Close</button></div>`;
-  openModal(html);
-}
-function generateStatement(){ openModal(`<h3 style="font-weight:800">Monthly Statement</h3><p style="font-size:12px;color:#6B7280">${currentUser.accountNumber}</p><div style="background:#F5F5F7;padding:16px;border-radius:14px;margin:16px 0"><p>Closing: $${(currentUser.balance||0).toFixed(2)}</p><p style="font-size:11px;color:#9CA3AF;margin-top:10px">Generated ${new Date().toLocaleString()}</p></div><button class="btn-primary" onclick="alert('Statement PDF downloaded')">Download PDF</button><button class="btn-secondary" onclick="showHistory()">Back</button>`); }
-function showRewards(){ document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active')); document.getElementById('navReward').classList.add('active'); let points=currentUser.rewardPoints||0; let html=`<h3 style="font-weight:800">Rewards</h3><div style="background:#00A651;color:#fff;padding:20px;border-radius:20px;margin:14px 0;display:flex;justify-content:space-between"><div><p style="font-size:11px;opacity:0.8">YOUR POINTS</p><h2 style="font-size:32px;margin-top:6px;font-weight:800">${points}</h2></div><div style="font-size:44px">🎁</div></div><button class="btn-primary" onclick="redeemPoints()">Redeem</button><button class="btn-secondary" onclick="closeModal()">Close</button>`; openModal(html); }
-async function redeemPoints(){ let pts=currentUser.rewardPoints||0; if(pts<100) return alert('Min 100 pts'); let amount=pts*0.01; try{ let updated=await Backendless.Data.of("Users").save({...currentUser, balance:(currentUser.balance||0)+amount, rewardPoints:0}); currentUser=updated; localStorage.setItem('currentUser', JSON.stringify(currentUser)); await Backendless.Data.of('Transactions').save({type:`Rewards ${pts} pts`, amount:amount, userId:currentUser.objectId, site:'dodcommunitybank', created:new Date()}); alert(`Redeemed $${amount.toFixed(2)}`); closeModal(); loadDashboard(); }catch(e){ alert('Failed: '+e.message); } }
-function showMe(){ document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active')); document.getElementById('navMe').classList.add('active'); openModal(`<div style="text-align:center"><div style="width:64px;height:64px;border-radius:50%;background:#111;color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;margin:0 auto 12px">${(currentUser.name||'U').slice(0,2).toUpperCase()}</div><h3 style="font-weight:800">${currentUser.name||''}</h3><p style="color:#6B7280;font-size:13px">${currentUser.email||''}</p><p style="color:#9CA3AF;font-size:11px;margin-top:4px">${currentUser.accountNumber||''} • Routing 021000021</p><div style="background:#F5F5F7;padding:16px;border-radius:16px;margin:18px 0;text-align:left"><p style="display:flex;justify-content:space-between;font-size:13px"><span>Balance</span><b>$${(currentUser.balance||0).toFixed(2)}</b></p></div><button class="btn-primary" onclick="closeModal()">Close</button><button class="btn-secondary" style="color:#FF3B30" onclick="logout()">Log Out</button></div>`); }
-async function logout(){ await Backendless.UserService.logout(); localStorage.removeItem('currentUser'); window.location.href='index.html'; }
-// ===== PROFILE PICTURE - VIEW, CHANGE, SNAP =====
-function showPictureOptions(){
-  let hasPic = currentUser.profilePic || currentUser.avatar;
-  let html = `<h3 style="font-weight:800">Profile Picture</h3>
-  <div style="text-align:center;margin:16px 0">
-    <div style="width:120px;height:120px;border-radius:50%;background:#111;color:#fff;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:700;margin:0 auto;overflow:hidden" id="previewAvatar">
-      ${hasPic ? `<img src="${hasPic}" style="width:100%;height:100%;object-fit:cover">` : (currentUser.name||'U').slice(0,2).toUpperCase()}
-    </div>
-    <p style="font-size:13px;color:#6B7280;margin-top:10px">${currentUser.name||'User'}</p>
-  </div>
-  <button class="btn-primary" onclick="viewPicture()">${hasPic?'👁️ View Full Picture':'No picture yet'}</button>
-  <button class="btn-secondary" onclick="document.getElementById('fileInput').click()">📁 Change from Gallery</button>
-  <button class="btn-secondary" onclick="snapPicture()">📸 Take Photo / Snap Picture</button>
-  <button class="btn-ghost" onclick="closeModal()">Close</button>
-  <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="uploadPic(event)">
-  <div id="cameraArea" style="display:none;margin-top:14px">
-    <video id="cameraVideo" autoplay playsinline style="width:100%;border-radius:16px;background:#000"></video>
-    <canvas id="cameraCanvas" style="display:none"></canvas>
-    <div style="display:flex;gap:10px;margin-top:10px">
-      <button class="btn-primary" style="flex:1" onclick="takeSnap()">Snap</button>
-      <button class="btn-secondary" style="flex:1;margin:0" onclick="stopCamera()">Cancel</button>
-    </div>
-  </div>`;
-  openModal(html);
-}
-function viewPicture(){
-  let pic = currentUser.profilePic || currentUser.avatar;
-  if(!pic) return alert('No picture set yet');
-  let html = `<h3 style="font-weight:800">Profile Picture</h3><div style="margin:16px 0;text-align:center"><img src="${pic}" style="width:100%;max-height:70vh;object-fit:contain;border-radius:20px"></div><button class="btn-primary" onclick="showPictureOptions()">Back</button><button class="btn-ghost" onclick="closeModal()">Close</button>`;
-  openModal(html);
-}
-async function uploadPic(e){
-  let f=e.target.files[0]; if(!f) return;
-  try{
-    openModal(`<div style="text-align:center"><p>Uploading picture...</p></div>`);
-    let up=await Backendless.Files.upload(f,"profile_pics/"+currentUser.objectId+"_"+Date.now()+"_"+f.name,true);
-    let url=up.fileURL;
-    // Save to user
-    let toSave={objectId: currentUser.objectId, profilePic:url, avatar:url};
-    let updated=await Backendless.Data.of("Users").save(toSave);
-    let confirmed=await Backendless.Data.of("Users").findById(currentUser.objectId);
-    currentUser={...currentUser, ...confirmed};
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    document.getElementById('avatarText').innerHTML=`<img src="${url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
-    openModal(`<div style="text-align:center"><h3>Picture Updated</h3><div style="width:100px;height:100px;border-radius:50%;overflow:hidden;margin:14px auto"><img src="${url}" style="width:100%;height:100%;object-fit:cover"></div><button class="btn-primary" onclick="closeModal(); loadDashboard()">Done</button></div>`);
-  }catch(err){ openModal(`<p style="color:#FF3B30">Failed: ${err.message}</p><button class="btn-secondary" onclick="showPictureOptions()">Back</button>`); }
-}
-let cameraStream=null;
-async function snapPicture(){
-  document.getElementById('cameraArea').style.display='block';
-  try{
-    cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"user"}, audio:false});
-    document.getElementById('cameraVideo').srcObject=cameraStream;
-  }catch(err){ alert('Camera access denied or not available: '+err.message); document.getElementById('cameraArea').style.display='none'; }
-}
-function stopCamera(){
-  if(cameraStream){ cameraStream.getTracks().forEach(t=>t.stop()); cameraStream=null; }
-  document.getElementById('cameraArea').style.display='none';
-}
-async function takeSnap(){
-  let video=document.getElementById('cameraVideo');
-  let canvas=document.getElementById('cameraCanvas');
-  canvas.width=video.videoWidth; canvas.height=video.videoHeight;
-  canvas.getContext('2d').drawImage(video,0,0);
-  stopCamera();
-  canvas.toBlob(async (blob)=>{
-    try{
-      openModal(`<div style="text-align:center"><p>Uploading snapped picture...</p></div>`);
-      let file=new File([blob], "snap_"+Date.now()+".jpg", {type:"image/jpeg"});
-      let up=await Backendless.Files.upload(file,"profile_pics/"+currentUser.objectId+"_snap_"+Date.now()+".jpg",true);
-      let url=up.fileURL;
-      let toSave={objectId: currentUser.objectId, profilePic:url, avatar:url};
-      await Backendless.Data.of("Users").save(toSave);
-      let confirmed=await Backendless.Data.of("Users").findById(currentUser.objectId);
-      currentUser={...currentUser, ...confirmed};
-      localStorage.setItem('currentUser', JSON.stringify(currentUser));
-      document.getElementById('avatarText').innerHTML=`<img src="${url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
-      openModal(`<div style="text-align:center"><h3>Snapped!</h3><div style="width:100px;height:100px;border-radius:50%;overflow:hidden;margin:14px auto"><img src="${url}" style="width:100%;height:100%;object-fit:cover"></div><button class="btn-primary" onclick="closeModal(); loadDashboard()">Done</button></div>`);
-    }catch(err){ openModal(`<p style="color:#FF3B30">${err.message}</p>`); }
-  }, 'image/jpeg', 0.8);
-}
-</script>
-<script>
-async function doLogin(){
-  let email=document.getElementById('loginEmail').value.trim();
-  let pass=document.getElementById('loginPass').value;
-  if(!email||!pass) return alert('Enter email and password');
-  let msgEl=document.getElementById('loginMsg');
-  if(msgEl) msgEl.innerHTML='Signing in...';
-  try{
-    let user=await Backendless.UserService.login(email, pass, true);
-    try{
-      let full=await Backendless.Data.of("Users").find({whereClause:`email='${email}'`});
-      if(full.length>0) user={...user, ...full[0]};
-    }catch(e){}
-    if(user.accountNumber && user.accountNumber.startsWith('MB')){
-      let newAcc='DOD'+user.accountNumber.substring(2);
-      try{ await Backendless.Data.of("Users").save({objectId:user.objectId, accountNumber:newAcc}); user.accountNumber=newAcc; }catch(e){}
-    }
-    if(!user.accountNumber){
-      let newAcc='DOD'+Math.floor(1000000000+Math.random()*9000000000).toString();
-      try{ await Backendless.Data.of("Users").save({objectId:user.objectId, accountNumber:newAcc, balance:user.balance||0}); user.accountNumber=newAcc; }catch(e){}
-    }
-    localStorage.setItem('currentUser', JSON.stringify(user));
-    if(msgEl) msgEl.innerHTML='<span style="color:#0B6E4F">Success</span>';
-    setTimeout(()=>{
-      document.getElementById('landingView').style.display='none';
-      document.getElementById('dashboardView').style.display='block';
-      if(typeof loadDashboard==='function') loadDashboard();
-      window.scrollTo(0,0);
-    },400);
-  }catch(e){
-    if(msgEl) msgEl.innerHTML='<span style="color:#FF3B30">'+e.message+'</span>';
-  }
-}
-function handleLogout(){
-  localStorage.removeItem('currentUser');
-  document.getElementById('dashboardView').style.display='none';
-  document.getElementById('landingView').style.display='block';
-}
-// If dashboard file had logout, override
-if(typeof logout==='function'){
-  let origLogout=logout;
-  logout=function(){ localStorage.removeItem('currentUser'); document.getElementById('dashboardView').style.display='none'; document.getElementById('landingView').style.display='block'; };
-}
-window.addEventListener('load', ()=>{
-  let u=localStorage.getItem('currentUser');
-  if(u){
-    try{
-      let user=JSON.parse(u);
-      if(user && user.email){
-        document.getElementById('landingView').style.display='none';
-        document.getElementById('dashboardView').style.display='block';
-        setTimeout(()=>{ if(typeof loadDashboard==='function') loadDashboard(); },300);
-      }
-    }catch(e){}
-  }
+async function loadTx(){
+let u=JSON.parse(localStorage.getItem('currentUser')||'{}');
+let list=document.getElementById('txList');
+if(!list) return;
+list.innerHTML='Loading...';
+try{
+let tx=await Backendless.Data.of("Transactions").find({whereClause:`userEmail='${u.email}'`, sortBy:["created DESC"], pageSize:50});
+if(!tx.length){ list.innerHTML='<div style="text-align:center;padding:20px;color:#6B7280;font-size:13px">No transactions yet</div>'; return; }
+let h='';
+tx.forEach(t=>{
+let time=new Date(t.created).toLocaleString();
+let isOut=t.fromAccount===u.accountNumber;
+h+=`<div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #F3F4F6"><div><div style="font-weight:700;font-size:13px">${t.type||'Transfer'} ${isOut?'to':'from'} ${isOut? t.toAccount : t.fromAccount}</div><div style="font-size:11px;color:#6B7280">${time} • ${t.status||'Completed'}</div></div><div style="text-align:right"><div style="font-weight:800;font-size:13px;color:${isOut?'#FF3B30':'#0B6E4F'}">${isOut?'-':'+'}$${Number(t.amount||0).toFixed(2)}</div><div style="font-size:10px;color:#6B7280">Bal $${Number(t.balanceAfter||0).toFixed(2)}</div></div></div>`;
 });
+list.innerHTML=h;
+}catch(e){ list.innerHTML='<span style="color:red">Error loading: '+e.message+'</span>'; }
+}
+function showSend(){
+let h=`<h3>Send Money</h3><input id="sTo" placeholder="To Account (DOD...)"><input id="sAmt" type="number" placeholder="Amount"><button class="btn btn-g" style="width:100%;margin-top:8px" onclick="doSend()">Send</button><button class="btn btn-w" style="width:100%;margin-top:6px" onclick="closeM()">Cancel</button><div id="smsg" style="font-size:12px;margin-top:8px"></div>`;
+openM(h);
+}
+async function doSend(){
+let u=JSON.parse(localStorage.getItem('currentUser')||'{}');
+let to=document.getElementById('sTo').value.trim(), amt=parseFloat(document.getElementById('sAmt').value);
+if(!to||!amt) return document.getElementById('smsg').innerText='Enter account and amount';
+if(to===u.accountNumber) return document.getElementById('smsg').innerText='Cannot send to self';
+document.getElementById('smsg').innerText='Sending...';
+try{
+let fromBal=Number(u.balance||0);
+if(fromBal<amt) return document.getElementById('smsg').innerText='Insufficient funds';
+let toUser=await Backendless.Data.of("Users").find({whereClause:`accountNumber='${to}'`});
+if(!toUser.length) return document.getElementById('smsg').innerText='Recipient not found';
+let toU=toUser[0];
+let newFrom=fromBal-amt;
+let newTo=Number(toU.balance||0)+amt;
+await Backendless.Data.of("Users").save({objectId:u.objectId,balance:newFrom});
+await Backendless.Data.of("Users").save({objectId:toU.objectId,balance:newTo});
+let now=new Date().toISOString();
+await Backendless.Data.of("Transactions").save({userEmail:u.email,fromAccount:u.accountNumber,toAccount:to,amount:amt,type:'Transfer',status:'Completed',balanceAfter:newFrom,created:now});
+await Backendless.Data.of("Transactions").save({userEmail:toU.email,fromAccount:u.accountNumber,toAccount:to,amount:amt,type:'Transfer',status:'Completed',balanceAfter:newTo,created:now});
+u.balance=newFrom; localStorage.setItem('currentUser',JSON.stringify(u));
+document.getElementById('bAmt').innerText='$'+newFrom.toLocaleString('en-US',{minimumFractionDigits:2});
+document.getElementById('smsg').innerHTML='<span style="color:#0B6E4F">Sent $'+amt.toFixed(2)+' to '+to+'<br>'+new Date().toLocaleString()+'</span>';
+loadTx();
+}catch(e){ document.getElementById('smsg').innerText='Error: '+e.message; }
+}
+function showWU(){ openM('<h3>Western Union / MoneyGram</h3><p style="font-size:13px;color:#6B7280">Transfer feature available in full dashboard version. Use Send for now.</p><button class="btn btn-w" style="width:100%;margin-top:10px" onclick="closeM()">Close</button>'); }
+function showProfile(){ let u=JSON.parse(localStorage.getItem('currentUser')||'{}'); openM(`<h3>Profile</h3><p style="font-size:13px;margin-top:8px"><b>Name:</b> ${u.name||''}</p><p style="font-size:13px"><b>Email:</b> ${u.email||''}</p><p style="font-size:13px"><b>Account:</b> ${u.accountNumber||''}</p><p style="font-size:13px"><b>Balance:</b> $${Number(u.balance||0).toFixed(2)}</p><button class="btn btn-w" style="width:100%;margin-top:12px" onclick="closeM()">Close</button>`); }
+function logout(){ localStorage.removeItem('currentUser'); document.getElementById('dash').style.display='none'; document.getElementById('landing').style.display='block'; }
+window.onload=()=>{ let u=localStorage.getItem('currentUser'); if(u){ try{ let ju=JSON.parse(u); if(ju.email) showDash(); }catch(e){} } };
 </script>
 </body>
 </html>
