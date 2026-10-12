@@ -220,10 +220,19 @@ async function doLogin(){
       if(full.length>0){ user={...user, ...full[0]}; }
     }catch(e){}
     localStorage.setItem('currentUser', JSON.stringify(user));
+    localStorage.setItem('userToken', user['user-token']||'');
     document.getElementById('loginMsg').innerHTML='<span style="color:#0B6E4F">Success - Redirecting to DoD Community Bank</span>';
-    setTimeout(()=>{ window.location.href='dashboard_DOD_TIME.html'; }, 800);
+    setTimeout(()=>{ 
+      // Try dashboard.html (standard) - if you named it differently, update here
+      window.location.href='dashboard.html'; 
+    }, 800);
   }catch(e){
-    document.getElementById('loginMsg').innerHTML='<span style="color:#FF3B30">'+e.message+'</span>';
+    console.log('Login error', e);
+    let msg = e.message || '';
+    if(msg.toLowerCase().includes('not found') || msg.toLowerCase().includes('invalid')){
+      msg = 'Invalid email or password. If you just signed up, make sure email is correct. If admin created your account, check credentials.';
+    }
+    document.getElementById('loginMsg').innerHTML='<span style="color:#FF3B30">'+msg+' (Code: '+e.code+')</span>';
   }
 }
 function toggleMobile(){
