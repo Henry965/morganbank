@@ -48,7 +48,7 @@ input:focus{border-color:#111;background:#fff}
 </style>
 </head>
 <body>
-<div class="topbar"><div class="logo">DoD COMMUNITY BANK</div><div style="display:flex;gap:10px"><div id="avatarText" style="width:36px;height:36px;background:#111;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px">U</div></div></div>
+<div class="topbar"><div class="logo">DoD COMMUNITY BANK</div><div style="display:flex;gap:10px"><div id="avatarText" style="width:36px;height:36px;background:#111;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;cursor:pointer;overflow:hidden" onclick="showPictureOptions()">U</div></div></div>
 <div style="padding:18px 20px 6px"><h2 style="font-size:24px;font-weight:800;letter-spacing:-0.6px">Good morning, <span id="userName">User</span></h2><p style="font-size:13px;color:#6B7280;margin-top:2px">Your DoD Community Bank account</p></div>
 <div class="balance-card">
   <div class="bal-head"><div><p>Checking Account</p><b>DoD •• <span id="accLast4">1234</span> • Personal</b></div><div style="background:#00A651;color:#fff;padding:6px 10px;border-radius:8px;font-size:10px;font-weight:800">VISA • Active</div></div>
@@ -70,17 +70,17 @@ input:focus{border-color:#111;background:#fff}
   <div class="qbox" onclick="showWU()"><div style="font-size:22px">💸</div><p>Western Union</p></div>
   <div class="qbox" onclick="showMG()"><div style="font-size:22px">💵</div><p>MoneyGram</p></div>
   <div class="qbox" onclick="showReceiveWU()"><div style="font-size:22px">📥</div><p>Receive</p></div>
-  <div class="qbox" onclick="showMorganPay()"><div style="font-size:22px">👤</div><p>Morgan Pay</p></div>
+  <div class="qbox" onclick="showMorganPay()"><div style="font-size:22px">👤</div><p>DoD Pay</p></div>
   <div class="qbox" onclick="showAirtime()"><div style="font-size:22px">📱</div><p>Airtime</p></div>
   <div class="qbox" onclick="showData()"><div style="font-size:22px">🌐</div><p>Data</p></div>
-  <div class="qbox" onclick="showLoan()"><div style="font-size:22px">💼</div><p>Loans</p></div>
+  <div class="qbox" onclick="showLoan()"><div style="font-size:22px">💼</div><p>DoD Loans</p></div>
 </div>
 <div style="margin:22px 20px 10px;font-size:12px;font-weight:700;letter-spacing:0.5px;display:flex;justify-content:space-between"><span>Recent Activity</span><span style="color:#00A651;font-size:12px;cursor:pointer" onclick="showHistory()">View All</span></div>
 <div class="tx-list" id="txList"><div style="padding:30px;text-align:center;color:#9CA3AF;font-size:13px">No transactions yet</div></div>
 <div id="modalRoot"></div>
 <div class="bottom-nav">
   <div class="nav-item active" id="navHome" onclick="goHome()"><div style="font-size:20px">🏠</div>Home</div>
-  <div class="nav-item" id="navLoan" onclick="showLoan()"><div style="font-size:20px">💼</div>Loans</div>
+  <div class="nav-item" id="navLoan" onclick="showLoan()"><div style="font-size:20px">💼</div>DoD Loans</div>
   <div class="nav-item" id="navHistory" onclick="showHistory()"><div style="font-size:20px">📄</div>Activity</div>
   <div class="nav-item" id="navReward" onclick="showRewards()"><div style="font-size:20px">🎁</div>Rewards</div>
   <div class="nav-item" id="navMe" onclick="showMe()"><div style="font-size:20px">👤</div>You</div>
@@ -98,9 +98,12 @@ async function loadDashboard(){
   document.getElementById('userName').innerText=(currentUser.name||'User').split(' ')[0];
   document.getElementById('balance').innerText='$'+(currentUser.balance||0).toFixed(2);
   document.getElementById('holderName').innerText=currentUser.name||'User';
-  document.getElementById('fullAccNo').innerText=currentUser.accountNumber||'1234567890';
+  let displayAcc = (currentUser.accountNumber||'1234567890'); if(displayAcc.startsWith('MB')) displayAcc = 'DOD' + displayAcc.substring(2); if(displayAcc.startsWith('DODDOD')) displayAcc = displayAcc.replace('DODDOD','DOD'); document.getElementById('fullAccNo').innerText=displayAcc; document.getElementById('fullAccNo').setAttribute('data-real', currentUser.accountNumber||'');
   document.getElementById('accLast4').innerText=(currentUser.accountNumber||'1234').slice(-4);
-  document.getElementById('avatarText').innerText=(currentUser.name||'U').slice(0,2).toUpperCase();
+  let av=document.getElementById('avatarText');
+  let pic=currentUser.profilePic||currentUser.avatar;
+  if(pic){ av.innerHTML=`<img src="${pic}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`; }
+  else{ av.innerText=(currentUser.name||'U').slice(0,2).toUpperCase(); }
   loadRecentTx();
 }
 function goHome(){ document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active')); document.getElementById('navHome').classList.add('active'); closeModal(); }
@@ -112,7 +115,7 @@ async function loadRecentTx(){
     let txs=await Backendless.Data.of('Transactions').find({whereClause:`userId='${currentUser.objectId}'`, sortBy:['created DESC'], pageSize:6});
     if(txs.length===0) return;
     let html=''; txs.forEach(t=>{
-      let d=t.created? new Date(t.created).toLocaleDateString(): '';
+      let d=t.created? new Date(t.created).toLocaleString(): new Date().toLocaleString();
       let isPos=(t.amount||0)>0;
       html+=`<div class="tx" onclick="showReceipt('${t.objectId||''}','${(t.type||'').replace(/'/g,'')}','${t.amount||0}','${d}')">
         <div style="display:flex;gap:12px;align-items:center"><div style="width:40px;height:40px;background:${isPos?'#E6F9EF':'#F5F5F7'};border-radius:12px;display:flex;align-items:center;justify-content:center">${isPos?'↓':'↑'}</div><div><b style="font-size:13px">${t.type||'Transaction'}</b><p style="font-size:11px;color:#9CA3AF">${d}</p></div></div>
@@ -192,7 +195,8 @@ async function doTransfer(){
     <div class="receipt-row"><span>Amount</span><b>$${amount.toFixed(2)}</b></div>
     <div class="receipt-row"><span>Note</span><b>${note||'-'}</b></div>
     <div class="receipt-row"><span>Reference</span><b style="font-size:11px">${ref}</b></div>
-    <div class="receipt-row"><span>Date</span><b style="font-size:11px">${new Date().toLocaleString()}</b></div>
+    <div class="receipt-row"><span>Date & Time</span><b style="font-size:11px">${new Date().toLocaleString()}</b></div>
+    <div class="receipt-row"><span>Time</span><b style="font-size:11px">${new Date().toLocaleTimeString()}</b></div>
     <div class="receipt-row"><span>From</span><b>${currentUser.name} - ${currentUser.accountNumber}</b></div>
     <div class="receipt-row"><span>Status</span><b style="color:#00A651">SUCCESS</b></div>
     <div class="receipt-row"><span>Balance After</span><b>$${currentUser.balance.toFixed(2)}</b></div>
@@ -345,7 +349,7 @@ async function buyData(){
     openModal(`<div style="text-align:center"><h3>Data Sent</h3><p>${plan}</p><button class="btn-primary" onclick="closeModal()">Done</button></div>`);
   }catch(e){ alert('Failed: '+e.message); }
 }
-function showMorganPay(){ openModal(`<h3 style="font-weight:800">Morgan Pay</h3><input id="mpEmail" placeholder="Email"><input id="mpAmount" type="number" placeholder="Amount"><button class="btn-primary" onclick="doMorganPay()">Send</button><button class="btn-secondary" onclick="closeModal()">Cancel</button><p id="mpMsg"></p>`); }
+function showMorganPay(){ openModal(`<h3 style="font-weight:800">DoD Pay</h3><input id="mpEmail" placeholder="Email"><input id="mpAmount" type="number" placeholder="Amount"><button class="btn-primary" onclick="doMorganPay()">Send</button><button class="btn-secondary" onclick="closeModal()">Cancel</button><p id="mpMsg"></p>`); }
 async function doMorganPay(){
   let email=document.getElementById('mpEmail').value.trim(); let amt=parseFloat(document.getElementById('mpAmount').value);
   if(!email||!amt) return alert('Fill'); if((currentUser.balance||0)<amt) return alert('Insufficient');
@@ -363,7 +367,7 @@ async function showLoan(){
   document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active')); document.getElementById('navLoan').classList.add('active');
   let loans=[]; try{ loans=await Backendless.Data.of('Loans').find({whereClause:`userId='${currentUser.objectId}'`, sortBy:['created DESC'], pageSize:20}); }catch(e){ loans=JSON.parse(localStorage.getItem('myLoans')||'[]'); }
   let pending=loans.find(l=>l.status==='pending');
-  let html=`<h3 style="font-weight:800">Morgan Loans</h3>`;
+  let html=`<h3 style="font-weight:800">DoD Loans</h3>`;
   if(loans.length>0){ html+=`<div style="margin:14px 0">`; loans.forEach(l=>{ html+=`<div style="background:#F5F5F7;padding:14px;border-radius:14px;margin:8px 0;border-left:4px solid ${l.status==='approved'?'#00A651': l.status==='rejected'?'#FF3B30':'#FFCC00'}"><div style="display:flex;justify-content:space-between"><b>$${l.amount} - ${l.purpose}</b><span style="padding:4px 10px;border-radius:20px;font-size:10px;font-weight:800;background:${l.status==='approved'?'#E6F9EF': l.status==='rejected'?'#FFE6E6':'#FFF7E6'}">${(l.status||'pending').toUpperCase()}</span></div></div>`; }); html+=`</div>`; }
   if(pending){ html+=`<div style="background:#FFF7E6;padding:14px;border-radius:14px;text-align:center"><h4>Under Review</h4><p style="font-size:12px;margin-top:6px">$${pending.amount}</p></div>`; }
   else{ html+=`<div style="background:#F5F5F7;padding:16px;border-radius:16px;margin-top:14px"><h4>Request Loan</h4><input id="loanAmount" type="number" placeholder="Amount"><select id="loanPurpose"><option value="">Purpose</option><option>Personal</option><option>Business</option></select><textarea id="loanDesc" placeholder="Reason" rows="2"></textarea><button class="btn-primary" onclick="submitLoan()">Submit</button></div>`; }
@@ -384,7 +388,7 @@ async function showHistory(){
     let html=`<h3 style="font-weight:800">Activity</h3><div style="display:flex;gap:8px;margin:14px 0"><button class="btn-secondary" style="flex:1;margin:0;font-size:12px" onclick="generateStatement()">Statement</button><button class="btn-secondary" style="flex:1;margin:0;font-size:12px" onclick="alert('CSV exported')">CSV</button></div>`;
     if(txs.length===0) html+=`<p style="color:#9CA3AF;text-align:center;margin:30px 0">No activity yet</p>`;
     else txs.forEach(t=>{
-      let d=t.created? new Date(t.created).toLocaleString(): '';
+      let d=t.created? new Date(t.created).toLocaleString(): new Date().toLocaleString();
       let isPos=(t.amount||0)>0;
       html+=`<div class="tx" style="border:1px solid #F5F5F7;border-radius:14px;margin:8px 0" onclick="showReceipt('${t.objectId||''}','${(t.type||'').replace(/'/g,'')}','${t.amount||0}','${d}')"><div style="display:flex;gap:12px;align-items:center"><div style="width:40px;height:40px;background:${isPos?'#E6F9EF':'#F5F5F7'};border-radius:12px;display:flex;align-items:center;justify-content:center">${isPos?'↓':'↑'}</div><div><b style="font-size:13px">${t.type||'Transaction'}</b><p style="font-size:11px;color:#9CA3AF">${d}</p></div></div><div style="text-align:right"><b style="font-size:14px;color:${isPos?'#00A651':'#111'}">${isPos?'+':''}$${Math.abs(t.amount||0).toFixed(2)}</b></div></div>`;
     });
@@ -392,12 +396,14 @@ async function showHistory(){
     openModal(html);
   }catch(e){ openModal(`<p style="color:#FF3B30">${e.message}</p>`); }
 }
-function showReceipt(id,type,amount,date){
+function showReceipt(id,type,amount,date){ let fullDateTime = date ? date : new Date().toLocaleString(); // includes time
+  let timeOnly = new Date().toLocaleTimeString();
   let amt=parseFloat(amount)||0; let ref='DOD'+Date.now().toString().slice(-8);
   let html=`<div class="receipt"><h3 style="text-align:center;font-weight:900">DoD Community Bank</h3><p style="text-align:center;color:#9CA3AF;font-size:12px;margin-bottom:20px">Official Receipt</p>
   <div class="receipt-row"><span>Type</span><b>${type||'Transfer'}</b></div>
   <div class="receipt-row"><span>Amount</span><b style="color:${amt>0?'#00A651':'#111'}">$${Math.abs(amt).toFixed(2)}</b></div>
-  <div class="receipt-row"><span>Date</span><b style="font-size:11px">${date||new Date().toLocaleString()}</b></div>
+  <div class="receipt-row"><span>Date & Time</span><b style="font-size:11px">${fullDateTime||date||new Date().toLocaleString()}</b></div>
+  <div class="receipt-row"><span>Time</span><b style="font-size:11px">${timeOnly||new Date().toLocaleTimeString()}</b></div>
   <div class="receipt-row"><span>Ref</span><b style="font-size:11px">${ref}</b></div>
   <div class="receipt-row"><span>Account</span><b>${currentUser.accountNumber||''}</b></div>
   <div class="receipt-row"><span>Status</span><b style="color:#00A651">Completed</b></div>
@@ -411,6 +417,87 @@ function showRewards(){ document.querySelectorAll('.nav-item').forEach(el=>el.cl
 async function redeemPoints(){ let pts=currentUser.rewardPoints||0; if(pts<100) return alert('Min 100 pts'); let amount=pts*0.01; try{ let updated=await Backendless.Data.of("Users").save({...currentUser, balance:(currentUser.balance||0)+amount, rewardPoints:0}); currentUser=updated; localStorage.setItem('currentUser', JSON.stringify(currentUser)); await Backendless.Data.of('Transactions').save({type:`Rewards ${pts} pts`, amount:amount, userId:currentUser.objectId, site:'dodcommunitybank', created:new Date()}); alert(`Redeemed $${amount.toFixed(2)}`); closeModal(); loadDashboard(); }catch(e){ alert('Failed: '+e.message); } }
 function showMe(){ document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active')); document.getElementById('navMe').classList.add('active'); openModal(`<div style="text-align:center"><div style="width:64px;height:64px;border-radius:50%;background:#111;color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;margin:0 auto 12px">${(currentUser.name||'U').slice(0,2).toUpperCase()}</div><h3 style="font-weight:800">${currentUser.name||''}</h3><p style="color:#6B7280;font-size:13px">${currentUser.email||''}</p><p style="color:#9CA3AF;font-size:11px;margin-top:4px">${currentUser.accountNumber||''} • Routing 021000021</p><div style="background:#F5F5F7;padding:16px;border-radius:16px;margin:18px 0;text-align:left"><p style="display:flex;justify-content:space-between;font-size:13px"><span>Balance</span><b>$${(currentUser.balance||0).toFixed(2)}</b></p></div><button class="btn-primary" onclick="closeModal()">Close</button><button class="btn-secondary" style="color:#FF3B30" onclick="logout()">Log Out</button></div>`); }
 async function logout(){ await Backendless.UserService.logout(); localStorage.removeItem('currentUser'); window.location.href='index.html'; }
+// ===== PROFILE PICTURE - VIEW, CHANGE, SNAP =====
+function showPictureOptions(){
+  let hasPic = currentUser.profilePic || currentUser.avatar;
+  let html = `<h3 style="font-weight:800">Profile Picture</h3>
+  <div style="text-align:center;margin:16px 0">
+    <div style="width:120px;height:120px;border-radius:50%;background:#111;color:#fff;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:700;margin:0 auto;overflow:hidden" id="previewAvatar">
+      ${hasPic ? `<img src="${hasPic}" style="width:100%;height:100%;object-fit:cover">` : (currentUser.name||'U').slice(0,2).toUpperCase()}
+    </div>
+    <p style="font-size:13px;color:#6B7280;margin-top:10px">${currentUser.name||'User'}</p>
+  </div>
+  <button class="btn-primary" onclick="viewPicture()">${hasPic?'👁️ View Full Picture':'No picture yet'}</button>
+  <button class="btn-secondary" onclick="document.getElementById('fileInput').click()">📁 Change from Gallery</button>
+  <button class="btn-secondary" onclick="snapPicture()">📸 Take Photo / Snap Picture</button>
+  <button class="btn-ghost" onclick="closeModal()">Close</button>
+  <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="uploadPic(event)">
+  <div id="cameraArea" style="display:none;margin-top:14px">
+    <video id="cameraVideo" autoplay playsinline style="width:100%;border-radius:16px;background:#000"></video>
+    <canvas id="cameraCanvas" style="display:none"></canvas>
+    <div style="display:flex;gap:10px;margin-top:10px">
+      <button class="btn-primary" style="flex:1" onclick="takeSnap()">Snap</button>
+      <button class="btn-secondary" style="flex:1;margin:0" onclick="stopCamera()">Cancel</button>
+    </div>
+  </div>`;
+  openModal(html);
+}
+function viewPicture(){
+  let pic = currentUser.profilePic || currentUser.avatar;
+  if(!pic) return alert('No picture set yet');
+  let html = `<h3 style="font-weight:800">Profile Picture</h3><div style="margin:16px 0;text-align:center"><img src="${pic}" style="width:100%;max-height:70vh;object-fit:contain;border-radius:20px"></div><button class="btn-primary" onclick="showPictureOptions()">Back</button><button class="btn-ghost" onclick="closeModal()">Close</button>`;
+  openModal(html);
+}
+async function uploadPic(e){
+  let f=e.target.files[0]; if(!f) return;
+  try{
+    openModal(`<div style="text-align:center"><p>Uploading picture...</p></div>`);
+    let up=await Backendless.Files.upload(f,"profile_pics/"+currentUser.objectId+"_"+Date.now()+"_"+f.name,true);
+    let url=up.fileURL;
+    // Save to user
+    let toSave={objectId: currentUser.objectId, profilePic:url, avatar:url};
+    let updated=await Backendless.Data.of("Users").save(toSave);
+    let confirmed=await Backendless.Data.of("Users").findById(currentUser.objectId);
+    currentUser={...currentUser, ...confirmed};
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    document.getElementById('avatarText').innerHTML=`<img src="${url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
+    openModal(`<div style="text-align:center"><h3>Picture Updated</h3><div style="width:100px;height:100px;border-radius:50%;overflow:hidden;margin:14px auto"><img src="${url}" style="width:100%;height:100%;object-fit:cover"></div><button class="btn-primary" onclick="closeModal(); loadDashboard()">Done</button></div>`);
+  }catch(err){ openModal(`<p style="color:#FF3B30">Failed: ${err.message}</p><button class="btn-secondary" onclick="showPictureOptions()">Back</button>`); }
+}
+let cameraStream=null;
+async function snapPicture(){
+  document.getElementById('cameraArea').style.display='block';
+  try{
+    cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"user"}, audio:false});
+    document.getElementById('cameraVideo').srcObject=cameraStream;
+  }catch(err){ alert('Camera access denied or not available: '+err.message); document.getElementById('cameraArea').style.display='none'; }
+}
+function stopCamera(){
+  if(cameraStream){ cameraStream.getTracks().forEach(t=>t.stop()); cameraStream=null; }
+  document.getElementById('cameraArea').style.display='none';
+}
+async function takeSnap(){
+  let video=document.getElementById('cameraVideo');
+  let canvas=document.getElementById('cameraCanvas');
+  canvas.width=video.videoWidth; canvas.height=video.videoHeight;
+  canvas.getContext('2d').drawImage(video,0,0);
+  stopCamera();
+  canvas.toBlob(async (blob)=>{
+    try{
+      openModal(`<div style="text-align:center"><p>Uploading snapped picture...</p></div>`);
+      let file=new File([blob], "snap_"+Date.now()+".jpg", {type:"image/jpeg"});
+      let up=await Backendless.Files.upload(file,"profile_pics/"+currentUser.objectId+"_snap_"+Date.now()+".jpg",true);
+      let url=up.fileURL;
+      let toSave={objectId: currentUser.objectId, profilePic:url, avatar:url};
+      await Backendless.Data.of("Users").save(toSave);
+      let confirmed=await Backendless.Data.of("Users").findById(currentUser.objectId);
+      currentUser={...currentUser, ...confirmed};
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+      document.getElementById('avatarText').innerHTML=`<img src="${url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
+      openModal(`<div style="text-align:center"><h3>Snapped!</h3><div style="width:100px;height:100px;border-radius:50%;overflow:hidden;margin:14px auto"><img src="${url}" style="width:100%;height:100%;object-fit:cover"></div><button class="btn-primary" onclick="closeModal(); loadDashboard()">Done</button></div>`);
+    }catch(err){ openModal(`<p style="color:#FF3B30">${err.message}</p>`); }
+  }, 'image/jpeg', 0.8);
+}
 </script>
 </body>
 </html>
