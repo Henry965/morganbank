@@ -1,157 +1,163 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Morgan Bank - Secure Digital Banking</title>
+<title>DoD Community Bank - Login</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.jsdelivr.net/npm/backendless@7.3.4/dist/backendless.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-*{margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Arial}
-html{scroll-behavior:smooth}
-body{background: #060B14; background-image: radial-gradient(#ff6a0033 1px, transparent 1px); background-size: 50px 50px; color:#fff; min-height:100vh;}
-.navbar{display:flex; justify-content:space-between; align-items:center; padding:20px; max-width:1200px; margin:0 auto; position:relative;}
-.logo-area{display:flex; align-items:center; gap:12px}
-.logo-area img{width:45px; height:45px; border-radius:50%}
-.logo-text{font-size:24px; font-weight:bold; color:#ff6a00}
-.menu-icon{font-size:28px; cursor:pointer; color:#fff}
-.side-menu{position:absolute; top:70px; left:0; right:0; background:#fff; color:#000; display:none; flex-direction:column; box-shadow:0 10px 30px rgba(0,0,0,0.5); z-index:999;}
-.side-menu a{padding:18px 30px; text-decoration:none; color:#000; font-size:18px; font-weight:500; border-bottom:1px solid #eee;}
-.side-menu a:hover{background:#f5f5f5; color:#ff6a00}
-.side-menu.show{display:flex}
-.container{max-width:900px; margin:40px auto; padding:20px; text-align:center}
-.section{padding:60px 20px; max-width:1100px; margin:0 auto; text-align:left}
-.section h2{font-size:32px; color:#ff6a00; margin-bottom:15px; text-align:center}
-.section p{color:#aaa; line-height:1.7; text-align:center}
-.badge{display:inline-flex; gap:8px; background:rgba(255,106,0,0.1); border:1px solid #ff6a0044; padding:8px 18px; border-radius:50px; color:#ff6a00; margin-bottom:20px;}
-h1{font-size:42px; margin-bottom:15px} h1 span{color:#ff6a00}
-.btn-primary{background:linear-gradient(90deg, #ff6a00, #ff8c00); color:#000; padding:14px 30px; border:none; border-radius:12px; font-weight:bold; cursor:pointer;}
-.btn-outline{background:transparent; color:#fff; border:1px solid #444; padding:14px 30px; border-radius:12px; cursor:pointer; margin-left:10px;}
-.stats{display:flex; justify-content:center; gap:50px; margin-top:60px; flex-wrap:wrap}
-.stat h2{font-size:40px; color:#ff6a00}
-.choose-title{color:#ff6a00; font-size:14px; letter-spacing:2px; text-align:left; margin-bottom:20px; font-weight:600;}
-.choose-grid{display:grid; gap:20px;}
-.choose-card{background:#fff; color:#000; padding:30px; border-radius:12px; border-top:4px solid #ff6a00; box-shadow:0 5px 20px rgba(0,0,0,0.2);}
-.choose-card h3{font-size:24px; margin-bottom:12px; color:#000}
-.choose-card p{color:#444; line-height:1.6; text-align:left}
-.performance-section{background:#fff; color:#000; padding:60px 20px;}
-.performance-content{max-width:1100px; margin:0 auto;}
-.performance-text{font-size:18px; line-height:1.7; margin-bottom:30px; color:#333;}
-.performance-img{width:100%; border-radius:16px; margin:40px 0; box-shadow:0 10px 30px rgba(0,0,0,0.1); display:block;}
-.performance-label{color:#ff6a00; font-size:14px; letter-spacing:2px; font-weight:600; margin-bottom:10px;}
-.performance-title{font-size:36px; font-weight:bold; color:#000; margin-bottom:15px;}
-.performance-desc{font-size:16px; color:#666; line-height:1.7;}
-.card{background:rgba(17,45,96,0.6); backdrop-filter:blur(10px); border:1px solid #1a3a75; border-radius:16px; padding:30px; max-width:500px; margin:40px auto; text-align:left;}
-input{width:100%; padding:14px; margin:10px 0; border:none; border-radius:8px; background:#0f274d; color:#fff}
-button.card-btn{width:100%; padding:14px; background:#ff6a00; color:#000; border:none; border-radius:8px; font-weight:bold; cursor:pointer; margin-top:10px}
-.hidden{display:none}
-.footer{background:#000; padding:30px 20px; text-align:center; border-top:1px solid #1a1a1a}
-.footer-copy{color:#777; font-size:14px; margin-bottom:20px}
-.footer-links{display:flex; justify-content:center; align-items:center; gap:30px; flex-wrap:wrap}
-.footer-links a{color:#aaa; text-decoration:none; font-size:15px}
-.footer-links a:hover{color:#ff6a00}
-.footer-bottom{background:#f5f5f5; color:#000; padding:12px; text-align:center; font-size:14px; display:flex; align-items:center; justify-content:center; gap:8px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+body{background:#F5F5F7;min-height:100vh;display:flex;flex-direction:column}
+.topbar{background:#111;color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:900;font-size:20px;letter-spacing:-0.8px}
+.logo span{color:#fff;opacity:0.6;font-weight:600;font-size:13px;margin-left:8px}
+.container{flex:1;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{background:#fff;width:100%;max-width:420px;border-radius:24px;padding:28px;box-shadow:0 4px 24px rgba(0,0,0,0.08);border:1px solid #E5E5E7}
+.card h2{font-size:26px;font-weight:800;letter-spacing:-0.8px}
+.card p{font-size:13px;color:#6B7280;margin-top:6px}
+input{width:100%;padding:14px;margin:8px 0;background:#F5F5F7;border:1px solid #E5E5E7;border-radius:14px;font-size:14px;outline:none}
+input:focus{border-color:#111;background:#fff}
+.btn{width:100%;padding:16px;background:#111;color:#fff;border:none;border-radius:16px;font-weight:700;cursor:pointer;margin-top:14px}
+.btn2{width:100%;padding:14px;background:#fff;border:1px solid #E5E5E7;border-radius:14px;cursor:pointer;margin-top:10px;font-weight:600}
+.footer{background:#111;color:#9CA3AF;padding:24px 20px;text-align:center;font-size:11px;line-height:1.6;margin-top:20px}
+.footer b{color:#fff;display:block;font-size:12px;margin-bottom:6px;letter-spacing:0.5px}
+.tabs{display:flex;gap:10px;margin:18px 0}
+.tab{flex:1;padding:10px;border-radius:12px;text-align:center;font-size:12px;font-weight:700;cursor:pointer;border:1px solid #E5E5E7}
+.tab.active{background:#111;color:#fff;border-color:#111}
 </style>
 </head>
 <body>
-
-<div class="navbar">
-  <div class="logo-area">
-    <img src="https://i.imgur.com/8QmXz7L.png" alt="Morgan Bank Logo">
-    <div class="logo-text">MORGAN BANK</div>
-  </div>
-  <div class="menu-icon" onclick="toggleMenu()">☰</div>
-  <div class="side-menu" id="sideMenu">
-    <a href="#choose" onclick="closeMenu()">Why Us</a>
-    <a href="#performance" onclick="closeMenu()">Performance</a>
-    <a href="#services" onclick="closeMenu()">Services</a>
-    <a href="#about" onclick="closeMenu()">About</a>
-    <a href="#contact" onclick="closeMenu()">Contact</a>
-  </div>
+<div class="topbar">
+  <div class="logo">DoD COMMUNITY BANK</div>
+  <div style="font-size:10px;color:#9CA3AF">Secure Banking</div>
 </div>
-
-<div id="authScreen" class="container">
-  <div class="badge">● Secure Digital Banking</div>
-  <h1>Banking that feels <span>effortless.</span></h1>
-  <p class="subtext">Send, receive, and manage your money in seconds. Built for speed, security, and trust.</p>
-  <button class="btn-primary" onclick="showTab('register')">Open Account</button>
-  <button class="btn-outline" onclick="showTab('login')">Login</button>
-  <div class="card" id="authCard" style="display:none">
+<div class="container">
+  <div class="card">
+    <h2>Welcome to DoD Community Bank</h2>
+    <p>Secure • American Banks • Western Union • MoneyGram • Real Banking</p>
+    
+    <div class="tabs">
+      <div class="tab active" id="loginTab" onclick="showLogin()">Login</div>
+      <div class="tab" id="signupTab" onclick="showSignup()">Sign Up</div>
+    </div>
     <div id="loginForm">
-      <h2 style="color:#ff6a00">Login to Morgan Bank</h2>
-      <input id="loginEmail" type="email" placeholder="Email">
-      <input id="loginPassword" type="password" placeholder="Password">
-      <button class="card-btn" onclick="login()">Login</button>
+      <input id="loginEmail" type="email" placeholder="Email address">
+      <input id="loginPass" type="password" placeholder="Password">
+      <button class="btn" onclick="doLogin()">Login to DoD Community Bank</button>
+      <p style="text-align:center;margin-top:12px;font-size:12px">Forgot password? Contact support</p>
     </div>
-    <div id="registerForm" class="hidden">
-      <h2 style="color:#ff6a00">Create Morgan Bank Account</h2>
-      <input id="regName" placeholder="Full Name">
-      <input id="regEmail" type="email" placeholder="Email">
-      <input id="regPassword" type="password" placeholder="Password">
-      <button class="card-btn" onclick="register()">Create Account</button>
+    <div id="signupForm" style="display:none">
+      <input id="regName" placeholder="Full Name (as on ID)">
+      <input id="regEmail" type="email" placeholder="Email address">
+      <input id="regPhone" placeholder="Phone Number (US)">
+      <input id="regPass" type="password" placeholder="Create Password">
+      <input id="regConfirm" type="password" placeholder="Confirm Password">
+      <button class="btn" onclick="doSignup()">Create DoD Account</button>
+      <p style="font-size:10px;color:#9CA3AF;margin-top:10px;text-align:center">By signing up, you agree to DoD Community Bank terms. Your account number will start with DOD and routing 021000021.</p>
     </div>
-  </div>
-  <div class="stats">
-    <div class="stat"><h2>50K+</h2><p>Customers</p></div>
-    <div class="stat"><h2>99.9%</h2><p>Uptime</p></div>
-    <div class="stat"><h2>24/7</h2><p>Support</p></div>
+    <div id="msg" style="margin-top:12px;font-size:12px;text-align:center"></div>
   </div>
 </div>
-
-<div id="choose" class="section">
-  <div class="choose-title">WHY CUSTOMERS CHOOSE US</div>
-  <div class="choose-grid">
-    <div class="choose-card"><h3>Clarity</h3><p>We define the goal before we move your first cash. Every account starts with clear onboarding to ensure you get exactly what you need.</p></div>
-    <div class="choose-card"><h3>Craft</h3><p>Clean UI, fast transfers, and zero hidden fees. We obsess over every pixel and every second of transaction time.</p></div>
-    <div class="choose-card"><h3>Continuity</h3><p>Launch is day one. We keep your account secure and growing with 24/7 monitoring, updates, and dedicated support.</p></div>
-  </div>
-</div>
-
-<div id="performance" class="performance-section">
-  <div class="performance-content">
-    <p class="performance-text">From startups to established businesses, we build banking that stays secure and scales with your finances.</p>
-    <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1000" alt="Morgan Bank Performance" class="performance-img">
-    <div class="performance-label">PERFORMANCE FIRST</div>
-    <div class="performance-title">Built for performance.</div>
-    <div class="performance-desc">Fast transfers, bank-grade security, and clean design — so your money moves instantly and stays protected.</div>
-  </div>
-</div>
-
-<div id="services" class="section"><h2>Our Services</h2><p>Fast transfers, instant deposits, secure withdrawals, and 24/7 transaction history.</p></div>
-<div id="about" class="section"><h2>About Morgan Bank</h2><p>Morgan Bank is a digital-first bank built for the next generation.</p></div>
-<div id="contact" class="section"><h2>Contact Us</h2><p>Email: support@morganbank.com<br>We reply within 24 hours.</p></div>
-
 <div class="footer">
-  <div class="footer-copy">© 2026 MORGAN BANK. All rights reserved.</div>
-  <div class="footer-links"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div>
+  <b>DoD COMMUNITY BANK - HEAD OFFICE</b>
+  300 Convent Street, Suite 400<br>
+  San Antonio, TX 78205-3701, USA<br>
+  Routing: 021000021 | Member FDIC | DoD Community Bank, N.A.<br>
+  <span style="margin-top:8px;display:block">American Banks • Western Union • MoneyGram • Zelle • ACH • Wire Transfer</span>
+  <span style="margin-top:8px;display:block;color:#6B7280">© 2026 DoD Community Bank. All rights reserved. DoD Community Bank is a fictional bank for demonstration purposes.</span>
 </div>
-<div class="footer-bottom">🔒 morganbank.com</div>
-
 <script>
 Backendless.initApp('65ABB198-A187-4B5A-B7D3-0839AEA80B26', 'CDA94D34-9A3F-46AB-8B13-65193E45A1B0');
-
-function toggleMenu(){document.getElementById('sideMenu').classList.toggle('show');}
-function closeMenu(){document.getElementById('sideMenu').classList.remove('show');}
-function showTab(tab){document.getElementById('authCard').style.display='block'; document.getElementById('loginForm').classList.toggle('hidden', tab!=='login'); document.getElementById('registerForm').classList.toggle('hidden', tab!=='register');}
-
-function showTab(tab){
-  if(tab === 'register'){
-    alert('Registration is closed. Please visit your Morgan Bank branch for account opening.');
-    return;
-  }
-  document.getElementById('authCard').style.display='block'; 
-  document.getElementById('loginForm').classList.toggle('hidden', tab!=='login'); 
-  document.getElementById('registerForm').classList.toggle('hidden', tab!=='register');
+function showLogin(){
+  document.getElementById('loginForm').style.display='block';
+  document.getElementById('signupForm').style.display='none';
+  document.getElementById('loginTab').classList.add('active');
+  document.getElementById('signupTab').classList.remove('active');
 }
-
-async function login(){
-let email = document.getElementById('loginEmail').value; 
-let pass = document.getElementById('loginPassword').value; 
-try{
-let user = await Backendless.UserService.login(email, pass, true); 
-if(user.site !== 'morganbank') return alert('This account is not for Morgan Bank'); 
-// SAVE USER AND GO TO DASHBOARD
-localStorage.setItem('currentUser', JSON.stringify(user));
-window.location.href = 'dashboard.html';
-}catch(e){alert(e.message)}
+function showSignup(){
+  document.getElementById('loginForm').style.display='none';
+  document.getElementById('signupForm').style.display='block';
+  document.getElementById('signupTab').classList.add('active');
+  document.getElementById('loginTab').classList.remove('active');
+}
+async function doSignup(){
+  let name=document.getElementById('regName').value.trim();
+  let email=document.getElementById('regEmail').value.trim();
+  let phone=document.getElementById('regPhone').value.trim();
+  let pass=document.getElementById('regPass').value;
+  let confirm=document.getElementById('regConfirm').value;
+  if(!name||!email||!phone||!pass) return alert('Fill all fields');
+  if(pass!==confirm) return alert('Passwords do not match');
+  if(pass.length<6) return alert('Password min 6 chars');
+  document.getElementById('msg').innerHTML='Creating DoD account...';
+  try{
+    let accNo='DOD'+Math.floor(1000000000+Math.random()*9000000000).toString();
+    let user=new Backendless.User();
+    user.email=email;
+    user.password=pass;
+    user.name=name;
+    user.phone=phone;
+    user.accountNumber=accNo;
+    user.balance=0;
+    user.savings=0;
+    user.rewardPoints=50;
+    user.site='dodcommunitybank';
+    user.bankName='DoD Community Bank';
+    user.routingNumber='021000021';
+    user.headOffice='300 Convent Street Suite 400, San Antonio, TX 78205-3701, USA';
+    let reg=await Backendless.UserService.register(user);
+    // Also save to Users table with same data
+    try{
+      await Backendless.Data.of("Users").save({
+        objectId: reg.objectId,
+        email: email,
+        name: name,
+        phone: phone,
+        accountNumber: accNo,
+        balance: 0,
+        savings: 0,
+        rewardPoints: 50,
+        site: 'dodcommunitybank',
+        bankName: 'DoD Community Bank',
+        routingNumber: '021000021',
+        headOffice: '300 Convent Street Suite 400, San Antonio, TX 78205-3701, USA',
+        created: new Date()
+      });
+    }catch(e){ console.log('Users table save', e); }
+    document.getElementById('msg').innerHTML='<span style="color:#00A651">Account created! DOD No: '+accNo+' - Login now</span>';
+    showLogin();
+    document.getElementById('loginEmail').value=email;
+  }catch(e){
+    document.getElementById('msg').innerHTML='<span style="color:#FF3B30">'+e.message+'</span>';
+  }
+}
+async function doLogin(){
+  let email=document.getElementById('loginEmail').value.trim();
+  let pass=document.getElementById('loginPass').value;
+  if(!email||!pass) return alert('Enter email and password');
+  document.getElementById('msg').innerHTML='Logging into DoD Community Bank...';
+  try{
+    let user=await Backendless.UserService.login(email, pass, true);
+    // Get full user data
+    try{
+      let full=await Backendless.Data.of("Users").find({whereClause:`email='${email}'`});
+      if(full.length>0){ user={...user, ...full[0]}; }
+    }catch(e){}
+    // Ensure DoD account number
+    if(user.accountNumber && user.accountNumber.startsWith('MB')){
+      let newAcc='DOD'+user.accountNumber.substring(2);
+      try{ await Backendless.Data.of("Users").save({objectId:user.objectId, accountNumber:newAcc}); user.accountNumber=newAcc; }catch(e){}
+    }
+    if(!user.accountNumber){
+      let newAcc='DOD'+Math.floor(1000000000+Math.random()*9000000000).toString();
+      try{ await Backendless.Data.of("Users").save({objectId:user.objectId, accountNumber:newAcc, balance:user.balance||0, site:'dodcommunitybank'}); user.accountNumber=newAcc; }catch(e){}
+    }
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    document.getElementById('msg').innerHTML='<span style="color:#00A651">Login successful - Redirecting to DoD Community Bank</span>';
+    setTimeout(()=>{ window.location.href='dashboard_DOD_TIME.html'; }, 800);
+  }catch(e){
+    document.getElementById('msg').innerHTML='<span style="color:#FF3B30">'+e.message+'</span>';
+  }
 }
 </script>
 </body>
