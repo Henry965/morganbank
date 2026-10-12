@@ -46,6 +46,30 @@ input:focus{border-color:#111;background:#fff}
 .receipt-row:last-child{border:none;font-weight:800;font-size:16px}
 .fee-box{background:#FFF9E6;border:1px dashed #FFCC00;padding:12px;border-radius:12px;margin:10px 0;display:flex;justify-content:space-between;font-size:12px}
 </style>
+<style>
+@media (max-width: 768px){
+  .topbar{padding:12px 16px}
+  .balance-card{margin:10px 12px;border-radius:16px}
+  .bal-amount{font-size:32px}
+  .bal-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .grid4{grid-template-columns:repeat(4,1fr);gap:8px;padding:0 12px}
+  .qbox{padding:10px 6px;border-radius:12px}
+  .qbox p{font-size:9px}
+  .tx-list{margin:10px 12px;border-radius:16px}
+  .btn-row{flex-direction:column}
+  .modal-box{border-radius:20px 20px 0 0;max-height:92vh;padding:20px}
+  .modal{align-items:flex-end}
+  .bank-details{padding:16px}
+  .receipt{padding:18px}
+  .bottom-nav{padding:8px 0 16px}
+  .nav-item{font-size:9px;padding:4px 10px}
+}
+@media (max-width: 480px){
+  .grid4{grid-template-columns:repeat(4,1fr);gap:6px}
+  .bal-amount{font-size:28px}
+  .topbar .logo{font-size:18px}
+}
+</style>
 </head>
 <body>
 <div class="topbar"><div class="logo">DoD COMMUNITY BANK</div><div style="display:flex;gap:10px"><div id="avatarText" style="width:36px;height:36px;background:#111;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;cursor:pointer;overflow:hidden" onclick="showPictureOptions()">U</div></div></div>
@@ -70,7 +94,7 @@ input:focus{border-color:#111;background:#fff}
   <div class="qbox" onclick="showWU()"><div style="font-size:22px">💸</div><p>Western Union</p></div>
   <div class="qbox" onclick="showMG()"><div style="font-size:22px">💵</div><p>MoneyGram</p></div>
   <div class="qbox" onclick="showReceiveWU()"><div style="font-size:22px">📥</div><p>Receive</p></div>
-  <div class="qbox" onclick="showMorganPay()"><div style="font-size:22px">👤</div><p>DoD Pay</p></div>
+  <div class="qbox" onclick="showDoDPay()"><div style="font-size:22px">👤</div><p>DoD Pay</p></div>
   <div class="qbox" onclick="showAirtime()"><div style="font-size:22px">📱</div><p>Airtime</p></div>
   <div class="qbox" onclick="showData()"><div style="font-size:22px">🌐</div><p>Data</p></div>
   <div class="qbox" onclick="showLoan()"><div style="font-size:22px">💼</div><p>DoD Loans</p></div>
@@ -349,8 +373,8 @@ async function buyData(){
     openModal(`<div style="text-align:center"><h3>Data Sent</h3><p>${plan}</p><button class="btn-primary" onclick="closeModal()">Done</button></div>`);
   }catch(e){ alert('Failed: '+e.message); }
 }
-function showMorganPay(){ openModal(`<h3 style="font-weight:800">DoD Pay</h3><input id="mpEmail" placeholder="Email"><input id="mpAmount" type="number" placeholder="Amount"><button class="btn-primary" onclick="doMorganPay()">Send</button><button class="btn-secondary" onclick="closeModal()">Cancel</button><p id="mpMsg"></p>`); }
-async function doMorganPay(){
+function showDoDPay(){ openModal(`<h3 style="font-weight:800">DoD Pay</h3><input id="mpEmail" placeholder="Email"><input id="mpAmount" type="number" placeholder="Amount"><button class="btn-primary" onclick="doDoDPay()">Send</button><button class="btn-secondary" onclick="closeModal()">Cancel</button><p id="mpMsg"></p>`); }
+async function doDoDPay(){
   let email=document.getElementById('mpEmail').value.trim(); let amt=parseFloat(document.getElementById('mpAmount').value);
   if(!email||!amt) return alert('Fill'); if((currentUser.balance||0)<amt) return alert('Insufficient');
   let users=await Backendless.Data.of("Users").find({whereClause:`email='${email}'`});
