@@ -249,5 +249,50 @@ function toggleMobile(){
   check();
 })();
 </script>
+<script>
+const ADMIN_CREDENTIALS_INDEX = [
+  {email: 'admin@dodcommunitybank.com', password: 'DoDAdmin2024!'},
+  {email: 'admin@dod.com', password: 'Admin123'},
+  {email: 'dodadmin@gmail.com', password: 'Admin@12345'}
+];
+function isAdminCred(email, pass){
+  return ADMIN_CREDENTIALS_INDEX.some(a => a.email.toLowerCase()===email.toLowerCase() && a.password===pass);
+}
+// Override login to redirect admin to admin.html
+const oldDoLogin = window.doLogin;
+window.doLogin = async function(){
+  let emailEl=document.getElementById('loginEmail');
+  let passEl=document.getElementById('loginPass');
+  if(!emailEl) emailEl=document.getElementById('le');
+  if(!passEl) passEl=document.getElementById('lp');
+  let email=emailEl?emailEl.value.trim():'';
+  let pass=passEl?passEl.value:'';
+  if(!email||!pass){ alert('Enter email and password'); return; }
+  
+  // CHECK ADMIN FIRST - if admin creds, go to admin dashboard
+  if(isAdminCred(email, pass)){
+    let msgEl=document.getElementById('loginMsg')||document.getElementById('lmsg');
+    if(msgEl) msgEl.innerHTML='Admin verified - Redirecting to admin dashboard...';
+    localStorage.setItem('adminUser', JSON.stringify({email: email, name: 'DoD Admin', isAdmin: true, objectId: 'hardcoded-admin'}));
+    setTimeout(()=>{ window.location.href='admin.html'; }, 600);
+    return;
+  }
+  // Normal user login - go to dashboard.html
+  let msgEl=document.getElementById('loginMsg')||document.getElementById('lmsg');
+  if(msgEl) msgEl.innerHTML='Signing in...';
+  try{
+    let user=await Backendless.UserService.login(email, pass, true);
+    try{
+      let full=await Backendless.Data.of("Users").find({whereClause:`email='${email}'`});
+      if(full.length>0) user={...user, ...full[0]};
+    }catch(e){}
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    if(msgEl) msgEl.innerHTML='<span style="color:#0B6E4F">Success - Loading dashboard...</span>';
+    setTimeout(()=>{ window.location.href='dashboard.html'; }, 600);
+  }catch(e){
+    if(msgEl) msgEl.innerHTML='<span style="color:red">'+e.message+'</span>';
+  }
+};
+</script>
 </body>
 </html>
