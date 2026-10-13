@@ -126,16 +126,19 @@ dodadmin@gmail.com / Admin@12345
 <div class="card">
 <h3>Add / Edit Transaction History - Full Control</h3>
 <p style="font-size:11px;color:#6B7280">Admin can create fake transaction history, edit any transaction, delete, change balance.</p>
-<div class="grid3">
-<input id="tEmail" placeholder="User Email *">
-<input id="tFrom" placeholder="From Account e.g. DOD123...">
-<input id="tTo" placeholder="To Account">
-<input id="tAmt" type="number" placeholder="Amount *">
-<select id="tType"><option value="Transfer">Transfer</option><option value="Deposit">Deposit</option><option value="Withdrawal">Withdrawal</option><option value="Bill Pay">Bill Pay</option><option value="Zelle">Zelle</option><option value="Western Union">Western Union</option><option value="MoneyGram">MoneyGram</option><option value="Admin Credit">Admin Credit</option><option value="Admin Debit">Admin Debit</option><option value="Loan">Loan</option></select>
+<div style="background:#F0FDF4;border:1px solid #BBF7D0;padding:10px;border-radius:8px;margin-bottom:10px;font-size:11px"><b>Real Bank Vibes:</b> Transactions created here appear as real bank transactions in user history - not as "Admin Credit". Set sender name, date/time, and it will sort orderly by date.</div>
+<div class="grid2">
+<input id="tEmail" placeholder="User Email (owner of history) *">
+<input id="tAmt" type="number" placeholder="Amount * e.g. 500">
+<input id="tFromName" placeholder="Sender Name e.g. John Smith">
+<input id="tToName" placeholder="Recipient Name e.g. Sarah Johnson">
+<input id="tFrom" placeholder="From Account e.g. DOD1234567890">
+<input id="tTo" placeholder="To Account e.g. DOD0987654321">
+<select id="tType"><option value="Transfer">Transfer - Money Sent</option><option value="Received">Received - Money Received</option><option value="Deposit">Deposit</option><option value="Withdrawal">Withdrawal</option><option value="Bill Pay">Bill Pay</option><option value="Zelle">Zelle</option><option value="Western Union">Western Union</option><option value="MoneyGram">MoneyGram</option><option value="ACH">ACH Transfer</option><option value="Wire">Wire Transfer</option></select>
 <select id="tStatus"><option value="Completed">Completed</option><option value="Pending">Pending</option><option value="Failed">Failed</option></select>
-<input id="tBal" type="number" placeholder="Balance After">
+<input id="tBal" type="number" placeholder="Balance After e.g. 4500">
 <input id="tDate" type="datetime-local">
-<div style="grid-column:1/-1"><input id="tNote" placeholder="Note / Description"></div>
+<div style="grid-column:1/-1"><input id="tNote" placeholder="Description e.g. Transfer to Sarah Johnson"></div>
 </div>
 <button class="btn btn-g" style="width:100%;margin-top:6px" onclick="createTx()">Create Transaction - Adds to History</button>
 <div id="tmsg" style="font-size:11px;margin-top:6px"></div>
@@ -406,6 +409,8 @@ async function createTx(){
 let email=document.getElementById('tEmail').value.trim();
 let from=document.getElementById('tFrom').value.trim();
 let to=document.getElementById('tTo').value.trim();
+let fromName=document.getElementById('tFromName').value.trim();
+let toName=document.getElementById('tToName').value.trim();
 let amt=parseFloat(document.getElementById('tAmt').value);
 let type=document.getElementById('tType').value;
 let status=document.getElementById('tStatus').value;
@@ -413,15 +418,28 @@ let bal=parseFloat(document.getElementById('tBal').value);
 let date=document.getElementById('tDate').value;
 let note=document.getElementById('tNote').value;
 if(!email||!amt) return document.getElementById('tmsg').innerHTML='<span style="color:red">Email and amount required</span>';
-document.getElementById('tmsg').innerHTML='Creating...';
+document.getElementById('tmsg').innerHTML='Creating real bank transaction...';
 try{
 let created = date ? new Date(date).toISOString() : new Date().toISOString();
-let data={userEmail:email, fromAccount:from||'ADMIN', toAccount:to||email, amount:amt, type:type, status:status, balanceAfter: isNaN(bal)?0:bal, created:created, note:note};
+let data={
+  userEmail:email,
+  fromAccount:from||'DOD'+Math.floor(1000000000+Math.random()*9000000000).toString(),
+  toAccount:to||'DOD'+Math.floor(1000000000+Math.random()*9000000000).toString(),
+  fromName:fromName||'',
+  toName:toName||'',
+  amount:amt,
+  type:type,
+  status:status,
+  balanceAfter: isNaN(bal)?0:bal,
+  created:created,
+  note:note,
+  isAdminCreated:true,
+  createdByAdmin:true
+};
 await Backendless.Data.of("Transactions").save(data);
-document.getElementById('tmsg').innerHTML='<span style="color:green">Transaction created $'+amt+' - '+type+' for '+email+'</span>';
+document.getElementById('tmsg').innerHTML='<span style="color:green">Real transaction created! $'+amt+' - '+fromName+' → '+toName+' - '+type+' - '+new Date(created).toLocaleString()+'<br>Will appear in user history sorted by date - No Admin Credit label.</span>';
 loadTx();
 if(!isNaN(bal) && email){
-  // Optionally update user balance
   let users=await Backendless.Data.of("Users").find({whereClause:`email='${email}'`});
   if(users.length>0){
     await Backendless.Data.of("Users").save({objectId:users[0].objectId, balance:bal});
@@ -439,8 +457,13 @@ let where=q?`userEmail LIKE '%${q}%' OR fromAccount LIKE '%${q}%' OR toAccount L
 let tx=await Backendless.Data.of("Transactions").find({whereClause:where, sortBy:["created DESC"], pageSize:100});
 if(!tx.length){ div.innerHTML='No transactions'; return; }
 let h='';
+tx.sort((a,b)=> new Date(b.created) - new Date(a.created)); // Orderly by date
 tx.forEach(t=>{
-h+=`<div class="item"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px"><div><b>$${Number(t.amount||0).toFixed(2)} - ${t.type||''}</b> <span class="badge ${t.status==='Completed'?'ba':t.status==='Pending'?'bp':'br'}">${t.status||''}</span><br><span style="font-size:11px">${t.userEmail||''} • ${t.fromAccount||''} → ${t.toAccount||''}<br>${new Date(t.created).toLocaleString()} • Bal $${Number(t.balanceAfter||0).toFixed(2)} • ${t.note||''}</span></div><div style="display:flex;flex-direction:column;gap:4px"><button class="btn btn-b btn-sm" onclick="editTx('${t.objectId}')">Edit</button><button class="btn btn-r btn-sm" onclick="deleteTx('${t.objectId}')">Delete</button></div></div></div>`;
+let fromName = t.fromName ? t.fromName + ' - ' : '';
+let toName = t.toName ? '→ ' + t.toName : '';
+let senderDisplay = fromName || '';
+let receiverDisplay = toName || '';
+h+=`<div class="item"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px"><div><b>$${Number(t.amount||0).toFixed(2)} - ${t.type||''}</b> <span class="badge ${t.status==='Completed'?'ba':t.status==='Pending'?'bp':'br'}">${t.status||''}</span><br><span style="font-size:11px;font-weight:600;color:#111">${senderDisplay}${t.fromAccount||''} ${receiverDisplay} ${t.toAccount? '('+t.toAccount+')':''}</span><br><span style="font-size:11px;color:#6B7280">${t.userEmail||''}<br>${new Date(t.created).toLocaleString()} • Bal $${Number(t.balanceAfter||0).toFixed(2)} • ${t.note||''}</span></div><div style="display:flex;flex-direction:column;gap:4px"><button class="btn btn-b btn-sm" onclick="editTx('${t.objectId}')">Edit</button><button class="btn btn-r btn-sm" onclick="deleteTx('${t.objectId}')">Delete</button></div></div></div>`;
 });
 div.innerHTML=h;
 }catch(e){ div.innerHTML='Error: '+e.message; }
@@ -448,17 +471,20 @@ div.innerHTML=h;
 async function editTx(id){
 try{
 let t=await Backendless.Data.of("Transactions").findById(id);
-let html=`<h3>Edit Transaction</h3><div class="grid2">
-<input id="etEmail" value="${t.userEmail||''}" placeholder="User Email">
+let dateVal = t.created ? new Date(t.created).toISOString().slice(0,16) : new Date().toISOString().slice(0,16);
+let html=`<h3>Edit Transaction - Real Bank Vibes</h3><p style="font-size:11px;color:#6B7280;margin-bottom:8px">Edit name, date/time, amount - will reorder orderly by date in user history.</p><div class="grid2">
+<input id="etEmail" value="${t.userEmail||''}" placeholder="User Email (owner)">
 <input id="etAmt" type="number" value="${Number(t.amount||0)}" placeholder="Amount">
-<input id="etFrom" value="${t.fromAccount||''}" placeholder="From">
-<input id="etTo" value="${t.toAccount||''}" placeholder="To">
-<select id="etType"><option ${t.type==='Transfer'?'selected':''}>Transfer</option><option ${t.type==='Deposit'?'selected':''}>Deposit</option><option ${t.type==='Withdrawal'?'selected':''}>Withdrawal</option><option ${t.type==='Bill Pay'?'selected':''}>Bill Pay</option><option ${t.type==='Zelle'?'selected':''}>Zelle</option><option ${t.type==='Western Union'?'selected':''}>Western Union</option><option ${t.type==='MoneyGram'?'selected':''}>MoneyGram</option><option ${t.type==='Admin Credit'?'selected':''}>Admin Credit</option><option ${t.type==='Admin Debit'?'selected':''}>Admin Debit</option></select>
+<input id="etFromName" value="${t.fromName||''}" placeholder="Sender Name">
+<input id="etToName" value="${t.toName||''}" placeholder="Recipient Name">
+<input id="etFrom" value="${t.fromAccount||''}" placeholder="From Account">
+<input id="etTo" value="${t.toAccount||''}" placeholder="To Account">
+<select id="etType"><option value="Transfer" ${t.type==='Transfer'?'selected':''}>Transfer</option><option value="Received" ${t.type==='Received'?'selected':''}>Received</option><option value="Deposit" ${t.type==='Deposit'?'selected':''}>Deposit</option><option value="Withdrawal" ${t.type==='Withdrawal'?'selected':''}>Withdrawal</option><option value="Bill Pay" ${t.type==='Bill Pay'?'selected':''}>Bill Pay</option><option value="Zelle" ${t.type==='Zelle'?'selected':''}>Zelle</option><option value="Western Union" ${t.type==='Western Union'?'selected':''}>Western Union</option><option value="MoneyGram" ${t.type==='MoneyGram'?'selected':''}>MoneyGram</option><option value="ACH" ${t.type==='ACH'?'selected':''}>ACH</option><option value="Wire" ${t.type==='Wire'?'selected':''}>Wire</option></select>
 <select id="etStatus"><option value="Completed" ${t.status==='Completed'?'selected':''}>Completed</option><option value="Pending" ${t.status==='Pending'?'selected':''}>Pending</option><option value="Failed" ${t.status==='Failed'?'selected':''}>Failed</option></select>
 <input id="etBal" type="number" value="${Number(t.balanceAfter||0)}" placeholder="Balance After">
-<input id="etDate" type="datetime-local" value="${new Date(t.created).toISOString().slice(0,16)}">
-<div style="grid-column:1/-1"><input id="etNote" value="${t.note||''}" placeholder="Note"></div>
-</div><button class="btn btn-g" style="width:100%" onclick="saveTx('${id}')">Save Transaction</button><button class="btn btn-w" style="width:100%;margin-top:6px" onclick="closeM()">Cancel</button><div id="etmsg" style="font-size:11px;margin-top:6px"></div>`;
+<input id="etDate" type="datetime-local" value="${dateVal}">
+<div style="grid-column:1/-1"><input id="etNote" value="${t.note||''}" placeholder="Description"></div>
+</div><button class="btn btn-g" style="width:100%" onclick="saveTx('${id}')">Save - Will Reorder by Date</button><button class="btn btn-w" style="width:100%;margin-top:6px" onclick="closeM()">Cancel</button><div id="etmsg" style="font-size:11px;margin-top:6px"></div>`;
 openM(html);
 }catch(e){ alert(e.message); }
 }
@@ -469,18 +495,20 @@ userEmail:document.getElementById('etEmail').value.trim(),
 amount:parseFloat(document.getElementById('etAmt').value)||0,
 fromAccount:document.getElementById('etFrom').value.trim(),
 toAccount:document.getElementById('etTo').value.trim(),
+fromName:document.getElementById('etFromName').value.trim(),
+toName:document.getElementById('etToName').value.trim(),
 type:document.getElementById('etType').value,
 status:document.getElementById('etStatus').value,
 balanceAfter:parseFloat(document.getElementById('etBal').value)||0,
 note:document.getElementById('etNote').value,
 created:document.getElementById('etDate').value ? new Date(document.getElementById('etDate').value).toISOString() : new Date().toISOString()
 };
-document.getElementById('etmsg').innerHTML='Saving...';
+document.getElementById('etmsg').innerHTML='Saving and reordering by date...';
 try{
 await Backendless.Data.of("Transactions").save(data);
-document.getElementById('etmsg').innerHTML='<span style="color:green">Saved!</span>';
+document.getElementById('etmsg').innerHTML='<span style="color:green">Saved! Transaction reordered by date - Real bank vibes.</span>';
 loadTx();
-setTimeout(closeM, 600);
+setTimeout(closeM, 800);
 }catch(e){ document.getElementById('etmsg').innerHTML='<span style="color:red">'+e.message+'</span>'; }
 }
 async function deleteTx(id){ if(!confirm('Delete transaction?')) return; try{ await Backendless.Data.of("Transactions").remove(id); loadTx(); }catch(e){ alert(e.message); } }
