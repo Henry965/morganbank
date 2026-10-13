@@ -523,5 +523,95 @@ async function takeSnap(){
   }, 'image/jpeg', 0.8);
 }
 </script>
+<script>
+// BLOCKED ACCOUNT CHECK - Real bank standard
+async function checkBlocked(){
+  let uStr=localStorage.getItem('currentUser');
+  if(!uStr) return false;
+  try{
+    let u=JSON.parse(uStr);
+    // Refresh from DB to get latest blocked status
+    let fresh=await Backendless.Data.of("Users").find({whereClause:`objectId='${u.objectId}'`});
+    if(fresh.length>0){
+      let fu=fresh[0];
+      if(fu.isBlocked || fu.status==='blocked' || fu.accountStatus==='blocked'){
+        // Update local
+        u.isBlocked=fu.isBlocked;
+        u.status=fu.status;
+        u.accountStatus=fu.accountStatus;
+        localStorage.setItem('currentUser', JSON.stringify(u));
+        return true;
+      }else{
+        u.isBlocked=false;
+        localStorage.setItem('currentUser', JSON.stringify(u));
+        return false;
+      }
+    }
+  }catch(e){ console.log('blocked check error', e); }
+  return false;
+}
+function showBlockedModal(){
+  let html=`<div style="text-align:center"><div style="width:70px;height:70px;background:#FEE2E2;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:32px">🚫</div><h3 style="margin-top:14px;font-weight:800;color:#991B1B">Account Blocked</h3><div style="background:#FEF2F2;border:1px solid #FECACA;padding:14px;border-radius:8px;margin:14px 0;text-align:left"><b style="font-size:13px;color:#991B1B">Your account has been restricted</b><p style="font-size:12px;color:#6B7280;margin-top:6px">Your DoD Community Bank account has been blocked by the administrator for security reasons. You cannot perform any transactions including transfers, deposits, withdrawals, or bill payments.</p><p style="font-size:12px;color:#6B7280;margin-top:8px">If you believe this is an error, please contact:</p><p style="font-size:12px;margin-top:6px"><b>DoD Community Bank Head Office</b><br>300 Convent Street Suite 400<br>San Antonio, TX 78205-3701, USA<br>Routing: 021000021<br>(210) 555-0142</p></div><button class="btn-green" onclick="closeModal(); logout();" style="width:100%">Log Out</button></div>`;
+  if(typeof openModal==='function') openModal(html);
+  else alert('Account Blocked - Contact bank');
+}
+// Override transaction functions to check blocked
+function isAccountBlocked(){
+  let uStr=localStorage.getItem('currentUser');
+  if(!uStr) return false;
+  try{
+    let u=JSON.parse(uStr);
+    return u.isBlocked || u.status==='blocked' || u.accountStatus==='blocked';
+  }catch(e){ return false; }
+}
+// Hook into existing functions
+const _origShowSend = window.showSend;
+const _origShowWU = window.showWU;
+const _origShowBill = window.showBillPay;
+const _origShowZelle = window.showZelle;
+// Wrap send functions
+window.showSend = async function(){
+  if(await checkBlocked() || isAccountBlocked()){ showBlockedModal(); return; }
+  if(typeof _origShowSend==='function') _origShowSend();
+};
+window.showWU = async function(){
+  if(await checkBlocked() || isAccountBlocked()){ showBlockedModal(); return; }
+  if(typeof _origShowWU==='function') _origShowWU();
+};
+if(typeof window.showMoneyGram==='function'){
+  const _origMG=window.showMoneyGram;
+  window.showMoneyGram=async function(){
+    if(await checkBlocked() || isAccountBlocked()){ showBlockedModal(); return; }
+    _origMG();
+  };
+}
+if(typeof window.showZelle==='function'){
+  const _origZ=window.showZelle;
+  window.showZelle=async function(){
+    if(await checkBlocked() || isAccountBlocked()){ showBlockedModal(); return; }
+    _origZ();
+  };
+}
+// Check on load
+window.addEventListener('load', async ()=>{
+  setTimeout(async ()=>{
+    if(await checkBlocked()){
+      // Show blocked banner on dashboard
+      let banner=document.createElement('div');
+      banner.innerHTML=`<div style="background:#FEE2E2;border:1px solid #FECACA;color:#991B1B;padding:10px 14px;border-radius:8px;margin:14px;font-size:12px;font-weight:600;text-align:center">🚫 ACCOUNT BLOCKED - No transactions allowed - Contact Head Office: 300 Convent Street Suite 400, San Antonio, TX</div>`;
+      let dashTop=document.getElementById('dashboardView')||document.body;
+      if(dashTop) dashTop.prepend(banner);
+    }
+  }, 1000);
+});
+// For doSend / transfer - check before sending
+if(typeof window.doSend==='function'){
+  const _origDoSend=window.doSend;
+  window.doSend=async function(){
+    if(await checkBlocked() || isAccountBlocked()){ showBlockedModal(); return; }
+    _origDoSend();
+  };
+}
+</script>
 </body>
 </html>
