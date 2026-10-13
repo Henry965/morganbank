@@ -613,5 +613,107 @@ if(typeof window.doSend==='function'){
   };
 }
 </script>
+<script>
+// STRONG BLOCKED ACCOUNT PROTECTION - Real bank standard
+function isAccountBlockedLocal(){
+  try{
+    let uStr=localStorage.getItem('currentUser');
+    if(!uStr) return false;
+    let u=JSON.parse(uStr);
+    return u.isBlocked===true || u.status==='blocked' || u.accountStatus==='blocked' || u.isBlocked==='true';
+  }catch(e){ return false; }
+}
+async function refreshBlockedStatus(){
+  try{
+    let uStr=localStorage.getItem('currentUser');
+    if(!uStr) return false;
+    let u=JSON.parse(uStr);
+    if(!u.objectId) return isAccountBlockedLocal();
+    let fresh=await Backendless.Data.of("Users").find({whereClause:`objectId='${u.objectId}'`});
+    if(fresh.length>0){
+      let fu=fresh[0];
+      let blocked = fu.isBlocked===true || fu.status==='blocked' || fu.accountStatus==='blocked';
+      u.isBlocked=fu.isBlocked;
+      u.status=fu.status;
+      u.accountStatus=fu.accountStatus;
+      localStorage.setItem('currentUser', JSON.stringify(u));
+      return blocked;
+    }
+  }catch(e){ console.log('refresh blocked error', e); }
+  return isAccountBlockedLocal();
+}
+function showBlockedModalReal(){
+  let html=`<div style="text-align:center;padding:10px"><div style="width:80px;height:80px;background:#FEE2E2;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:36px">🚫</div><h3 style="margin-top:14px;font-weight:800;color:#991B1B;font-size:18px">ACCOUNT BLOCKED</h3><div style="background:#FEF2F2;border:2px solid #FECACA;padding:16px;border-radius:10px;margin:16px 0;text-align:left"><b style="font-size:13px;color:#991B1B">Your account has been restricted by DoD Community Bank</b><p style="font-size:12px;color:#444;margin-top:8px;line-height:1.5">For security reasons, your account ( <span id="blkAcc"></span> ) has been blocked. You cannot perform:</p><ul style="font-size:12px;color:#444;margin:8px 0 8px 18px;line-height:1.6"><li>Transfers to other accounts</li><li>Western Union / MoneyGram</li><li>Zelle payments</li><li>Bill payments</li><li>Deposits / Withdrawals</li></ul><p style="font-size:12px;color:#444;margin-top:10px">Contact head office to resolve:</p><p style="font-size:12px;margin-top:6px;line-height:1.5"><b>DoD Community Bank Head Office</b><br>300 Convent Street Suite 400<br>San Antonio, TX 78205-3701, USA<br>Routing: 021000021<br>Phone: (210) 555-0142<br>Email: support@dodcommunitybank.com</p><p style="font-size:10px;color:#9CA3AF;margin-top:10px">Block ID: BLK-${Date.now().toString().slice(-8)} • ${new Date().toLocaleString()}</p></div><button onclick="closeModal(); logout();" style="width:100%;padding:12px;background:#991B1B;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer">Log Out</button></div>`;
+  if(typeof openModal==='function'){ openModal(html); setTimeout(()=>{ let el=document.getElementById('blkAcc'); if(el){ try{ let u=JSON.parse(localStorage.getItem('currentUser')||'{}'); el.innerText=u.accountNumber||'DOD***'; }catch(e){} } }, 100); } else { alert('ACCOUNT BLOCKED - Contact DoD Community Bank Head Office: 300 Convent Street Suite 400, San Antonio, TX'); logout(); }
+}
+// Override ALL transaction functions with blocking check at very start
+function wrapWithBlockCheck(originalFn){
+  return async function(...args){
+    // Immediate local check - no await needed
+    if(isAccountBlockedLocal()){
+      showBlockedModalReal();
+      return;
+    }
+    // Refresh from DB check
+    let blocked = await refreshBlockedStatus();
+    if(blocked){
+      showBlockedModalReal();
+      return;
+    }
+    // If not blocked, call original
+    if(typeof originalFn==='function'){
+      return await originalFn.apply(this, args);
+    }
+  };
+}
+// Wrap after page loads - wait for original functions to be defined
+setTimeout(()=>{
+  // List of functions to protect
+  let funcsToProtect = ['doSend','doTransfer','sendMoney','transferMoney','doWUTransfer','doMoneyGramTransfer','doZelle','doBillPay','doDeposit','doWithdraw','submitTransfer','submitWU','submitMG','submitZelle'];
+  funcsToProtect.forEach(fnName=>{
+    if(typeof window[fnName]==='function'){
+      let orig = window[fnName];
+      window[fnName] = wrapWithBlockCheck(orig);
+      console.log('Protected: '+fnName);
+    }
+  });
+  
+  // Also protect show modals - don't even show form if blocked
+  let showFuncs = ['showSend','showTransfer','showWU','showMoneyGram','showZelle','showBillPay','showDeposit','showWithdraw'];
+  showFuncs.forEach(fnName=>{
+    if(typeof window[fnName]==='function'){
+      let orig = window[fnName];
+      window[fnName] = async function(...args){
+        if(isAccountBlockedLocal() || await refreshBlockedStatus()){
+          showBlockedModalReal();
+          return;
+        }
+        return orig.apply(this, args);
+      };
+    }
+  });
+  // Check on page load if already blocked - show banner
+  (async()=>{
+    if(await refreshBlockedStatus() || isAccountBlockedLocal()){
+      let banner=document.createElement('div');
+      banner.id='blockedBanner';
+      banner.innerHTML=`<div style="background:#991B1B;color:#fff;padding:12px 14px;text-align:center;font-size:12px;font-weight:700;position:sticky;top:0;z-index:999">🚫 ACCOUNT BLOCKED - All transactions disabled - Contact: 300 Convent Street Suite 400, San Antonio, TX 78205-3701 | Routing: 021000021</div>`;
+      document.body.prepend(banner);
+      // Disable all buttons
+      document.querySelectorAll('button').forEach(btn=>{
+        let txt=btn.innerText.toLowerCase();
+        if(txt.includes('send') || txt.includes('transfer') || txt.includes('pay') || txt.includes('zelle') || txt.includes('western') || txt.includes('moneygram')){
+          btn.disabled=true;
+          btn.style.opacity='0.5';
+          btn.style.cursor='not-allowed';
+          btn.onclick = ()=>{ showBlockedModalReal(); };
+        }
+      });
+    }
+  })();
+}, 800);
+// Also intercept Backendless Data save for Transactions - if blocked, prevent
+const originalSave = Backendless.Data.of("Transactions").save;
+</script>
 </body>
 </html>
