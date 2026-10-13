@@ -715,5 +715,52 @@ setTimeout(()=>{
 // Also intercept Backendless Data save for Transactions - if blocked, prevent
 const originalSave = Backendless.Data.of("Transactions").save;
 </script>
+<script>
+// Improve transaction display - real bank vibes - orderly by date, show names
+setTimeout(()=>{
+  // Override loadTransactions if exists
+  if(typeof loadTransactions==='function'){
+    let origLoad = loadTransactions;
+    window.loadTransactions = async function(){
+      try{
+        let uStr=localStorage.getItem('currentUser');
+        if(!uStr) return;
+        let u=JSON.parse(uStr);
+        let tx=await Backendless.Data.of("Transactions").find({whereClause:`userEmail='${u.email}'`, sortBy:["created DESC"], pageSize:100});
+        // Sort orderly by date DESC
+        tx.sort((a,b)=> new Date(b.created) - new Date(a.created));
+        let list=document.getElementById('txList') || document.getElementById('transactionList') || document.getElementById('transactions');
+        if(!list) return;
+        let h='';
+        tx.forEach(t=>{
+          let isReceived = t.type==='Received' || (t.toAccount===u.accountNumber);
+          let fromName = t.fromName || '';
+          let toName = t.toName || '';
+          let displayName = '';
+          let amountSign = '';
+          let amountColor = '';
+          if(isReceived){
+            displayName = fromName ? `From ${fromName}` : `From ${t.fromAccount||'Unknown'}`;
+            amountSign = '+';
+            amountColor = '#065F46';
+          } else {
+            displayName = toName ? `To ${toName}` : `To ${t.toAccount||'Unknown'}`;
+            amountSign = '-';
+            amountColor = '#111';
+          }
+          // Don't show Admin Credit label - show real name
+          let typeDisplay = t.type;
+          if(typeDisplay==='Admin Credit') typeDisplay='Transfer';
+          if(typeDisplay==='Admin Debit') typeDisplay='Transfer';
+          h+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:12px;border-bottom:1px solid #F3F4F6"><div><b style="font-size:13px">${displayName}</b><br><span style="font-size:11px;color:#6B7280">${typeDisplay} • ${new Date(t.created).toLocaleString()}<br>${t.fromAccount||''} ${t.toAccount? '→ '+t.toAccount:''} ${t.note? '• '+t.note:''}</span></div><div style="text-align:right"><b style="font-size:14px;color:${amountColor}">${amountSign}$${Number(t.amount||0).toFixed(2)}</b><br><span style="font-size:10px;color:#6B7280">Bal $${Number(t.balanceAfter||0).toFixed(2)}</span></div></div>`;
+        });
+        list.innerHTML = h || '<p style="text-align:center;color:#6B7280;font-size:12px;padding:20px">No transactions</p>';
+      }catch(e){ console.log('loadTransactions error', e); }
+    };
+    // Call immediately
+    if(typeof loadTransactions==='function') loadTransactions();
+  }
+}, 1000);
+</script>
 </body>
 </html>
