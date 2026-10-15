@@ -334,8 +334,6 @@ async function doLogin(){
       if(full.length>0){
         console.log('User found in Users table:', full[0]);
         // ONLY block if isBlocked === true explicitly - FIXED
-        // REAL BANK LOGIC: Only block if admin explicitly blocked (isBlocked=true)
-        // Admin-created accounts have isBlocked=false, so they login fine
         if(full[0].isBlocked===true){
           document.getElementById('loginMsg').innerHTML='<span style="color:#FF3B30">🚫 ACCOUNT BLOCKED - Contact Head Office<br>300 Convent Street Suite 400, San Antonio, TX</span>';
           await Backendless.UserService.logout();
