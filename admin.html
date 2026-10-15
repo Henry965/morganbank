@@ -344,7 +344,45 @@ async function loadLoans(){ let div=document.getElementById('loanList'); div.inn
 async function approveLoan(id){ try{ let loan=await Backendless.Data.of("Loans").findById(id); let users=await Backendless.Data.of("Users").find({whereClause:`email='${loan.userEmail}'`}); if(users.length>0){ let u=users[0]; let newBal=Number(u.balance||0)+Number(loan.amount||0); await Backendless.Data.of("Users").save({objectId:u.objectId, balance:newBal}); await Backendless.Data.of("Transactions").save({userEmail:u.email, fromAccount:'LOAN', toAccount:u.accountNumber, fromName:'DoD Loans', toName:u.name, amount:Number(loan.amount||0), type:'Loan Approved', status:'Completed', balanceAfter:newBal, created:new Date().toISOString()}); } await Backendless.Data.of("Loans").save({objectId:id, status:'approved'}); alert('Approved'); loadLoans(); }catch(e){ alert(e.message); } }
 async function rejectLoan(id){ try{ await Backendless.Data.of("Loans").save({objectId:id, status:'rejected'}); loadLoans(); }catch(e){ alert(e.message); } }
 function logout(){ localStorage.removeItem('adminUser'); location.reload(); }
-window.onload=()=>{ let a=localStorage.getItem('adminUser'); if(a){ try{ let u=JSON.parse(a); if(u.email){ document.getElementById('loginCard').style.display='none'; document.getElementById('panel').style.display='block'; curUser=u; loadStats(); loadAllUsers(); } }catch(e){} } };
+window.onload=()=>{
+  console.log('Admin page loaded, checking adminUser');
+  let a=localStorage.getItem('adminUser');
+  console.log('adminUser in storage:', a);
+  if(a){
+    try{
+      let u=JSON.parse(a);
+      console.log('Parsed admin user:', u);
+      if(u.email || u.isAdmin){
+        document.getElementById('loginCard').style.display='none';
+        document.getElementById('panel').style.display='block';
+        curUser=u;
+        console.log('Showing admin dashboard');
+        loadStats();
+        loadAllUsers();
+        return;
+      }
+    }catch(e){ console.log('Parse error', e); }
+  }
+  console.log('No admin user, showing login');
+  document.getElementById('loginCard').style.display='block';
+  document.getElementById('panel').style.display='none';
+};
+// Also auto-check every 500ms in case storage not ready
+setTimeout(()=>{
+  let a=localStorage.getItem('adminUser');
+  if(a && document.getElementById('panel').style.display==='none'){
+    try{
+      let u=JSON.parse(a);
+      if(u.email || u.isAdmin){
+        document.getElementById('loginCard').style.display='none';
+        document.getElementById('panel').style.display='block';
+        curUser=u;
+        loadStats();
+        loadAllUsers();
+      }
+    }catch(e){}
+  }
+}, 500);
 </script>
 </body>
 </html>
