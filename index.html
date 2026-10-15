@@ -153,7 +153,7 @@ let email=emailRaw.toLowerCase();
 let pass=document.getElementById('loginPass').value;
 if(!email||!pass) return alert('Enter email and password');
 document.getElementById('loginMsg').innerHTML='Signing in...';
-localStorage.clear(); sessionStorage.clear(); try{await Backendless.UserService.logout();}catch(e){} localStorage.removeItem('currentUser');localStorage.removeItem('currentUserEmail');localStorage.removeItem('userToken');localStorage.removeItem('adminUser'); console.log('Cleared all old accounts');
+localStorage.removeItem('currentUser');localStorage.removeItem('currentUserEmail');localStorage.removeItem('userToken');localStorage.removeItem('adminUser');
 if(isAdminCred(email,pass)){localStorage.setItem('adminUser',JSON.stringify({email:email,name:'DoD Admin',isAdmin:true}));document.getElementById('loginMsg').innerHTML='<span style="color:#0B6E4F">Admin verified...</span>';setTimeout(()=>{window.location.href='admin.html';},600);return;}
 // Try multiple email cases to fix 3003
 let user=null; let loginError=null;
