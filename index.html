@@ -100,7 +100,7 @@ input:focus{border-color:#0B6E4F;box-shadow:0 0 0 2px rgba(11,110,79,0.1)}
 </div>
 <div class="features">
   <div class="feat"><h4>DoD Checking</h4><p>Free checking with no monthly fees, early direct deposit, real-time transfers.</p></div>
-  <div class="feat"><h4>Send Money Woeldwide </h4><p>Western Union and MoneyGram with 60+ countries,MTCN tracking, cash pickup in minutes.</p></div>
+  <div class="feat"><h4>Email / Phone Verification</h4><p>Secure OTP code verification for new accounts. Admin can create accounts directly without verification.</p></div>
   <div class="feat"><h4>DoD Loans</h4><p>Personal and emergency loans for service members and community.</p></div>
 </div>
 <div class="footer">© 2026 DoD Community Bank, N.A. Member FDIC. Routing: 021000021</div>
@@ -334,6 +334,8 @@ async function doLogin(){
       if(full.length>0){
         console.log('User found in Users table:', full[0]);
         // ONLY block if isBlocked === true explicitly - FIXED
+        // REAL BANK LOGIC: Only block if admin explicitly blocked (isBlocked=true)
+        // Admin-created accounts have isBlocked=false, so they login fine
         if(full[0].isBlocked===true){
           document.getElementById('loginMsg').innerHTML='<span style="color:#FF3B30">🚫 ACCOUNT BLOCKED - Contact Head Office<br>300 Convent Street Suite 400, San Antonio, TX</span>';
           await Backendless.UserService.logout();
