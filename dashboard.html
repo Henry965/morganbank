@@ -111,10 +111,33 @@ async function checkAndRun(fn){
 }
 loadDashboard();
 async function loadDashboard(){
-  if(await refreshBlocked()){ /* show banner but allow dashboard */ }
+  // Force fresh load by email, not cached objectId - fixes "logs into old account"
   try{
-    let fresh=await Backendless.Data.of("Users").findById(currentUser.objectId);
-    if(fresh){ currentUser=fresh; localStorage.setItem('currentUser', JSON.stringify(currentUser)); }
+    console.log('Loading dashboard for email:', currentEmail);
+    // Clear any stale objectId mismatch - always get latest user by email
+    let users=await Backendless.Data.of("Users").find({whereClause:`email='${currentEmail}'`, sortBy:['created DESC'], pageSize:1});
+    if(users.length>0){
+      let latest=users[0];
+      console.log('Latest user by email:', latest);
+      currentUser={...currentUser, ...latest};
+      // Update stored objectId to latest
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+      localStorage.setItem('currentUserEmail', currentEmail.toLowerCase());
+    }
+  }catch(e){ console.log('email load error', e); }
+  
+  if(await refreshBlocked()){ /* show banner */ }
+  try{
+    // Try findById with current objectId, but fallback to email
+    let fresh=null;
+    if(currentUser.objectId && !currentUser.objectId.includes('hardcoded') && !currentUser.objectId.includes('fallback')){
+      try{ fresh=await Backendless.Data.of("Users").findById(currentUser.objectId); }catch(e){ console.log('findById failed, using email'); }
+    }
+    if(!fresh){
+      let users=await Backendless.Data.of("Users").find({whereClause:`email='${currentEmail}'`, sortBy:['created DESC'], pageSize:1});
+      if(users.length>0) fresh=users[0];
+    }
+    if(fresh){ currentUser={...currentUser, ...fresh}; localStorage.setItem('currentUser', JSON.stringify(currentUser)); }
   }catch(e){ console.log('token may be expired, using cached user', e); }
   document.getElementById('userName').innerText=(currentUser.name||'User').split(' ')[0];
   document.getElementById('balance').innerText='$'+Number(currentUser.balance||0).toFixed(2);
