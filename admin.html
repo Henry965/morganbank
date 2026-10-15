@@ -209,6 +209,7 @@ let addr=document.getElementById('cAddr').value.trim();
 if(!name||!email||!pass) return document.getElementById('cmsg').innerHTML='<span style="color:red">Name, Email, Pass required</span>';
 document.getElementById('cmsg').innerHTML='Creating ACTIVE account...';
 try{
+let existing=await Backendless.Data.of("Users").find({whereClause:`email='${email}'`}); if(existing.length>0){ return document.getElementById('cmsg').innerHTML='<span style="color:red">Email already exists as user: '+email+'<br>Use different email or delete old user first in Users tab</span>'; }
 let newUser=new Backendless.User(); newUser.email=email; newUser.password=pass; newUser.name=name;
 let reg=await Backendless.UserService.register(newUser);
 // ALWAYS create as ACTIVE, NOT BLOCKED - fixes your blocked bug
