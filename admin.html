@@ -1,29 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>DoD Community Bank - Super Admin</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>DoD Community Bank - SUPER ADMIN - FULL CONTROL</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.jsdelivr.net/npm/backendless@7.3.4/dist/backendless.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif}
-body{background:#F5F5F7;color:#111;min-height:100vh}
-.top{background:#0B6E4F;color:#fff;padding:8px 16px;font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px}
+body{background:#F5F5F7;color:#111}
+.top{background:#0B6E4F;color:#fff;padding:8px 16px;font-size:11px;display:flex;justify-content:space-between}
 .head{background:#fff;border-bottom:1px solid #E5E7EB;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:20}
-.logo{font-weight:800;color:#0B6E4F;font-size:18px;line-height:1} .logo small{display:block;font-size:8px;color:#6B7280;letter-spacing:1px}
+.logo{font-weight:800;color:#0B6E4F;font-size:18px} .logo small{display:block;font-size:8px;color:#6B7280}
 .container{max-width:1200px;margin:0 auto;padding:14px}
 .card{background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
 h1{font-size:20px;font-weight:800;color:#0B6E4F;text-align:center;margin:8px 0}
-h3{font-size:15px;font-weight:800;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
-input,select,textarea{width:100%;padding:11px;margin:5px 0;border:1px solid #D1D5DB;border-radius:8px;font-size:13px;outline:none}
-input:focus,select:focus,textarea:focus{border-color:#0B6E4F}
+h3{font-size:15px;font-weight:800;margin-bottom:10px}
+input,select,textarea{width:100%;padding:11px;margin:5px 0;border:1px solid #D1D5DB;border-radius:8px;font-size:13px}
 .btn{padding:11px 14px;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:12px;margin-top:6px}
-.btn-g{background:#0B6E4F;color:#fff} .btn-r{background:#EF4444;color:#fff} .btn-b{background:#2563EB;color:#fff} .btn-w{background:#fff;border:1px solid #E5E7EB;color:#111} .btn-y{background:#F59E0B;color:#fff}
+.btn-g{background:#0B6E4F;color:#fff} .btn-r{background:#EF4444;color:#fff} .btn-b{background:#2563EB;color:#fff} .btn-w{background:#fff;border:1px solid #E5E7EB} .btn-y{background:#F59E0B;color:#fff}
 .btn-sm{padding:6px 10px;font-size:11px;width:auto}
-.tabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;padding-bottom:4px}
+.tabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;flex-wrap:wrap}
 .tab{padding:9px 14px;background:#fff;border:1px solid #E5E7EB;border-radius:8px;cursor:pointer;font-size:11px;font-weight:700;white-space:nowrap}
-.tab.active{background:#0B6E4F;color:#fff;border-color:#0B6E4F}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px} .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.tab.active{background:#0B6E4F;color:#fff}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .item{background:#F9FAFB;border:1px solid #E5E7EB;padding:12px;border-radius:10px;margin:6px 0}
 .stat{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px}
 .s{background:#fff;border:1px solid #E5E7EB;border-radius:10px;padding:12px;text-align:center}
@@ -31,27 +30,23 @@ input:focus,select:focus,textarea:focus{border-color:#0B6E4F}
 .badge{padding:2px 7px;border-radius:12px;font-size:9px;font-weight:700}
 .bp{background:#FEF3C7;color:#92400E} .ba{background:#D1FAE5;color:#065F46} .br{background:#FEE2E2;color:#991B1B}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:12px;z-index:100}
-.m-box{background:#fff;border-radius:12px;padding:18px;width:100%;max-width:560px;max-height:90vh;overflow:auto}
-@media(max-width:768px){.stat{grid-template-columns:repeat(2,1fr)}.grid2,.grid3{grid-template-columns:1fr}.container{padding:8px}.head{padding:10px 12px}}
+.m-box{background:#fff;border-radius:12px;padding:18px;width:100%;max-width:600px;max-height:90vh;overflow:auto}
+@media(max-width:768px){.stat{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="top"><span>DoD COMMUNITY BANK - SUPER ADMIN | Authorized Only</span><span>📍 300 Convent Street Suite 400, San Antonio, TX 78205-3701 | Routing: 021000021</span></div>
-<div class="head"><div class="logo">DoD COMMUNITY BANK<small>SUPER ADMIN PANEL</small></div><div style="display:flex;gap:6px"><a href="index.html" style="font-size:11px;color:#0B6E4F;font-weight:700;text-decoration:none;padding:6px 10px;border:1px solid #E5E7EB;border-radius:6px">Bank Home</a><button id="logoutBtn" style="display:none" class="btn btn-w btn-sm" onclick="logout()">Log out</button></div></div>
+<div class="top"><span>DoD SUPER ADMIN - FULL CONTROL</span><span>Routing: 021000021 | 300 Convent St, San Antonio TX</span></div>
+<div class="head"><div class="logo">DoD COMMUNITY BANK<small>FULL ADMIN - EDIT EVERYTHING</small></div><div><a href="index.html" style="font-size:11px;color:#0B6E4F;font-weight:700;text-decoration:none;padding:6px 10px;border:1px solid #E5E7EB;border-radius:6px">Bank Home</a> <button class="btn btn-w btn-sm" onclick="logout()">Log out</button></div></div>
 <div class="container">
-<h1>DoD COMMUNITY BANK - SUPER ADMIN</h1>
+<h1>DoD SUPER ADMIN - LITERALLY EVERYTHING</h1>
 <div class="card" id="loginCard">
-<h3>Super Admin Login</h3>
-<p style="font-size:11px;color:#6B7280;margin-bottom:8px">Manage everything: users, accounts, deposits, transactions, loans, cards. All actions logged.</p>
+<h3>Admin Login</h3>
 <input id="aEmail" placeholder="Admin Email">
 <input id="aPass" type="password" placeholder="Password">
-<button class="btn btn-g" style="width:100%" onclick="adminLogin()">Sign In as Super Admin</button>
+<button class="btn btn-g" style="width:100%" onclick="adminLogin()">Sign In</button>
 <div id="lmsg" style="font-size:11px;margin-top:8px"></div>
 <div style="background:#F0FDF4;border:1px solid #BBF7D0;padding:10px;border-radius:8px;margin-top:10px;font-size:11px">
-<b>Hardcoded Admin Accounts (no Backendless needed):</b><br>
-admin@dodcommunitybank.com / DoDAdmin2024!<br>
-admin@dod.com / Admin123<br>
-dodadmin@gmail.com / Admin@12345
+<b>Hardcoded:</b> admin@dodcommunitybank.com / DoDAdmin2024! | admin@dod.com / Admin123 | dodadmin@gmail.com / Admin@12345
 </div>
 </div>
 <div id="panel" style="display:none">
@@ -59,205 +54,150 @@ dodadmin@gmail.com / Admin@12345
 <div class="s"><b id="totalUsers">0</b><span>Users</span></div>
 <div class="s"><b id="totalDep">0</b><span>Deposits</span></div>
 <div class="s"><b id="totalLoans">0</b><span>Loans</span></div>
-<div class="s"><b id="totalTx">0</b><span>Transactions</span></div>
-<div class="s"><b id="totalBal">$0</b><span>Total Balance</span></div>
+<div class="s"><b id="totalTx">0</b><span>Tx</span></div>
+<div class="s"><b id="totalBal">$0</b><span>Balance</span></div>
+</div>
+<div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">
+<button class="btn btn-g btn-sm" onclick="fixAllBlocked()">🔧 FIX ALL - Unblock All Wrongly Blocked</button>
+<button class="btn btn-b btn-sm" onclick="loadAllUsers()">Refresh</button>
+<button class="btn btn-w btn-sm" onclick="loadStats()">Stats</button>
 </div>
 <div class="tabs">
-<div class="tab active" onclick="sw('users')">Users - Create & Manage</div>
-<div class="tab" onclick="sw('create')">Create Account</div>
-<div class="tab" onclick="sw('deposits')">Deposits</div>
-<div class="tab" onclick="sw('tx')">Transactions - Add/Edit</div>
-<div class="tab" onclick="sw('loans')">Loans</div>
-<div class="tab" onclick="sw('cards')">Cards</div>
+<div class="tab active" onclick="swTab('users',this)">Users - Edit All</div>
+<div class="tab" onclick="swTab('create',this)">Create Account</div>
+<div class="tab" onclick="swTab('block',this)">Block/Unblock</div>
+<div class="tab" onclick="swTab('balance',this)">Add Balance</div>
+<div class="tab" onclick="swTab('history',this)">Add History</div>
+<div class="tab" onclick="swTab('deposits',this)">Deposits</div>
+<div class="tab" onclick="swTab('tx',this)">Transactions</div>
+<div class="tab" onclick="swTab('loans',this)">Loans</div>
+<div class="tab" onclick="swTab('settings',this)">Edit All Settings</div>
 </div>
 <div id="usersTab">
-<div class="card">
-<h3>Search User <button class="btn btn-b btn-sm" onclick="loadAllUsers()">Refresh All</button></h3>
-<input id="sEmail" placeholder="Search by email, name, DOD account, phone">
-<button class="btn btn-g" style="width:100%" onclick="searchUser()">Search</button>
-<div id="userRes" style="margin-top:8px"></div>
-</div>
-<div id="allUsersCard" class="card">
-<h3>All Users - Full Control</h3>
-<div id="allUsers" style="max-height:600px;overflow:auto">Loading...</div>
-</div>
+<div class="card"><h3>Search & Edit Users</h3><input id="sEmail" placeholder="Search email, name, DOD, phone"><button class="btn btn-g" style="width:100%" onclick="searchUser()">Search</button><div id="userRes" style="margin-top:8px"></div></div>
+<div class="card"><h3>All Users - Full Control - Click Edit to Change EVERYTHING</h3><div id="allUsers">Loading...</div></div>
 </div>
 <div id="createTab" style="display:none">
 <div class="card">
-<h3>Create New User Account - Admin Creates Account</h3>
-<p style="font-size:11px;color:#6B7280;margin-bottom:8px">Admin can create account for new users directly. User can login immediately.</p>
+<h3>Create New Account - Admin Creates (ACTIVE, NOT BLOCKED)</h3>
 <div class="grid2">
-<div><input id="cName" placeholder="Full Name *"></div>
-<div><input id="cEmail" type="email" placeholder="Email *"></div>
-<div><input id="cPhone" placeholder="Phone *"></div>
-<div><input id="cPass" type="password" placeholder="Password *"></div>
-<div><input id="cAcc" placeholder="Account Number (auto if empty) - DOD..."></div>
-<div><input id="cBal" type="number" placeholder="Initial Balance e.g. 5000"></div>
-<div><input id="cCity" placeholder="City"></div>
-<div><input id="cState" placeholder="State e.g. TX"></div>
-<div><input id="cSsn" placeholder="SSN Last 4"></div>
-<div><input id="cAddr" placeholder="Address"></div>
-<div class="grid2" style="grid-column:1/-1">
-<select id="cStatus"><option value="active">Status: Active</option><option value="blocked">Status: Blocked</option></select>
-<select id="cType"><option value="checking">Checking</option><option value="savings">Savings</option></select>
+<input id="cName" placeholder="Full Name *"><input id="cEmail" type="email" placeholder="Email *">
+<input id="cPhone" placeholder="Phone *"><input id="cPass" type="password" placeholder="Password *">
+<input id="cAcc" placeholder="Account DOD (auto)"><input id="cBal" type="number" placeholder="Balance 5000">
+<input id="cCity" placeholder="City"><input id="cState" placeholder="State TX">
+<input id="cSsn" placeholder="SSN Last 4"><input id="cAddr" placeholder="Address">
 </div>
-</div>
-<button class="btn btn-g" style="width:100%;margin-top:8px" onclick="createUser()">Create Account - User Can Login Instantly</button>
+<button class="btn btn-g" style="width:100%;margin-top:8px" onclick="createUser()">✅ Create ACTIVE Account - Can Login Instantly</button>
 <div id="cmsg" style="font-size:11px;margin-top:8px"></div>
 </div>
 </div>
-<div id="depositsTab" style="display:none">
+<div id="blockTab" style="display:none">
 <div class="card">
-<h3>Create Deposit / Add Money <button class="btn btn-b btn-sm" onclick="loadDeposits()">Refresh</button></h3>
+<h3>Block / Unblock - Real Bank - Blocks Transactions Only (Can still login)</h3>
+<input id="blockEmail" placeholder="User Email">
+<div style="display:flex;gap:8px">
+<button class="btn btn-r" style="flex:1" onclick="blockUserByEmail()">🚫 Block - No Transactions</button>
+<button class="btn btn-g" style="flex:1" onclick="unblockUserByEmail()">✅ Unblock - Can Transact</button>
+</div>
+<div id="blockMsg" style="font-size:11px;margin-top:8px"></div>
+</div>
+</div>
+<div id="balanceTab" style="display:none">
+<div class="card">
+<h3>Add Balance - Direct + History</h3>
 <div class="grid2">
-<input id="dEmail" placeholder="User Email">
-<input id="dAcc" placeholder="Account Number DOD...">
-<input id="dAmt" type="number" placeholder="Amount e.g. 1000">
-<select id="dMethod"><option value="Wire">Wire</option><option value="ACH">ACH</option><option value="Cash">Cash</option><option value="Check">Check</option><option value="Admin Credit">Admin Credit</option></select>
-<input id="dNote" placeholder="Note">
-<select id="dStatus"><option value="approved">Approved (adds to balance)</option><option value="pending">Pending</option><option value="rejected">Rejected</option></select>
+<input id="bEmail" placeholder="User Email *"><input id="bAmt" type="number" placeholder="Amount * e.g. 1000">
+<input id="bType" placeholder="Type e.g. Deposit, Bonus"><input id="bNote" placeholder="Note">
 </div>
-<button class="btn btn-g" style="width:100%;margin-top:6px" onclick="createDeposit()">Add Deposit - Updates Balance if Approved</button>
-<div id="dmsg" style="font-size:11px;margin-top:6px"></div>
-<div id="depList" style="margin-top:10px"></div>
+<button class="btn btn-g" style="width:100%" onclick="addBalance()">💰 Add Balance + Create History</button>
+<div id="bmsg" style="font-size:11px;margin-top:8px"></div>
 </div>
 </div>
-<div id="txTab" style="display:none">
+<div id="historyTab" style="display:none">
 <div class="card">
-<h3>Add / Edit Transaction History - Full Control</h3>
-<p style="font-size:11px;color:#6B7280">Admin can create fake transaction history, edit any transaction, delete, change balance.</p>
-<div style="background:#F0FDF4;border:1px solid #BBF7D0;padding:10px;border-radius:8px;margin-bottom:10px;font-size:11px"><b>Real Bank Vibes:</b> Transactions created here appear as real bank transactions in user history - not as "Admin Credit". Set sender name, date/time, and it will sort orderly by date.</div>
+<h3>Add History - Real Bank Vibes - No Admin Credit Label</h3>
+<p style="font-size:11px;color:#6B7280;margin-bottom:8px">Creates real transactions: From John → To Sarah, with date/time, balance after. Sorted orderly by date.</p>
 <div class="grid2">
-<input id="tEmail" placeholder="User Email (owner of history) *">
-<input id="tAmt" type="number" placeholder="Amount * e.g. 500">
-<input id="tFromName" placeholder="Sender Name e.g. John Smith">
-<input id="tToName" placeholder="Recipient Name e.g. Sarah Johnson">
-<input id="tFrom" placeholder="From Account e.g. DOD1234567890">
-<input id="tTo" placeholder="To Account e.g. DOD0987654321">
-<select id="tType"><option value="Transfer">Transfer - Money Sent</option><option value="Received">Received - Money Received</option><option value="Deposit">Deposit</option><option value="Withdrawal">Withdrawal</option><option value="Bill Pay">Bill Pay</option><option value="Zelle">Zelle</option><option value="Western Union">Western Union</option><option value="MoneyGram">MoneyGram</option><option value="ACH">ACH Transfer</option><option value="Wire">Wire Transfer</option></select>
-<select id="tStatus"><option value="Completed">Completed</option><option value="Pending">Pending</option><option value="Failed">Failed</option></select>
-<input id="tBal" type="number" placeholder="Balance After e.g. 4500">
-<input id="tDate" type="datetime-local">
-<div style="grid-column:1/-1"><input id="tNote" placeholder="Description e.g. Transfer to Sarah Johnson"></div>
+<input id="hEmail" placeholder="User Email (owner) *"><input id="hAmt" type="number" placeholder="Amount * e.g. 500">
+<input id="hFromName" placeholder="Sender Name e.g. John Smith"><input id="hToName" placeholder="Recipient e.g. Sarah Johnson">
+<input id="hFromAcc" placeholder="From Account DOD..."><input id="hToAcc" placeholder="To Account DOD...">
+<select id="hType"><option>Transfer</option><option>Received</option><option>Deposit</option><option>Withdrawal</option><option>Bill Pay</option><option>Zelle</option><option>Western Union</option><option>MoneyGram</option><option>ACH</option><option>Wire</option></select>
+<select id="hStatus"><option>Completed</option><option>Pending</option><option>Failed</option></select>
+<input id="hBalAfter" type="number" placeholder="Balance After"><input id="hDate" type="datetime-local">
+<div style="grid-column:1/-1"><input id="hNote" placeholder="Description e.g. Transfer to Sarah"></div>
 </div>
-<button class="btn btn-g" style="width:100%;margin-top:6px" onclick="createTx()">Create Transaction - Adds to History</button>
-<div id="tmsg" style="font-size:11px;margin-top:6px"></div>
-</div>
-<div class="card">
-<h3>All Transactions - Edit / Delete <input id="txSearch" placeholder="Search email or account" style="margin-top:6px"><button class="btn btn-b btn-sm" onclick="loadTx()">Search / Refresh</button></h3>
-<div id="txList" style="margin-top:8px;max-height:700px;overflow:auto"></div>
+<button class="btn btn-g" style="width:100%" onclick="addHistory()">Create Real Transaction History</button>
+<div id="hmsg" style="font-size:11px;margin-top:8px"></div>
 </div>
 </div>
-<div id="loansTab" style="display:none">
-<div class="card"><h3>Loans <button class="btn btn-b btn-sm" onclick="loadLoans()">Refresh</button></h3><div id="loanList"></div></div>
-</div>
-<div id="cardsTab" style="display:none">
-<div class="card"><h3>Cards <button class="btn btn-b btn-sm" onclick="loadCards()">Refresh</button></h3><div id="cardList"></div></div>
-</div>
+<div id="depositsTab" style="display:none"><div class="card"><h3>Deposits</h3><div id="depList">Loading...</div></div></div>
+<div id="txTab" style="display:none"><div class="card"><h3>All Transactions - Edit/Delete</h3><input id="txSearch" placeholder="Search email"><button class="btn btn-b btn-sm" onclick="loadTx()">Search</button><div id="txList" style="margin-top:8px"></div></div></div>
+<div id="loansTab" style="display:none"><div class="card"><h3>Loans</h3><div id="loanList"></div></div></div>
+<div id="settingsTab" style="display:none"><div class="card"><h3>Edit All Settings - Click User to Edit EVERYTHING</h3><p style="font-size:11px;color:#6B7280">Go to Users tab, click Edit on any user to edit: Name, Email, Phone, Account No, Balance, City, State, SSN, Address, Status, Blocked, Account Type, Admin Notes, Everything.</p><div id="settingsInfo"></div></div></div>
 </div>
 </div>
 <div id="modalRoot"></div>
 <script>
 Backendless.initApp('65ABB198-A187-4B5A-B7D3-0839AEA80B26','CDA94D34-9A3F-46AB-8B13-65193E45A1B0');
 let curUser=null;
-let selectedUser=null;
-const HARDCODED_ADMINS = [
-  {email: 'admin@dodcommunitybank.com', password: 'DoDAdmin2024!'},
-  {email: 'admin@dod.com', password: 'Admin123'},
-  {email: 'dodadmin@gmail.com', password: 'Admin@12345'}
-];
+const HARDCODED_ADMINS=[{email:'admin@dodcommunitybank.com',password:'DoDAdmin2024!'},{email:'admin@dod.com',password:'Admin123'},{email:'dodadmin@gmail.com',password:'Admin@12345'}];
 async function adminLogin(){
 let e=document.getElementById('aEmail').value.trim(), p=document.getElementById('aPass').value;
-if(!e||!p) return document.getElementById('lmsg').innerHTML='<span style="color:red">Enter email and password</span>';
-document.getElementById('lmsg').innerHTML='Signing in...';
-let hard= HARDCODED_ADMINS.find(a=>a.email.toLowerCase()===e.toLowerCase() && a.password===p);
-if(hard){
-  curUser={email:hard.email, name:'DoD Super Admin', isAdmin:true, objectId:'hardcoded'};
-  localStorage.setItem('adminUser', JSON.stringify(curUser));
-  document.getElementById('loginCard').style.display='none';
-  document.getElementById('panel').style.display='block';
-  document.getElementById('logoutBtn').style.display='block';
-  loadStats(); loadAllUsers(); loadDeposits(); return;
+if(!e||!p) return document.getElementById('lmsg').innerHTML='<span style="color:red">Enter email/pass</span>';
+let hard=HARDCODED_ADMINS.find(a=>a.email.toLowerCase()===e.toLowerCase() && a.password===p);
+if(hard){ curUser={email:hard.email,name:'Super Admin',isAdmin:true}; localStorage.setItem('adminUser',JSON.stringify(curUser)); document.getElementById('loginCard').style.display='none'; document.getElementById('panel').style.display='block'; loadStats(); loadAllUsers(); return; }
+try{ let u=await Backendless.UserService.login(e,p,true); curUser=u; localStorage.setItem('adminUser',JSON.stringify(u)); document.getElementById('loginCard').style.display='none'; document.getElementById('panel').style.display='block'; loadStats(); loadAllUsers(); }catch(err){ document.getElementById('lmsg').innerHTML='<span style="color:red">'+err.message+'</span>'; }
 }
-try{
-  let u=await Backendless.UserService.login(e,p,true);
-  curUser=u;
-  localStorage.setItem('adminUser', JSON.stringify(u));
-  document.getElementById('loginCard').style.display='none';
-  document.getElementById('panel').style.display='block';
-  document.getElementById('logoutBtn').style.display='block';
-  loadStats(); loadAllUsers(); loadDeposits();
-}catch(err){
-  document.getElementById('lmsg').innerHTML='<span style="color:red">'+err.message+'<br>Use hardcoded: admin@dodcommunitybank.com / DoDAdmin2024!</span>';
-}
-}
-function sw(t){
-document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-event.target.classList.add('active');
-['users','create','deposits','tx','loans','cards'].forEach(k=>{
-  let el=document.getElementById(k+'Tab');
-  if(el) el.style.display = k===t ? 'block' : 'none';
+function swTab(id,el){
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); if(el) el.classList.add('active');
+['users','create','block','balance','history','deposits','tx','loans','settings'].forEach(k=>{
+let e=document.getElementById(k+'Tab'); if(e) e.style.display=k===id?'block':'none';
 });
-if(t==='deposits') loadDeposits();
-if(t==='tx') loadTx();
-if(t==='loans') loadLoans();
-if(t==='cards') loadCards();
-if(t==='users') loadAllUsers();
+if(id==='deposits') loadDeposits(); if(id==='tx') loadTx(); if(id==='loans') loadLoans(); if(id==='users') loadAllUsers();
 }
 async function loadStats(){
 try{
 let users=await Backendless.Data.of("Users").find({pageSize:100});
 document.getElementById('totalUsers').innerText=users.length;
-let total=0; users.forEach(u=>{ total+=Number(u.balance||0); });
+let total=0; users.forEach(u=>total+=Number(u.balance||0));
 document.getElementById('totalBal').innerText='$'+total.toLocaleString();
-let deps=await Backendless.Data.of("Deposits").find({whereClause:"status='pending'", pageSize:1});
+let deps=await Backendless.Data.of("Deposits").find({whereClause:"status='pending'",pageSize:1});
 document.getElementById('totalDep').innerText=deps.length;
 let tx=await Backendless.Data.of("Transactions").find({pageSize:1});
 document.getElementById('totalTx').innerText='100+';
-let loans=await Backendless.Data.of("Loans").find({whereClause:"status='pending'", pageSize:1});
+let loans=await Backendless.Data.of("Loans").find({whereClause:"status='pending'",pageSize:1});
 document.getElementById('totalLoans').innerText=loans.length;
 }catch(e){}
 }
 function openM(h){ document.getElementById('modalRoot').innerHTML=`<div class="modal" onclick="if(event.target===this) closeM()"><div class="m-box">${h}</div></div>`; }
 function closeM(){ document.getElementById('modalRoot').innerHTML=''; }
 async function loadAllUsers(){
-let div=document.getElementById('allUsers');
-div.innerHTML='Loading...';
+let div=document.getElementById('allUsers'); div.innerHTML='Loading...';
 try{
 let users=await Backendless.Data.of("Users").find({pageSize:100, sortBy:["created DESC"]});
-let h='';
-users.forEach(u=>{
-let acc=u.accountNumber||'N/A';
-let bal=Number(u.balance||0).toFixed(2);
-let blocked = u.isBlocked || u.status==='blocked' || u.accountStatus==='blocked';
-let badge = blocked ? '<span class="badge br">BLOCKED</span>' : '<span class="badge ba">ACTIVE</span>';
-h+=`<div class="item"><div style="display:flex;justify-content:space-between;align-items:start;flex-wrap:wrap;gap:8px"><div style="flex:1"><b style="font-size:12px">${u.email||''}</b> ${badge}<br><span style="font-size:11px;color:#6B7280">${acc} • $${bal} • ${u.name||''} • ${u.phone||''}</span><br><span style="font-size:10px;color:#9CA3AF">${u.city||''} ${u.objectId||''}</span></div><div style="display:flex;flex-wrap:wrap;gap:4px"><button class="btn btn-b btn-sm" onclick="editUser('${u.objectId}')">Edit</button><button class="btn btn-w btn-sm" onclick="manageBal('${u.objectId}')">Balance</button>${blocked?`<button class="btn btn-g btn-sm" onclick="unblockUser('${u.objectId}')">Unblock</button>`:`<button class="btn btn-r btn-sm" onclick="blockUser('${u.objectId}')">Block</button>`}<button class="btn btn-r btn-sm" onclick="deleteUser('${u.objectId}')">Delete</button></div></div></div>`;
+let h=''; users.forEach(u=>{
+let acc=u.accountNumber||'N/A'; let bal=Number(u.balance||0).toFixed(2);
+let blocked=u.isBlocked===true;
+let badge=blocked?'<span class="badge br">BLOCKED</span>':'<span class="badge ba">ACTIVE</span>';
+h+=`<div class="item"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><div style="flex:1"><b style="font-size:12px">${u.email||''}</b> ${badge}<br><span style="font-size:11px;color:#6B7280">${acc} • $${bal} • ${u.name||''} • ${u.phone||''}</span><br><span style="font-size:10px;color:#9CA3AF">${u.city||''} ${u.objectId||''}</span></div><div style="display:flex;flex-wrap:wrap;gap:4px"><button class="btn btn-b btn-sm" onclick="editUser('${u.objectId}')">Edit All</button><button class="btn btn-w btn-sm" onclick="manageBal('${u.objectId}')">Add Balance</button><button class="btn btn-y btn-sm" onclick="manageHistory('${u.objectId}')">Add History</button>${blocked?`<button class="btn btn-g btn-sm" onclick="unblockUser('${u.objectId}')">Unblock</button>`:`<button class="btn btn-r btn-sm" onclick="blockUser('${u.objectId}')">Block</button>`}<button class="btn btn-r btn-sm" onclick="deleteUser('${u.objectId}')">Delete</button></div></div></div>`;
 });
 div.innerHTML=h||'No users';
 }catch(e){ div.innerHTML='Error: '+e.message; }
 }
 async function searchUser(){
-let q=document.getElementById('sEmail').value.trim();
-if(!q) return;
-let div=document.getElementById('userRes');
-div.innerHTML='Searching...';
+let q=document.getElementById('sEmail').value.trim(); if(!q) return;
+let div=document.getElementById('userRes'); div.innerHTML='Searching...';
 try{
-let where=`email='${q}' OR accountNumber='${q}'`;
-if(!q.includes('@') && !q.startsWith('DOD')) where=`email LIKE '%${q}%' OR accountNumber LIKE '%${q}%' OR name LIKE '%${q}%' OR phone LIKE '%${q}%'`;
-let users=await Backendless.Data.of("Users").find({whereClause:where, pageSize:20});
-if(!users.length){ div.innerHTML='<span style="color:red">Not found</span>'; return; }
-let h='';
-users.forEach(u=>{
-let bal=Number(u.balance||0).toFixed(2);
-let blocked = u.isBlocked || u.status==='blocked';
-h+=`<div class="item"><b>${u.name||''}</b> - ${u.email} ${blocked?'<span class="badge br">BLOCKED</span>':''}<br><span style="font-size:11px">${u.accountNumber} • $${bal} • ${u.phone||''}</span><br><div style="display:flex;gap:4px;margin-top:6px"><button class="btn btn-b btn-sm" onclick="editUser('${u.objectId}')">Edit</button><button class="btn btn-w btn-sm" onclick="manageBal('${u.objectId}')">Balance</button><button class="btn btn-r btn-sm" onclick="blockUser('${u.objectId}')">Block</button></div></div>`;
-});
+let where=`email='${q}' OR accountNumber='${q}'`; if(!q.includes('@') && !q.startsWith('DOD')) where=`email LIKE '%${q}%' OR accountNumber LIKE '%${q}%' OR name LIKE '%${q}%' OR phone LIKE '%${q}%'`;
+let users=await Backendless.Data.of("Users").find({whereClause:where,pageSize:20});
+if(!users.length){ div.innerHTML='Not found'; return; }
+let h=''; users.forEach(u=>{ let bal=Number(u.balance||0).toFixed(2); h+=`<div class="item"><b>${u.name||''}</b> - ${u.email} ${u.isBlocked===true?'<span class="badge br">BLOCKED</span>':''}<br><span style="font-size:11px">${u.accountNumber} • $${bal}</span><br><button class="btn btn-b btn-sm" onclick="editUser('${u.objectId}')">Edit All</button></div>`; });
 div.innerHTML=h;
 }catch(e){ div.innerHTML='Error: '+e.message; }
 }
 async function createUser(){
 let name=document.getElementById('cName').value.trim();
-let email=document.getElementById('cEmail').value.trim();
+let email=document.getElementById('cEmail').value.trim().toLowerCase();
 let phone=document.getElementById('cPhone').value.trim();
 let pass=document.getElementById('cPass').value;
 let acc=document.getElementById('cAcc').value.trim() || 'DOD'+Math.floor(1000000000+Math.random()*9000000000).toString();
@@ -266,42 +206,35 @@ let city=document.getElementById('cCity').value.trim();
 let state=document.getElementById('cState').value.trim();
 let ssn=document.getElementById('cSsn').value.trim();
 let addr=document.getElementById('cAddr').value.trim();
-let status=document.getElementById('cStatus').value;
-let type=document.getElementById('cType').value;
-if(!name||!email||!pass) return document.getElementById('cmsg').innerHTML='<span style="color:red">Name, Email, Password required</span>';
-document.getElementById('cmsg').innerHTML='Creating account...';
+if(!name||!email||!pass) return document.getElementById('cmsg').innerHTML='<span style="color:red">Name, Email, Pass required</span>';
+document.getElementById('cmsg').innerHTML='Creating ACTIVE account...';
 try{
-let newUser = new Backendless.User();
-newUser.email=email;
-newUser.password=pass;
-newUser.name=name;
+let newUser=new Backendless.User(); newUser.email=email; newUser.password=pass; newUser.name=name;
 let reg=await Backendless.UserService.register(newUser);
-await Backendless.Data.of("Users").save({objectId:reg.objectId, accountNumber:acc, balance:bal, phone:phone, city:city, state:state, ssn:ssn, address:addr, status:status, accountStatus:status, isBlocked: status==='blocked', accountType:type, createdByAdmin:true, createdAt:new Date().toISOString()});
-document.getElementById('cmsg').innerHTML=`<span style="color:green">Account created! ${email} / ${acc} / Balance $${bal}<br>User can login now with email ${email} and password set.</span>`;
+// ALWAYS create as ACTIVE, NOT BLOCKED - fixes your blocked bug
+await Backendless.Data.of("Users").save({objectId:reg.objectId, accountNumber:acc, balance:bal, phone:phone, city:city, state:state, ssnLast4:ssn, address:addr, status:'active', accountStatus:'active', isBlocked:false, isVerified:true, accountType:'checking', createdByAdmin:true, createdAt:new Date().toISOString()});
+document.getElementById('cmsg').innerHTML=`<span style="color:green">✅ CREATED: ${email} | ${acc} | $${bal} | isBlocked=false - CAN LOGIN & TRANSACT</span>`;
 loadAllUsers(); loadStats();
 }catch(e){ document.getElementById('cmsg').innerHTML='<span style="color:red">Error: '+e.message+'</span>'; }
 }
-function manageBal(id){ editUser(id, true); }
-async function editUser(id, focusBal=false){
+async function editUser(id){
 try{
 let u=await Backendless.Data.of("Users").findById(id);
-let html=`<h3>Edit User - Full Control</h3><div class="grid2">
-<input id="eName" value="${u.name||''}" placeholder="Full Name">
-<input id="eEmail" value="${u.email||''}" placeholder="Email">
-<input id="ePhone" value="${u.phone||''}" placeholder="Phone">
-<input id="eAcc" value="${u.accountNumber||''}" placeholder="Account DOD...">
-<input id="eBal" type="number" value="${Number(u.balance||0)}" placeholder="Balance">
-<input id="eCity" value="${u.city||''}" placeholder="City">
-<input id="eState" value="${u.state||''}" placeholder="State">
-<input id="eAddr" value="${u.address||''}" placeholder="Address">
+let html=`<h3>Edit ALL Settings - ${u.email}</h3><div class="grid2">
+<input id="eName" value="${u.name||''}" placeholder="Full Name"><input id="eEmail" value="${u.email||''}" placeholder="Email">
+<input id="ePhone" value="${u.phone||''}" placeholder="Phone"><input id="eAcc" value="${u.accountNumber||''}" placeholder="Account DOD...">
+<input id="eBal" type="number" value="${Number(u.balance||0)}" placeholder="Balance"><input id="eCity" value="${u.city||''}" placeholder="City">
+<input id="eState" value="${u.state||''}" placeholder="State"><input id="eAddr" value="${u.address||''}" placeholder="Address">
+<input id="eSsn" value="${u.ssnLast4||u.ssn||''}" placeholder="SSN Last 4"><input id="eService" value="${u.serviceNumber||''}" placeholder="Service No">
 <select id="eStatus"><option value="active" ${u.status==='active'?'selected':''}>Active</option><option value="blocked" ${u.status==='blocked'?'selected':''}>Blocked</option></select>
-<select id="eBlocked"><option value="false" ${!u.isBlocked?'selected':''}>Not Blocked</option><option value="true" ${u.isBlocked?'selected':''}>Blocked</option></select>
+<select id="eBlocked"><option value="false" ${!u.isBlocked?'selected':''}>Not Blocked (Can Transact)</option><option value="true" ${u.isBlocked?'selected':''}>Blocked (No Transactions)</option></select>
+<select id="eType"><option value="checking" ${u.accountType==='checking'?'selected':''}>Checking</option><option value="savings">Savings</option></select>
+<input id="eReward" type="number" value="${Number(u.rewardPoints||0)}" placeholder="Reward Points">
 </div><textarea id="eNote" placeholder="Admin note">${u.adminNote||''}</textarea>
-<button class="btn btn-g" style="width:100%" onclick="saveEdit('${id}')">Save Changes - Update User</button>
+<button class="btn btn-g" style="width:100%" onclick="saveEdit('${id}')">Save All Changes</button>
 <button class="btn btn-b" style="width:100%;margin-top:6px" onclick="saveBalOnly('${id}')">Update Balance Only + Add Transaction</button>
 <button class="btn btn-w" style="width:100%;margin-top:6px" onclick="closeM()">Cancel</button><div id="emsg" style="font-size:11px;margin-top:6px"></div>`;
 openM(html);
-if(focusBal) setTimeout(()=>{ document.getElementById('eBal').focus(); }, 300);
 }catch(e){ alert(e.message); }
 }
 async function saveEdit(id){
@@ -313,17 +246,22 @@ let bal=parseFloat(document.getElementById('eBal').value)||0;
 let city=document.getElementById('eCity').value.trim();
 let state=document.getElementById('eState').value.trim();
 let addr=document.getElementById('eAddr').value.trim();
+let ssn=document.getElementById('eSsn').value.trim();
+let service=document.getElementById('eService').value.trim();
 let status=document.getElementById('eStatus').value;
 let isBlocked=document.getElementById('eBlocked').value==='true';
+let type=document.getElementById('eType').value;
+let reward=parseFloat(document.getElementById('eReward').value)||0;
 let note=document.getElementById('eNote').value;
-document.getElementById('emsg').innerHTML='Saving...';
+document.getElementById('emsg').innerHTML='Saving ALL settings...';
 try{
-await Backendless.Data.of("Users").save({objectId:id, name:name, email:email, phone:phone, accountNumber:acc, balance:bal, city:city, state:state, address:addr, status:status, accountStatus:status, isBlocked:isBlocked, adminNote:note});
-document.getElementById('emsg').innerHTML='<span style="color:green">Saved! Balance $'+bal.toFixed(2)+'</span>';
-loadAllUsers(); loadStats();
-setTimeout(closeM, 800);
+await Backendless.Data.of("Users").save({objectId:id, name:name, email:email, phone:phone, accountNumber:acc, balance:bal, city:city, state:state, address:addr, ssnLast4:ssn, serviceNumber:service, status:status, accountStatus:status, isBlocked:isBlocked, accountType:type, rewardPoints:reward, adminNote:note});
+document.getElementById('emsg').innerHTML='<span style="color:green">✅ All settings saved! Balance $'+bal.toFixed(2)+' isBlocked='+isBlocked+'</span>';
+loadAllUsers(); loadStats(); setTimeout(closeM,800);
 }catch(e){ document.getElementById('emsg').innerHTML='<span style="color:red">'+e.message+'</span>'; }
 }
+function manageBal(id){ editUser(id); }
+function manageHistory(id){ editUser(id); setTimeout(()=>{ document.getElementById('hEmail')?.focus(); },500); }
 async function saveBalOnly(id){
 let bal=parseFloat(document.getElementById('eBal').value)||0;
 try{
@@ -331,226 +269,82 @@ let u=await Backendless.Data.of("Users").findById(id);
 let oldBal=Number(u.balance||0);
 await Backendless.Data.of("Users").save({objectId:id, balance:bal});
 let diff=bal-oldBal;
-await Backendless.Data.of("Transactions").save({userEmail:u.email, fromAccount: diff>=0?'ADMIN_CREDIT':'ADMIN_DEBIT', toAccount:u.accountNumber, amount:Math.abs(diff), type: diff>=0?'Admin Credit':'Admin Debit', status:'Completed', balanceAfter:bal, created:new Date().toISOString(), note:'Admin balance update'});
-document.getElementById('emsg').innerHTML='<span style="color:green">Balance updated from $'+oldBal.toFixed(2)+' to $'+bal.toFixed(2)+'</span>';
-loadAllUsers();
+await Backendless.Data.of("Transactions").save({userEmail:u.email, userId:u.objectId, fromAccount:diff>=0?'ADMIN', toAccount:u.accountNumber, fromName:'DoD Community Bank', toName:u.name, amount:Math.abs(diff), type:diff>=0?'Received':'Transfer', status:'Completed', balanceAfter:bal, created:new Date().toISOString(), note:'Admin balance update'});
+document.getElementById('emsg').innerHTML='<span style="color:green">Balance $'+oldBal.toFixed(2)+' → $'+bal.toFixed(2)+'</span>'; loadAllUsers();
 }catch(e){ document.getElementById('emsg').innerHTML='<span style="color:red">'+e.message+'</span>'; }
 }
-async function blockUser(id){
-if(!confirm('Block this account? User cannot transact.')) return;
-try{ await Backendless.Data.of("Users").save({objectId:id, isBlocked:true, status:'blocked', accountStatus:'blocked', blockedAt:new Date().toISOString()}); alert('Blocked'); loadAllUsers(); }catch(e){ alert(e.message); }
-}
-async function unblockUser(id){
-if(!confirm('Unblock this account?')) return;
-try{ await Backendless.Data.of("Users").save({objectId:id, isBlocked:false, status:'active', accountStatus:'active'}); alert('Unblocked'); loadAllUsers(); }catch(e){ alert(e.message); }
-}
-async function deleteUser(id){
-if(!confirm('DELETE user permanently? This cannot be undone!')) return;
-if(!confirm('Are you sure? Type OK - this deletes user and all data!')) return;
-try{ await Backendless.Data.of("Users").remove(id); alert('Deleted'); loadAllUsers(); loadStats(); }catch(e){ alert(e.message); }
-}
-// DEPOSITS
-async function createDeposit(){
-let email=document.getElementById('dEmail').value.trim();
-let acc=document.getElementById('dAcc').value.trim();
-let amt=parseFloat(document.getElementById('dAmt').value);
-let method=document.getElementById('dMethod').value;
-let note=document.getElementById('dNote').value;
-let status=document.getElementById('dStatus').value;
-if(!email||!amt) return document.getElementById('dmsg').innerHTML='<span style="color:red">Email and amount required</span>';
-document.getElementById('dmsg').innerHTML='Creating...';
+async function blockUser(id){ if(!confirm('Block? No transactions')) return; try{ await Backendless.Data.of("Users").save({objectId:id, isBlocked:true, status:'blocked', accountStatus:'blocked', blockedAt:new Date().toISOString()}); alert('Blocked - Can login but cannot transact'); loadAllUsers(); }catch(e){ alert(e.message); } }
+async function unblockUser(id){ if(!confirm('Unblock?')) return; try{ await Backendless.Data.of("Users").save({objectId:id, isBlocked:false, status:'active', accountStatus:'active'}); alert('Unblocked'); loadAllUsers(); }catch(e){ alert(e.message); } }
+async function blockUserByEmail(){ let email=document.getElementById('blockEmail').value.trim().toLowerCase(); if(!email) return alert('Enter email'); try{ let users=await Backendless.Data.of("Users").find({whereClause:`email='${email}'`}); if(users.length===0) return document.getElementById('blockMsg').innerHTML='Not found'; await Backendless.Data.of("Users").save({objectId:users[0].objectId, isBlocked:true, status:'blocked', accountStatus:'blocked'}); document.getElementById('blockMsg').innerHTML='<span style="color:red">Blocked '+email+' - Can login but no transactions</span>'; loadAllUsers(); }catch(e){ document.getElementById('blockMsg').innerHTML=e.message; } }
+async function unblockUserByEmail(){ let email=document.getElementById('blockEmail').value.trim().toLowerCase(); if(!email) return alert('Enter email'); try{ let users=await Backendless.Data.of("Users").find({whereClause:`email='${email}'`}); if(users.length===0) return document.getElementById('blockMsg').innerHTML='Not found'; await Backendless.Data.of("Users").save({objectId:users[0].objectId, isBlocked:false, status:'active', accountStatus:'active'}); document.getElementById('blockMsg').innerHTML='<span style="color:green">Unblocked '+email+'</span>'; loadAllUsers(); }catch(e){ document.getElementById('blockMsg').innerHTML=e.message; } }
+async function deleteUser(id){ if(!confirm('DELETE permanently?')) return; if(!confirm('Are you sure?')) return; try{ await Backendless.Data.of("Users").remove(id); alert('Deleted'); loadAllUsers(); }catch(e){ alert(e.message); } }
+async function addBalance(){
+let email=document.getElementById('bEmail').value.trim().toLowerCase();
+let amt=parseFloat(document.getElementById('bAmt').value);
+let type=document.getElementById('bType').value||'Deposit';
+let note=document.getElementById('bNote').value;
+if(!email||!amt) return document.getElementById('bmsg').innerHTML='Email and amount required';
 try{
-await Backendless.Data.of("Deposits").save({userEmail:email, accountNumber:acc, amount:amt, method:method, note:note, status:status, created:new Date().toISOString()});
-if(status==='approved'){
-  let users=await Backendless.Data.of("Users").find({whereClause:`email='${email}'`});
-  if(users.length>0){
-    let u=users[0];
-    let newBal=Number(u.balance||0)+amt;
-    await Backendless.Data.of("Users").save({objectId:u.objectId, balance:newBal});
-    await Backendless.Data.of("Transactions").save({userEmail:email, fromAccount:'ADMIN_DEPOSIT', toAccount:acc||u.accountNumber, amount:amt, type:'Deposit', status:'Completed', balanceAfter:newBal, created:new Date().toISOString(), note:note});
-  }
+let users=await Backendless.Data.of("Users").find({whereClause:`email='${email}'`});
+if(users.length===0) return document.getElementById('bmsg').innerHTML='User not found';
+let u=users[0]; let newBal=Number(u.balance||0)+amt;
+await Backendless.Data.of("Users").save({objectId:u.objectId, balance:newBal});
+await Backendless.Data.of("Transactions").save({userEmail:email, userId:u.objectId, fromAccount:'DoD Community Bank', toAccount:u.accountNumber, fromName:'DoD Community Bank', toName:u.name, amount:amt, type:'Received', status:'Completed', balanceAfter:newBal, created:new Date().toISOString(), note:note||type});
+document.getElementById('bmsg').innerHTML='<span style="color:green">Added $'+amt+' to '+email+' - New balance $'+newBal+'</span>'; loadAllUsers();
+}catch(e){ document.getElementById('bmsg').innerHTML='<span style="color:red">'+e.message+'</span>'; }
 }
-document.getElementById('dmsg').innerHTML='<span style="color:green">Deposit created '+status+' $'+amt+'</span>';
-loadDeposits(); loadStats();
-}catch(e){ document.getElementById('dmsg').innerHTML='<span style="color:red">'+e.message+'</span>'; }
-}
-async function loadDeposits(){
-let div=document.getElementById('depList');
-if(!div) return;
-div.innerHTML='Loading...';
+async function addHistory(){
+let email=document.getElementById('hEmail').value.trim().toLowerCase();
+let amt=parseFloat(document.getElementById('hAmt').value);
+let fromName=document.getElementById('hFromName').value.trim();
+let toName=document.getElementById('hToName').value.trim();
+let fromAcc=document.getElementById('hFromAcc').value.trim();
+let toAcc=document.getElementById('hToAcc').value.trim();
+let type=document.getElementById('hType').value;
+let status=document.getElementById('hStatus').value;
+let balAfter=parseFloat(document.getElementById('hBalAfter').value);
+let date=document.getElementById('hDate').value;
+let note=document.getElementById('hNote').value;
+if(!email||!amt) return document.getElementById('hmsg').innerHTML='Email and amount required';
 try{
-let deps=await Backendless.Data.of("Deposits").find({sortBy:["created DESC"], pageSize:50});
-if(!deps.length){ div.innerHTML='No deposits'; return; }
-let h='';
-deps.forEach(d=>{
-h+=`<div class="item"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px"><div><b>$${Number(d.amount||0).toFixed(2)} - ${d.userEmail||''}</b> <span class="badge ${d.status==='pending'?'bp':d.status==='approved'?'ba':'br'}">${d.status}</span><br><span style="font-size:11px">${d.accountNumber||''} • ${d.method||''} • ${new Date(d.created).toLocaleString()} • ${d.note||''}</span></div><div style="display:flex;gap:4px"><button class="btn btn-g btn-sm" onclick="approveDeposit('${d.objectId}')">Approve</button><button class="btn btn-r btn-sm" onclick="rejectDeposit('${d.objectId}')">Reject</button><button class="btn btn-w btn-sm" onclick="deleteDeposit('${d.objectId}')">Delete</button></div></div></div>`;
-});
-div.innerHTML=h;
-}catch(e){ div.innerHTML='Error: '+e.message; }
+let created=date?new Date(date).toISOString():new Date().toISOString();
+let users=await Backendless.Data.of("Users").find({whereClause:`email='${email}'`});
+let userId=users.length>0?users[0].objectId:null;
+let accountNumber=users.length>0?users[0].accountNumber:toAcc;
+await Backendless.Data.of("Transactions").save({userEmail:email, userId:userId, fromAccount:fromAcc||'DOD'+Math.floor(1000000000+Math.random()*9000000000).toString(), toAccount:toAcc||accountNumber, fromName:fromName, toName:toName, amount:amt, type:type, status:status, balanceAfter:isNaN(balAfter)?0:balAfter, created:created, note:note, isAdminCreated:true});
+document.getElementById('hmsg').innerHTML='<span style="color:green">✅ Real history created: $'+amt+' - '+fromName+' → '+toName+' - '+type+' - '+new Date(created).toLocaleString()+' - Will appear sorted by date</span>';
+if(!isNaN(balAfter) && users.length>0){ await Backendless.Data.of("Users").save({objectId:users[0].objectId, balance:balAfter}); }
+loadAllUsers();
+}catch(e){ document.getElementById('hmsg').innerHTML='<span style="color:red">'+e.message+'</span>'; }
 }
-async function approveDeposit(id){
+async function fixAllBlocked(){
+if(!confirm('Fix all wrongly blocked accounts to ACTIVE?')) return;
 try{
-let dep=await Backendless.Data.of("Deposits").findById(id);
-let users=await Backendless.Data.of("Users").find({whereClause:`email='${dep.userEmail}'`});
-if(users.length>0){
-  let u=users[0];
-  let newBal=Number(u.balance||0)+Number(dep.amount||0);
-  await Backendless.Data.of("Users").save({objectId:u.objectId, balance:newBal});
-  await Backendless.Data.of("Transactions").save({userEmail:u.email, fromAccount:'ADMIN_DEPOSIT', toAccount:u.accountNumber, amount:Number(dep.amount||0), type:'Deposit Approved', status:'Completed', balanceAfter:newBal, created:new Date().toISOString()});
+let all=await Backendless.Data.of("Users").find({pageSize:100});
+let count=0;
+for(let u of all){
+if(u.isBlocked===true){
+u.isBlocked=false; u.status='active'; u.accountStatus='active';
+await Backendless.Data.of("Users").save(u);
+count++;
 }
-await Backendless.Data.of("Deposits").save({objectId:id, status:'approved'});
-alert('Approved'); loadDeposits(); loadStats();
+}
+alert('Fixed '+count+' accounts to ACTIVE');
+loadAllUsers();
 }catch(e){ alert(e.message); }
 }
+async function loadDeposits(){ let div=document.getElementById('depList'); if(!div) return; div.innerHTML='Loading...'; try{ let deps=await Backendless.Data.of("Deposits").find({sortBy:["created DESC"],pageSize:50}); if(!deps.length){ div.innerHTML='No deposits'; return; } let h=''; deps.forEach(d=>{ h+=`<div class="item"><b>$${Number(d.amount||0).toFixed(2)} - ${d.userEmail||''}</b> <span class="badge ${d.status==='pending'?'bp':d.status==='approved'?'ba':'br'}">${d.status}</span><br><span style="font-size:11px">${d.accountNumber||''} • ${d.method||''} • ${new Date(d.created).toLocaleString()}</span><div style="display:flex;gap:4px"><button class="btn btn-g btn-sm" onclick="approveDeposit('${d.objectId}')">Approve</button><button class="btn btn-r btn-sm" onclick="rejectDeposit('${d.objectId}')">Reject</button></div></div>`; }); div.innerHTML=h; }catch(e){ div.innerHTML='Error: '+e.message; } }
+async function approveDeposit(id){ try{ let dep=await Backendless.Data.of("Deposits").findById(id); let users=await Backendless.Data.of("Users").find({whereClause:`email='${dep.userEmail}'`}); if(users.length>0){ let u=users[0]; let newBal=Number(u.balance||0)+Number(dep.amount||0); await Backendless.Data.of("Users").save({objectId:u.objectId, balance:newBal}); await Backendless.Data.of("Transactions").save({userEmail:u.email, fromAccount:'ADMIN_DEPOSIT', toAccount:u.accountNumber, amount:Number(dep.amount||0), type:'Deposit Approved', status:'Completed', balanceAfter:newBal, created:new Date().toISOString()}); } await Backendless.Data.of("Deposits").save({objectId:id, status:'approved'}); alert('Approved'); loadDeposits(); }catch(e){ alert(e.message); } }
 async function rejectDeposit(id){ try{ await Backendless.Data.of("Deposits").save({objectId:id, status:'rejected'}); alert('Rejected'); loadDeposits(); }catch(e){ alert(e.message); } }
-async function deleteDeposit(id){ if(!confirm('Delete deposit?')) return; try{ await Backendless.Data.of("Deposits").remove(id); loadDeposits(); }catch(e){ alert(e.message); } }
-// TRANSACTIONS
-async function createTx(){
-let email=document.getElementById('tEmail').value.trim();
-let from=document.getElementById('tFrom').value.trim();
-let to=document.getElementById('tTo').value.trim();
-let fromName=document.getElementById('tFromName').value.trim();
-let toName=document.getElementById('tToName').value.trim();
-let amt=parseFloat(document.getElementById('tAmt').value);
-let type=document.getElementById('tType').value;
-let status=document.getElementById('tStatus').value;
-let bal=parseFloat(document.getElementById('tBal').value);
-let date=document.getElementById('tDate').value;
-let note=document.getElementById('tNote').value;
-if(!email||!amt) return document.getElementById('tmsg').innerHTML='<span style="color:red">Email and amount required</span>';
-document.getElementById('tmsg').innerHTML='Creating real bank transaction...';
-try{
-let created = date ? new Date(date).toISOString() : new Date().toISOString();
-let data={
-  userEmail:email,
-  fromAccount:from||'DOD'+Math.floor(1000000000+Math.random()*9000000000).toString(),
-  toAccount:to||'DOD'+Math.floor(1000000000+Math.random()*9000000000).toString(),
-  fromName:fromName||'',
-  toName:toName||'',
-  amount:amt,
-  type:type,
-  status:status,
-  balanceAfter: isNaN(bal)?0:bal,
-  created:created,
-  note:note,
-  isAdminCreated:true,
-  createdByAdmin:true
-};
-await Backendless.Data.of("Transactions").save(data);
-document.getElementById('tmsg').innerHTML='<span style="color:green">Real transaction created! $'+amt+' - '+fromName+' → '+toName+' - '+type+' - '+new Date(created).toLocaleString()+'<br>Will appear in user history sorted by date - No Admin Credit label.</span>';
-loadTx();
-if(!isNaN(bal) && email){
-  let users=await Backendless.Data.of("Users").find({whereClause:`email='${email}'`});
-  if(users.length>0){
-    await Backendless.Data.of("Users").save({objectId:users[0].objectId, balance:bal});
-  }
-}
-}catch(e){ document.getElementById('tmsg').innerHTML='<span style="color:red">'+e.message+'</span>'; }
-}
-async function loadTx(){
-let div=document.getElementById('txList');
-let q=document.getElementById('txSearch').value.trim();
-if(!div) return;
-div.innerHTML='Loading...';
-try{
-let where=q?`userEmail LIKE '%${q}%' OR fromAccount LIKE '%${q}%' OR toAccount LIKE '%${q}%'`:undefined;
-let tx=await Backendless.Data.of("Transactions").find({whereClause:where, sortBy:["created DESC"], pageSize:100});
-if(!tx.length){ div.innerHTML='No transactions'; return; }
-let h='';
-tx.sort((a,b)=> new Date(b.created) - new Date(a.created)); // Orderly by date
-tx.forEach(t=>{
-let fromName = t.fromName ? t.fromName + ' - ' : '';
-let toName = t.toName ? '→ ' + t.toName : '';
-let senderDisplay = fromName || '';
-let receiverDisplay = toName || '';
-h+=`<div class="item"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px"><div><b>$${Number(t.amount||0).toFixed(2)} - ${t.type||''}</b> <span class="badge ${t.status==='Completed'?'ba':t.status==='Pending'?'bp':'br'}">${t.status||''}</span><br><span style="font-size:11px;font-weight:600;color:#111">${senderDisplay}${t.fromAccount||''} ${receiverDisplay} ${t.toAccount? '('+t.toAccount+')':''}</span><br><span style="font-size:11px;color:#6B7280">${t.userEmail||''}<br>${new Date(t.created).toLocaleString()} • Bal $${Number(t.balanceAfter||0).toFixed(2)} • ${t.note||''}</span></div><div style="display:flex;flex-direction:column;gap:4px"><button class="btn btn-b btn-sm" onclick="editTx('${t.objectId}')">Edit</button><button class="btn btn-r btn-sm" onclick="deleteTx('${t.objectId}')">Delete</button></div></div></div>`;
-});
-div.innerHTML=h;
-}catch(e){ div.innerHTML='Error: '+e.message; }
-}
-async function editTx(id){
-try{
-let t=await Backendless.Data.of("Transactions").findById(id);
-let dateVal = t.created ? new Date(t.created).toISOString().slice(0,16) : new Date().toISOString().slice(0,16);
-let html=`<h3>Edit Transaction - Real Bank Vibes</h3><p style="font-size:11px;color:#6B7280;margin-bottom:8px">Edit name, date/time, amount - will reorder orderly by date in user history.</p><div class="grid2">
-<input id="etEmail" value="${t.userEmail||''}" placeholder="User Email (owner)">
-<input id="etAmt" type="number" value="${Number(t.amount||0)}" placeholder="Amount">
-<input id="etFromName" value="${t.fromName||''}" placeholder="Sender Name">
-<input id="etToName" value="${t.toName||''}" placeholder="Recipient Name">
-<input id="etFrom" value="${t.fromAccount||''}" placeholder="From Account">
-<input id="etTo" value="${t.toAccount||''}" placeholder="To Account">
-<select id="etType"><option value="Transfer" ${t.type==='Transfer'?'selected':''}>Transfer</option><option value="Received" ${t.type==='Received'?'selected':''}>Received</option><option value="Deposit" ${t.type==='Deposit'?'selected':''}>Deposit</option><option value="Withdrawal" ${t.type==='Withdrawal'?'selected':''}>Withdrawal</option><option value="Bill Pay" ${t.type==='Bill Pay'?'selected':''}>Bill Pay</option><option value="Zelle" ${t.type==='Zelle'?'selected':''}>Zelle</option><option value="Western Union" ${t.type==='Western Union'?'selected':''}>Western Union</option><option value="MoneyGram" ${t.type==='MoneyGram'?'selected':''}>MoneyGram</option><option value="ACH" ${t.type==='ACH'?'selected':''}>ACH</option><option value="Wire" ${t.type==='Wire'?'selected':''}>Wire</option></select>
-<select id="etStatus"><option value="Completed" ${t.status==='Completed'?'selected':''}>Completed</option><option value="Pending" ${t.status==='Pending'?'selected':''}>Pending</option><option value="Failed" ${t.status==='Failed'?'selected':''}>Failed</option></select>
-<input id="etBal" type="number" value="${Number(t.balanceAfter||0)}" placeholder="Balance After">
-<input id="etDate" type="datetime-local" value="${dateVal}">
-<div style="grid-column:1/-1"><input id="etNote" value="${t.note||''}" placeholder="Description"></div>
-</div><button class="btn btn-g" style="width:100%" onclick="saveTx('${id}')">Save - Will Reorder by Date</button><button class="btn btn-w" style="width:100%;margin-top:6px" onclick="closeM()">Cancel</button><div id="etmsg" style="font-size:11px;margin-top:6px"></div>`;
-openM(html);
-}catch(e){ alert(e.message); }
-}
-async function saveTx(id){
-let data={
-objectId:id,
-userEmail:document.getElementById('etEmail').value.trim(),
-amount:parseFloat(document.getElementById('etAmt').value)||0,
-fromAccount:document.getElementById('etFrom').value.trim(),
-toAccount:document.getElementById('etTo').value.trim(),
-fromName:document.getElementById('etFromName').value.trim(),
-toName:document.getElementById('etToName').value.trim(),
-type:document.getElementById('etType').value,
-status:document.getElementById('etStatus').value,
-balanceAfter:parseFloat(document.getElementById('etBal').value)||0,
-note:document.getElementById('etNote').value,
-created:document.getElementById('etDate').value ? new Date(document.getElementById('etDate').value).toISOString() : new Date().toISOString()
-};
-document.getElementById('etmsg').innerHTML='Saving and reordering by date...';
-try{
-await Backendless.Data.of("Transactions").save(data);
-document.getElementById('etmsg').innerHTML='<span style="color:green">Saved! Transaction reordered by date - Real bank vibes.</span>';
-loadTx();
-setTimeout(closeM, 800);
-}catch(e){ document.getElementById('etmsg').innerHTML='<span style="color:red">'+e.message+'</span>'; }
-}
-async function deleteTx(id){ if(!confirm('Delete transaction?')) return; try{ await Backendless.Data.of("Transactions").remove(id); loadTx(); }catch(e){ alert(e.message); } }
-async function loadLoans(){
-let div=document.getElementById('loanList');
-div.innerHTML='Loading...';
-try{
-let loans=await Backendless.Data.of("Loans").find({sortBy:["created DESC"], pageSize:50});
-if(!loans.length){ div.innerHTML='No loans'; return; }
-let h='';
-loans.forEach(l=>{ h+=`<div class="item"><b>$${Number(l.amount||0).toFixed(2)} - ${l.userEmail||''}</b> <span class="badge ${l.status==='pending'?'bp':l.status==='approved'?'ba':'br'}">${l.status}</span><br><span style="font-size:11px">${l.purpose||''} • ${new Date(l.created).toLocaleString()}</span><div style="display:flex;gap:4px;margin-top:6px"><button class="btn btn-g btn-sm" onclick="approveLoan('${l.objectId}')">Approve</button><button class="btn btn-r btn-sm" onclick="rejectLoan('${l.objectId}')">Reject</button><button class="btn btn-w btn-sm" onclick="deleteLoan('${l.objectId}')">Delete</button></div></div>`; });
-div.innerHTML=h;
-}catch(e){ div.innerHTML='Error: '+e.message; }
-}
-async function approveLoan(id){
-try{
-let loan=await Backendless.Data.of("Loans").findById(id);
-let users=await Backendless.Data.of("Users").find({whereClause:`email='${loan.userEmail}'`});
-if(users.length>0){ let u=users[0]; let newBal=Number(u.balance||0)+Number(loan.amount||0); await Backendless.Data.of("Users").save({objectId:u.objectId, balance:newBal}); await Backendless.Data.of("Transactions").save({userEmail:u.email, fromAccount:'LOAN_APPROVED', toAccount:u.accountNumber, amount:Number(loan.amount||0), type:'Loan Approved', status:'Completed', balanceAfter:newBal, created:new Date().toISOString()}); }
-await Backendless.Data.of("Loans").save({objectId:id, status:'approved'}); alert('Approved'); loadLoans(); loadStats();
-}catch(e){ alert(e.message); }
-}
+async function loadTx(){ let div=document.getElementById('txList'); if(!div) return; div.innerHTML='Loading...'; try{ let tx=await Backendless.Data.of("Transactions").find({sortBy:["created DESC"],pageSize:100}); if(!tx.length){ div.innerHTML='No tx'; return; } let h=''; tx.sort((a,b)=>new Date(b.created)-new Date(a.created)); tx.forEach(t=>{ h+=`<div class="item"><b>$${Number(t.amount||0).toFixed(2)} - ${t.type||''}</b> ${t.status||''}<br><span style="font-size:11px">${t.fromName||''} ${t.fromAccount||''} → ${t.toName||''} ${t.toAccount||''}<br>${t.userEmail||''} • ${new Date(t.created).toLocaleString()} • Bal $${Number(t.balanceAfter||0).toFixed(2)}</span><div style="display:flex;gap:4px"><button class="btn btn-b btn-sm" onclick="editTx('${t.objectId}')">Edit</button><button class="btn btn-r btn-sm" onclick="deleteTx('${t.objectId}')">Delete</button></div></div>`; }); div.innerHTML=h; }catch(e){ div.innerHTML='Error: '+e.message; } }
+async function editTx(id){ try{ let t=await Backendless.Data.of("Transactions").findById(id); let dateVal=t.created?new Date(t.created).toISOString().slice(0,16):new Date().toISOString().slice(0,16); let html=`<h3>Edit Transaction</h3><div class="grid2"><input id="etEmail" value="${t.userEmail||''}" placeholder="User Email"><input id="etAmt" type="number" value="${Number(t.amount||0)}"><input id="etFromName" value="${t.fromName||''}" placeholder="From Name"><input id="etToName" value="${t.toName||''}" placeholder="To Name"><input id="etFrom" value="${t.fromAccount||''}"><input id="etTo" value="${t.toAccount||''}"><select id="etType"><option ${t.type==='Transfer'?'selected':''}>Transfer</option><option ${t.type==='Received'?'selected':''}>Received</option><option>Deposit</option><option>Withdrawal</option></select><select id="etStatus"><option ${t.status==='Completed'?'selected':''}>Completed</option><option>Pending</option><option>Failed</option></select><input id="etBal" type="number" value="${Number(t.balanceAfter||0)}"><input id="etDate" type="datetime-local" value="${dateVal}"><div style="grid-column:1/-1"><input id="etNote" value="${t.note||''}" placeholder="Note"></div></div><button class="btn btn-g" style="width:100%" onclick="saveTx('${id}')">Save</button><button class="btn btn-w" style="width:100%;margin-top:6px" onclick="closeM()">Cancel</button><div id="etmsg"></div>`; openM(html); }catch(e){ alert(e.message); } }
+async function saveTx(id){ let data={objectId:id, userEmail:document.getElementById('etEmail').value.trim(), amount:parseFloat(document.getElementById('etAmt').value)||0, fromName:document.getElementById('etFromName').value.trim(), toName:document.getElementById('etToName').value.trim(), fromAccount:document.getElementById('etFrom').value.trim(), toAccount:document.getElementById('etTo').value.trim(), type:document.getElementById('etType').value, status:document.getElementById('etStatus').value, balanceAfter:parseFloat(document.getElementById('etBal').value)||0, note:document.getElementById('etNote').value, created:document.getElementById('etDate').value?new Date(document.getElementById('etDate').value).toISOString():new Date().toISOString()}; try{ await Backendless.Data.of("Transactions").save(data); closeM(); loadTx(); }catch(e){ document.getElementById('etmsg').innerHTML='<span style="color:red">'+e.message+'</span>'; } }
+async function deleteTx(id){ if(!confirm('Delete?')) return; try{ await Backendless.Data.of("Transactions").remove(id); loadTx(); }catch(e){ alert(e.message); } }
+async function loadLoans(){ let div=document.getElementById('loanList'); div.innerHTML='Loading...'; try{ let loans=await Backendless.Data.of("Loans").find({sortBy:["created DESC"],pageSize:50}); if(!loans.length){ div.innerHTML='No loans'; return; } let h=''; loans.forEach(l=>{ h+=`<div class="item"><b>$${Number(l.amount||0).toFixed(2)} - ${l.userEmail||''}</b> <span class="badge ${l.status==='pending'?'bp':l.status==='approved'?'ba':'br'}">${l.status}</span><br><span style="font-size:11px">${l.purpose||''} • ${new Date(l.created).toLocaleString()}</span><div style="display:flex;gap:4px"><button class="btn btn-g btn-sm" onclick="approveLoan('${l.objectId}')">Approve</button><button class="btn btn-r btn-sm" onclick="rejectLoan('${l.objectId}')">Reject</button></div></div>`; }); div.innerHTML=h; }catch(e){ div.innerHTML='Error: '+e.message; } }
+async function approveLoan(id){ try{ let loan=await Backendless.Data.of("Loans").findById(id); let users=await Backendless.Data.of("Users").find({whereClause:`email='${loan.userEmail}'`}); if(users.length>0){ let u=users[0]; let newBal=Number(u.balance||0)+Number(loan.amount||0); await Backendless.Data.of("Users").save({objectId:u.objectId, balance:newBal}); await Backendless.Data.of("Transactions").save({userEmail:u.email, fromAccount:'LOAN', toAccount:u.accountNumber, fromName:'DoD Loans', toName:u.name, amount:Number(loan.amount||0), type:'Loan Approved', status:'Completed', balanceAfter:newBal, created:new Date().toISOString()}); } await Backendless.Data.of("Loans").save({objectId:id, status:'approved'}); alert('Approved'); loadLoans(); }catch(e){ alert(e.message); } }
 async function rejectLoan(id){ try{ await Backendless.Data.of("Loans").save({objectId:id, status:'rejected'}); loadLoans(); }catch(e){ alert(e.message); } }
-async function deleteLoan(id){ if(!confirm('Delete loan?')) return; try{ await Backendless.Data.of("Loans").remove(id); loadLoans(); }catch(e){ alert(e.message); } }
-async function loadCards(){
-let div=document.getElementById('cardList');
-div.innerHTML='Loading...';
-try{
-let cards=await Backendless.Data.of("Cards").find({sortBy:["created DESC"], pageSize:50});
-if(!cards.length){ div.innerHTML='No cards'; return; }
-let h=''; cards.forEach(c=>{ h+=`<div class="item"><b>${c.userEmail}</b> - ${c.cardType||''} ${c.last4||''} <span class="badge ba">${c.status||''}</span><br><span style="font-size:11px">${new Date(c.created).toLocaleString()}</span> <button class="btn btn-r btn-sm" onclick="deleteCard('${c.objectId}')">Delete</button></div>`; });
-div.innerHTML=h;
-}catch(e){ div.innerHTML='Error: '+e.message; }
-}
-async function deleteCard(id){ if(!confirm('Delete card?')) return; try{ await Backendless.Data.of("Cards").remove(id); loadCards(); }catch(e){ alert(e.message); } }
 function logout(){ localStorage.removeItem('adminUser'); location.reload(); }
-window.onload=()=>{
-let a=localStorage.getItem('adminUser');
-if(a){
-try{ let u=JSON.parse(a); if(u.email){ document.getElementById('loginCard').style.display='none'; document.getElementById('panel').style.display='block'; document.getElementById('logoutBtn').style.display='block'; curUser=u; loadStats(); loadAllUsers(); } }catch(e){}
-}
-};
+window.onload=()=>{ let a=localStorage.getItem('adminUser'); if(a){ try{ let u=JSON.parse(a); if(u.email){ document.getElementById('loginCard').style.display='none'; document.getElementById('panel').style.display='block'; curUser=u; loadStats(); loadAllUsers(); } }catch(e){} } };
 </script>
 </body>
 </html>
