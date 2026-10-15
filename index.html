@@ -191,8 +191,7 @@ async function submitOpenAccount(){
     <div class="otp-box">
       <p style="font-size:13px">We sent a 6-digit code via <b>${verifyMethod}</b> to:</p>
       <p style="font-size:13px;font-weight:700;margin:6px 0">${verifyMethod==='phone'?phone: verifyMethod==='both'? email+' & '+phone : email}</p>
-      <p style="font-size:11px;color:#6B7280">For demo, code is in console (F12) or Backendless VerificationCodes table. Real email/SMS can be enabled later.</p>
-      <p style="font-size:11px;color:#6B7280;margin-top:8px">Check your email or phone for the code. For testing, check Backendless Data → VerificationCodes table or browser console (F12).</p>
+      <p style="font-size:11px;color:#6B7280">Check your email or phone for the code.</p>
     </div>
     <input id="otpInput" class="otp-input" placeholder="000000" maxlength="6" style="margin-top:12px">
     <button class="btn-green" onclick="verifyCode()">Verify & Create Account</button>
