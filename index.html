@@ -209,22 +209,40 @@ async function submitOpenAccount(){
   }, 1800);
 }
 async function doLogin(){
-  let email=document.getElementById('loginEmail').value.trim();
+  let email=document.getElementById('loginEmail').value.trim().toLowerCase();
   let pass=document.getElementById('loginPass').value;
   if(!email||!pass) return alert('Enter email and password');
   document.getElementById('loginMsg').innerHTML='Signing in to DoD Community Bank...';
+
+  // FIX - Clear previous account first - THIS FIXES "ONLY ONE ACCOUNT"
+  localStorage.removeItem('currentUser');
+  localStorage.removeItem('currentUserEmail');
+  localStorage.removeItem('userToken');
+  localStorage.removeItem('adminUser');
+
   try{
     let user=await Backendless.UserService.login(email, pass, true);
     try{
       let full=await Backendless.Data.of("Users").find({whereClause:`email='${email}'`});
-      if(full.length>0){ user={...user, ...full[0]}; }
-    }catch(e){}
+      if(full.length>0){
+        // Check blocked
+        if(full[0].isBlocked===true || full[0].status==='blocked' || full[0].accountStatus==='blocked'){
+          document.getElementById('loginMsg').innerHTML='<span style="color:#FF3B30">🚫 ACCOUNT BLOCKED - Contact Head Office</span>';
+          await Backendless.UserService.logout();
+          return;
+        }
+        user={...user,...full[0]};
+      }
+    }catch(e){ console.log('fetch full user error', e) }
+
+    // SAVE THIS USER ONLY - NOT PREVIOUS USER
     localStorage.setItem('currentUser', JSON.stringify(user));
+    localStorage.setItem('currentUserEmail', email);
     localStorage.setItem('userToken', user['user-token']||'');
-    document.getElementById('loginMsg').innerHTML='<span style="color:#0B6E4F">Success - Redirecting to DoD Community Bank</span>';
-    setTimeout(()=>{ 
-      // Try dashboard.html (standard) - if you named it differently, update here
-      window.location.href='dashboard.html'; 
+
+    document.getElementById('loginMsg').innerHTML='<span style="color:#0B6E4F">Success - Logged in as '+email+' - Redirecting...</span>';
+    setTimeout(()=>{
+      window.location.href='dashboard.html';
     }, 800);
   }catch(e){
     console.log('Login error', e);
