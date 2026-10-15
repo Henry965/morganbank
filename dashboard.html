@@ -154,7 +154,7 @@ async function loadRecentTx(){
   let el=document.getElementById('txList');
   try{
     // FIXED: Use email OR userId - fixes "not existing user token"
-    let where = `userEmail='${currentEmail}' OR userId='${currentUser.objectId}' OR email='${currentEmail}'`;
+    let where = `userId='${currentUser.objectId}'`;
     let txs=await Backendless.Data.of('Transactions').find({whereClause:where, sortBy:['created DESC'], pageSize:6});
     if(txs.length===0){ el.innerHTML='<div style="padding:30px;text-align:center;color:#9CA3AF">No transactions yet</div>'; return; }
     let h=''; txs.forEach(t=>{
@@ -170,7 +170,7 @@ async function loadRecentTx(){
 }
 function showHistory(){
   openModal(`<h3 style="font-weight:800">Activity</h3><div id="historyList" style="margin-top:14px">Loading...</div><button class="btn-ghost" onclick="closeModal()">Close</button>`);
-  let where = `userEmail='${currentEmail}' OR userId='${currentUser.objectId}' OR email='${currentEmail}'`;
+  let where = `userId='${currentUser.objectId}'`;
   Backendless.Data.of('Transactions').find({whereClause:where, sortBy:['created DESC'], pageSize:100}).then(txs=>{
     let el=document.getElementById('historyList'); if(!el) return;
     if(txs.length===0){ el.innerHTML='<p style="text-align:center;color:#9CA3AF;padding:20px">No activity yet</p>'; return; }
@@ -199,7 +199,7 @@ async function doTransfer(){
     let fresh=await Backendless.Data.of("Users").findById(currentUser.objectId);
     currentUser={...currentUser, ...fresh}; localStorage.setItem('currentUser', JSON.stringify(currentUser));
     // Save transaction with userEmail for Activity fix
-    await Backendless.Data.of('Transactions').save({type:`Sent to ${name} - ${bank} • ${acc}`, amount:-amt, userId:currentUser.objectId, userEmail:currentEmail, email:currentEmail, created:new Date()});
+    await Backendless.Data.of('Transactions').save({type:`Sent to ${name} - ${bank} • ${acc}`, amount:-amt, userId:currentUser.objectId, userEmail:currentEmail, email:currentEmail, accountNumber:currentUser.accountNumber, created:new Date()});
     document.getElementById('balance').innerText='$'+Number(currentUser.balance||0).toFixed(2);
     openModal(`<div class="receipt"><h3 style="text-align:center">Transfer Successful</h3><div class="receipt-row"><span>To</span><b>${name}</b></div><div class="receipt-row"><span>Account</span><b>${acc}</b></div><div class="receipt-row"><span>Amount</span><b>$${amt.toFixed(2)}</b></div><div class="receipt-row"><span>Balance</span><b>$${Number(currentUser.balance||0).toFixed(2)}</b></div><button class="btn-primary" onclick="closeModal(); loadDashboard()">Done</button></div>`);
     loadRecentTx();
